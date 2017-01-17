@@ -1,0 +1,20 @@
+#parse("manager/page_header.vm")
+#parse("manager/menu/add_edit_inner.vm")
+<script>
+layui.use('form', function(){
+  var form = layui.form();
+});
+
+function save(){
+	var index = parent.layer.load(2);
+	$.post('../menu/save', $("#formid").serialize(), function(json){
+		if(json&&json.success==true){
+			parent.layer.closeAll();
+			location.reload();
+		}else{
+			Log.e(json.message);
+			parent.layer.close(index);
+		}
+	},'json');
+}
+</script>

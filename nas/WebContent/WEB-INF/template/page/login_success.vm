@@ -1,0 +1,9 @@
+#if(${service})
+	#set($st = $escape.html("$!{service}"))
+	<script type="text/javascript">
+		window.location.href="$!{st}";
+	</script>
+#else
+	登录成功
+#end
+
