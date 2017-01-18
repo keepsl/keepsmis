@@ -289,5 +289,6 @@
     <module>login</module>
     <module>quartz</module>
     <module>webservice</module>
+    <module>keepssite</module>
   </modules>
 </project>
