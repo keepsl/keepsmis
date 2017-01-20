@@ -47,7 +47,7 @@ public class LoginController extends AbstractController {
 		String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
 		if (UserLoginUtils.ifLoginReturnUid(request, response) != null) {
 			request.setAttribute("service", loginvar.getService());
-			return "redirect:" + url + "/keeps/page/index";
+			return "redirect:" + url + "/manage/page/index";
 		}
 		try {
 			if (StringUtils.isBlank(loginvar.getLt())) {
