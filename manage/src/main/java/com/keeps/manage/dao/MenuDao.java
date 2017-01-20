@@ -9,7 +9,7 @@ import com.keeps.tools.utils.page.Page;
 /**
  * 
  * <p>Title: MenuDao.java</p>  
- * <p>Description: @TODO </p>  
+ * <p>Description: 菜单DAO接口 </p>  
  * <p>Copyright: Copyright (c) KEEPS</p>  
  * @author keeps
  * @version v 1.00

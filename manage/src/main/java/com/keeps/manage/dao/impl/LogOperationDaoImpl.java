@@ -9,7 +9,7 @@ import com.keeps.model.TLogOperation;
 
 /** 
  * <p>Title: LogOperationDaoImpl.java</p>  
- * <p>Description: @TODO </p>  
+ * <p>Description: 操作日志DAO接口实现类 </p>  
  * <p>Copyright: Copyright (c) KEEPS</p>  
  * @author keeps
  * @version v 1.00
