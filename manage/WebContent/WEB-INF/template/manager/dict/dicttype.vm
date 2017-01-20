@@ -23,6 +23,17 @@
     </span>
     <span class="fl" style="margin-left: 5px;width:80%">
         <table class="layui-table">
+		  <colgroup>
+		    <col width="8">
+		    <col width="120">
+		    <col width="120">
+		    <col width="130">
+		    <col width="60">
+		    <col width="80">
+		    <col width="80">
+		    <col width="150">
+		    <col>
+		  </colgroup>
 		  <thead>
 		    <tr>
 			  <th><input type="checkbox" class="my-checkbox" /></th>
@@ -38,7 +49,7 @@
 		  <tbody>
 		  	#if($menulist.total==0)
   			<tr>
-  				<td colspan="8" style="text-align: center">无数据。。。</td>
+  				<td colspan="7" style="text-align: center">无数据。。。</td>
   			</tr>
 		  	#else
 			  	#foreach ($list in $menulist.record)
@@ -48,7 +59,7 @@
 				      <td>$list.pname</td>
 				      <td>$list.url</td>
 				      <td>$!{list.icon}</td>
-				      <td>#dictk2vtag('status',$!{list.status})</td>
+				      <td>$list.status</td>
 				      <td>$list.createperson</td>
 				      <td>$!date.format('yyyy-MM-dd HH:mm:ss ',$list.createtime)</td>
 				    </tr>

@@ -3,7 +3,6 @@ layui.use(['jquery','layer','element'],function(){
 	window.jQuery = window.$ = layui.jquery;
 	window.layer = layui.layer;
 	var element = layui.element();
-  
 // larry-side-menu向左折叠
 $('.larry-side-menu').click(function() {
   var sideWidth = $('#larry-side').width();
@@ -80,7 +79,6 @@ $(function(){
    checkLockStatus('0');
    // 锁定屏幕
    function lockSystem(){
-   		
    	   var url = '';
    	   $.post(
    	   	   url,
@@ -96,7 +94,6 @@ $(function(){
    //解锁屏幕
    function unlockSystem(){
         // 与后台交互代码已移除，根据需求定义或删除此功能
-        
    	    checkLockStatus(0);
     }
    // 点击锁屏
@@ -109,12 +106,20 @@ $(function(){
    });
    // 监控lock_password 键盘事件
    $('#lock_password').keypress(function(e){
-        var key = e.which;
-        if (key == 13) {
-            unlockSystem();
-        }
-    });
-    
+	   var key = e.which;
+	   if (key == 13) {
+		   unlockSystem();
+	   }
+   });
+   $('#exit').click(function(){
+	   layer.confirm('您确认要退出系统吗?', {
+		   btn: ['确认','取消']
+	   }, function(){
+		   window.location.href='../page/logout';
+	   }, function(){
+	   });
+   });
+   
 });
 
 

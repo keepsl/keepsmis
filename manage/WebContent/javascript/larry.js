@@ -22,9 +22,6 @@ layui.config({
 	// 左侧菜单导航-->tab
 	$(function() {
 		// 注入菜单
-		// var $menu = $('.larry-tab-menu');
-		// console.log($menu);
-		// $('#larry-tab .layui-tab-title').append($menu);
 		$('#larry-nav-side').click(function() {
 			if ($(this).attr('lay-filter') !== undefined) {
 				$(this).children('ul').find('li').each(function() {

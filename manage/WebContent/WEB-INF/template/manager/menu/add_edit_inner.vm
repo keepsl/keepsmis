@@ -51,10 +51,7 @@
   <div class="layui-form-item">
     <label class="layui-form-label">状态</label>
     <div class="layui-input-inline sw-times2">
-      <select name="status" lay-verify="required">
-        <option value="1">启用</option>
-        <option value="2">禁用</option>
-      </select>
+      #dictselecttag('status','status',$!{menu.status})
     </div>
     <div class="layui-form-mid layui-word-aux">该菜单启用/禁用状态</div>
   </div>

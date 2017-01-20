@@ -16,6 +16,18 @@ import com.keeps.manage.service.MenuService;
 import com.keeps.model.TManagerMenu;
 import com.keeps.tools.utils.JsonPost;
 
+/**
+ * 
+ * <p>Title: MenuController.java</p>  
+ * <p>Description: 菜单控制类 </p>  
+ * <p>Copyright: Copyright (c) KEEPS</p>  
+ * @author keeps
+ * @version v 1.00
+ * @date 创建日期：2017年1月13日
+ * 修改日期：
+ * 修改人：
+ * 复审人：
+ */
 @Controller
 @RequestMapping("menu")
 public class MenuController extends AbstractController {
@@ -32,12 +44,12 @@ public class MenuController extends AbstractController {
 	 */
 	@RequestMapping("index")
 	public ModelAndView index(ModelAndView view,HttpServletRequest request, HttpServletResponse response,TManagerMenu menu) {
-		view.setViewName("manager/menu/list");
 		if (menu==null) {
 			menu = new TManagerMenu();
 		}
 		view.addObject("menu",menu);
 		view.addObject("menulist",menuService.queryList(menu));
+		view.setViewName("manager/menu/list");
 		return view;
 	}
 	/**

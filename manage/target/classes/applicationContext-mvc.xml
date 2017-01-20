@@ -74,10 +74,6 @@
     	</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
-			<mvc:exclude-mapping path="/" />
-			<mvc:exclude-mapping path="/login" />
-			<mvc:exclude-mapping path="/logout" />
-			<mvc:exclude-mapping path="/scaptcha" />
 			<mvc:exclude-mapping path="/skins/**" />
 			<mvc:exclude-mapping path="/javascript/**" />
 			<mvc:exclude-mapping path="/plug/**" />
@@ -129,6 +125,7 @@
 				<prop key="resource.loader">file</prop>
 				<prop key="file.resource.loader.class">org.apache.velocity.runtime.resource.loader.FileResourceLoader
 				</prop>
+				<prop key="userdirective">com.keeps.manage.utils.PageDirective,com.keeps.manage.utils.Dictkey2valueDirective,com.keeps.manage.utils.DictSelectDirective</prop>
 			</props>
 		</property>
 	</bean>

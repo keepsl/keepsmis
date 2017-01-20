@@ -1,9 +1,12 @@
 <!DOCTYPE HTML>
 <html xmlns=http://www.w3.org/1999/xhtml>
-	
 	<head>
-	 	<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	 	<meta name="renderer" content="webkit">	
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">	
+		<meta name="apple-mobile-web-app-capable" content="yes">	
+		<meta name="format-detection" content="telephone=no">	
 		<!-- jquery基础包 -->
 		<script type="text/javascript" src="${path}/plug/jquery/jquery.min.js"></script> 
 		

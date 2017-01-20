@@ -1,25 +1,9 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>后台管理</title>
-	<meta name="renderer" content="webkit">	
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">	
-	<meta name="apple-mobile-web-app-capable" content="yes">	
-	<meta name="format-detection" content="telephone=no">	
-	<!-- load css -->
-	<link rel="stylesheet" type="text/css" href="${path}/plug/layui/css/layui.css" media="all">
-	<link rel="stylesheet" type="text/css" href="${path}/skins/template/css/global.css" media="all">
-	<link rel="stylesheet" type="text/css" href="${path}/skins/template/css/adminstyle.css" media="all">
-	<!-- 加载js文件-->
-	<script type="text/javascript" src="${path}/plug/layui/layui.js"></script> 
-	<script type="text/javascript" src="${path}/javascript/larry.js"></script>
-	<script type="text/javascript" src="${path}/javascript/index.js"></script>
-</head>
-<body>
+<!-- load css -->
+<link rel="stylesheet" type="text/css" href="${path}/skins/template/css/adminstyle.css" media="all">
+<!-- 加载js文件-->
+<script type="text/javascript" src="${path}/plug/layui/layui.js"></script> 
+<script type="text/javascript" src="${path}/javascript/larry.js"></script>
+<script type="text/javascript" src="${path}/javascript/index.js"></script>
 <div class="layui-layout layui-layout-admin" id="layui_layout">
 	<!-- 顶部区域 -->
 	<div class="layui-header header header-demo">
@@ -37,41 +21,29 @@
                        <li class="layui-nav-item layui-this">
                  	   	   <a href="javascirpt:;"><i class="iconfont icon-wangzhanguanli"></i>内容管理</a>
                  	   </li>
-                 	   <li class="layui-nav-item">
-                 	   	   <a href="javascirpt:;"><i class="iconfont icon-weixin3"></i>微信公众</a>
-                 	   </li>
-                 	   <li class="layui-nav-item">
-                 	   	   <a href="javascirpt:;"><i class="iconfont icon-ht_expand"></i>扩展模块</a>
-                 	   </li>
                  </ul>
             </div>
             <!-- 右侧导航 -->
             <ul class="layui-nav larry-header-item">
             		<li class="layui-nav-item first">
 						<a href="javascript:;">
-							<img src="${path}/temp/images/userimg.jpg" class="userimg">			
-							<cite>默认站点</cite>
+							<img src="${path}/temp/images/userimg.jpg" class="userimg">		
+							<cite>设置</cite>
 							<span class="layui-nav-more"></span>
 						</a>
 						<dl class="layui-nav-child">
 							<dd>
-								<a href="">站点1</a>
-							</dd>
-							<dd>
-								<a href="">站点2</a>
-							</dd>
-							
+								<a href="javascript:;">代办消息</a>
+								<a href="javascript:;">清除缓存</a>
+								<a href="javascript:;">修改密码</a>
+							</dd>						
 						</dl>
 					</li>
 					<li class="layui-nav-item">
-						<a href="javascript:;" id="lock">
-                        <i class="iconfont icon-diannao1"></i>
-						锁屏</a>
+						<a href="javascript:;" id="lock"><i class="iconfont icon-diannao1"></i>锁屏</a>
 					</li>
 					<li class="layui-nav-item">
-						<a href="login.html">
-                        <i class="iconfont icon-exit"></i>
-						退出</a>
+						<a href="javascript:;" id="exit"><i class="iconfont icon-exit"></i>退出</a>
 					</li>
             </ul>
 		</div>
@@ -103,7 +75,7 @@
 						<dl class="layui-nav-child">
 		                    <dd>
 		                        <a href="javascript:;" data-url="${path}/$menu.href">
-		                            <i class="iconfont icon-caidan" data-icon='icon-geren1'></i>
+		                            <i class="iconfont icon-caidan" data-icon='$list.icon'></i>
 		                            <span>$menu.name</span>
 		                        </a>
 		                    </dd>
@@ -130,17 +102,6 @@
 			</div>
 		</div>
 	</div>
-	
-	<!-- 底部区域 -->
-	<div class="layui-footer layui-larry-foot" id="larry-footer">
-		<div class="layui-mian">
-		    <div class="larry-footer-left">
-		    </div>
-		    <p class="p-admin">
-		    	<span>2017 &copy;</span> keeps.
-		    </p>
-		</div>
-	</div>
 </div>
 <!-- 锁屏 -->
 <div class="lock-screen" style="display: none;">
@@ -156,12 +117,3 @@
 		</div>
 	</div>
 </div>
-<!-- 菜单控件 -->
-<!-- <div class="larry-tab-menu">
-	<span class="layui-btn larry-test">刷新</span>
-</div> -->
-<!-- iframe框架刷新操作 -->
-<!-- <div id="refresh_iframe" class="layui-btn refresh_iframe">刷新</div> -->
-<div style="display:none;"></div>
-</body>
-</html>
