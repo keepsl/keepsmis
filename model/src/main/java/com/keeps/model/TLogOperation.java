@@ -1,5 +1,6 @@
 package com.keeps.model;
 
+
 // default package
 // Generated 2017-1-16 10:14:25 by Hibernate Tools 3.2.2.GA
 
@@ -12,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.keeps.core.model.AbstractModel;
 
@@ -29,6 +31,8 @@ public class TLogOperation extends AbstractModel implements java.io.Serializable
 	private String ip;
 	private Integer userid;
 	private Date createtime;
+	
+	private String nickname;
 
 	public TLogOperation() {
 	}
@@ -99,4 +103,14 @@ public class TLogOperation extends AbstractModel implements java.io.Serializable
 		this.createtime = createtime;
 	}
 
+	@Transient
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	
 }
