@@ -3,6 +3,7 @@ package com.keeps.manage.dao;
 import java.util.List;
 
 import com.keeps.core.dao.SoftDao;
+import com.keeps.manage.utils.TreeNode;
 import com.keeps.model.TManagerMenu;
 import com.keeps.tools.utils.page.Page;
 
@@ -39,4 +40,25 @@ public interface MenuDao extends SoftDao{
 	  * @data:			2017年1月13日
 	 */
 	public List<TManagerMenu> queryListAll(Integer status,Integer pid);
+	
+	/**
+	  * @Title:			getListByPid 
+	  * @Description:	根据PID取得菜单列表
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年1月23日
+	 */
+	public List<TManagerMenu> getListByPid(Integer pid);
+
+	/**
+	  * @Title:			queryListAll 
+	  * @Description:	查询菜单tree
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年1月20日
+	 */
+	public List<TreeNode> queryListTree();
+
 }

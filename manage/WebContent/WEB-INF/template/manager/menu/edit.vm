@@ -1,18 +1,13 @@
 #parse("manager/page_header.vm")
 #parse("manager/menu/add_edit_inner.vm")
 <script>
-layui.use('form', function(){
-  var form = layui.form();
-});
-function update(){
-	var index = parent.layer.load(2);
+function update(callback){
 	$.post('../menu/update', $("#formid").serialize(), function(json){
 		if(json&&json.success==true){
-			parent.layer.closeAll();
-			location.reload();
+			callback(true);
 		}else{
 			Log.e(json.message);
-			parent.layer.close(index);
+			callback(false);
 		}
 	},'json');
 }

@@ -35,7 +35,7 @@ public class DictSelectDirective extends Directive{
 		}
 		Map<Integer, String> mapdata  = Constants.DICT_ITEM_LIST.get(dicItem);
 		StringBuffer sb = new StringBuffer();
-		sb.append("<select name=\""+name+"\" >"); 
+		sb.append("<select class='form-control' name=\""+name+"\" >"); 
 		Iterator<Map.Entry<Integer, String>> entries = mapdata.entrySet().iterator();
 		while (entries.hasNext()) {
 			Map.Entry<Integer, String> entry = entries.next();

@@ -2,6 +2,7 @@ package com.keeps.manage.dao;
 
 import com.keeps.core.dao.SoftDao;
 import com.keeps.model.TLogOperation;
+import com.keeps.tools.utils.page.Page;
 
 /** 
  * <p>Title: LogOperationDao.java</p>  
@@ -26,4 +27,13 @@ public interface LogOperationDao extends SoftDao{
 	 */
 	public int saveLog(TLogOperation logOperation);
 	
+	/**
+	  * @Title:			queryList 
+	  * @Description:	查询操作日志列表
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年2月5日
+	 */
+	public Page queryList(TLogOperation logOperation);
 }

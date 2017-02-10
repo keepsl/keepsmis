@@ -43,14 +43,29 @@ public class MenuController extends AbstractController {
 	  * @data:			2017年1月12日
 	 */
 	@RequestMapping("index")
-	public ModelAndView index(ModelAndView view,HttpServletRequest request, HttpServletResponse response,TManagerMenu menu) {
-		if (menu==null) {
-			menu = new TManagerMenu();
-		}
-		view.addObject("menu",menu);
-		view.addObject("menulist",menuService.queryList(menu));
+	public ModelAndView index(ModelAndView view,HttpServletRequest request, HttpServletResponse response) {
 		view.setViewName("manager/menu/list");
 		return view;
+	}
+	
+	/**
+	  * @Title:			query 
+	  * @Description:	查询菜单列表
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年1月12日
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("query")
+	public @ResponseBody Map query(final TManagerMenu menu) {
+		return super.doJsonPost(new JsonPost() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void doInstancePost(Map map) {
+				map.put("message", menuService.queryList(menu));
+			}
+		});
 	}
 	/**
 	  * @Title:			add 
@@ -63,7 +78,7 @@ public class MenuController extends AbstractController {
 	@RequestMapping("add")
 	public ModelAndView add(ModelAndView view,HttpServletRequest request, HttpServletResponse response) {
 		view.setViewName("manager/menu/add");
-		view.addObject("menulist", menuService.queryListAll(1,0));
+		view.addObject("menulist", menuService.queryListAll(1,null));
 		return view;
 	}
 	/**
@@ -78,7 +93,7 @@ public class MenuController extends AbstractController {
 	public ModelAndView edit(ModelAndView view,HttpServletRequest request, HttpServletResponse response,Integer id) {
 		view.setViewName("manager/menu/edit");
 		view.addObject("menu",menuService.getById(id));
-		view.addObject("menulist", menuService.queryListAll(1,0));
+		view.addObject("menulist", menuService.queryListAll(1,null));
 		return view;
 	}
  

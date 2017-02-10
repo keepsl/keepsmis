@@ -10,9 +10,12 @@ import com.keeps.core.model.utils.IdTypes;
 import com.keeps.core.service.AbstractService;
 import com.keeps.manage.dao.MenuDao;
 import com.keeps.manage.service.MenuService;
-import com.keeps.manage.utils.LayuiTree;
+import com.keeps.manage.utils.TreeNode;
 import com.keeps.model.TManagerMenu;
+import com.keeps.tools.exception.CapecException;
 import com.keeps.tools.utils.Assert;
+import com.keeps.tools.utils.AsyncTreeNode;
+import com.keeps.tools.utils.EditType;
 import com.keeps.tools.utils.StringUtils;
 import com.keeps.tools.utils.page.Page;
 
@@ -38,12 +41,16 @@ public class MenuServiceImpl extends AbstractService implements MenuService{
 	 */
 	@Override
 	public String save(TManagerMenu menu) {
-		Assert.isTrue(StringUtils.hasLength(menu.getMenuname()), "菜单名称不能为空！");
-		Assert.isTrue(menu.getPid()!=null, "上级菜单不能为空！");
-		Assert.isTrue(StringUtils.hasLength(menu.getUrl()), "菜单连接不能为空！");
-		Assert.isTrue(menu.getStatus()!=null, "状态不能为空！");
+		Assert.isTrue(StringUtils.hasLength(menu.getMenuname()), "菜单名称不能为空!");
+		Assert.isTrue(menu.getPid()!=null, "上级菜单不能为空!");
+		Assert.isTrue(StringUtils.hasLength(menu.getUrl()), "菜单连接不能为空!");
+		Assert.isTrue(menu.getSort()!=null, "顺序不能为空!");
+		Assert.isTrue(menu.getStatus()!=null, "状态不能为空!");
+		if(!menuDao.isUnique(menu, new String[]{"menuname"})){
+			throw new CapecException("["+menu.getMenuname()+"]菜单名称已经存在,不允许重复添加!");
+		}
 		if (menu.getPid()==0) {
-			menu.setPname("顶级菜单");
+			menu.setPname("一级菜单");
 		}else{
 			TManagerMenu menu2 = super.get(TManagerMenu.class, menu.getPid());
 			menu.setPname(menu2.getMenuname());
@@ -57,19 +64,28 @@ public class MenuServiceImpl extends AbstractService implements MenuService{
 	 */
 	@Override
 	public String update(TManagerMenu menu) {
-		Assert.isTrue(menu.getId()!=null, "ID不能为空！");
-		Assert.isTrue(StringUtils.hasLength(menu.getMenuname()), "菜单名称不能为空！");
-		Assert.isTrue(menu.getPid()!=null, "上级菜单不能为空！");
-		Assert.isTrue(StringUtils.hasLength(menu.getUrl()), "菜单连接不能为空！");
-		Assert.isTrue(menu.getStatus()!=null, "状态不能为空！");
+		Assert.isTrue(menu.getId()!=null, "ID不能为空!");
+		Assert.isTrue(StringUtils.hasLength(menu.getMenuname()), "菜单名称不能为空!");
+		Assert.isTrue(menu.getPid()!=null, "上级菜单不能为空!");
+		Assert.isTrue(StringUtils.hasLength(menu.getUrl()), "菜单连接不能为空!");
+		Assert.isTrue(menu.getSort()!=null, "顺序不能为空!");
+		Assert.isTrue(menu.getStatus()!=null, "状态不能为空!");
+		if(!menuDao.isUnique(menu, new String[]{"menuname"})){
+			throw new CapecException("["+menu.getMenuname()+"]菜单名称已经存在,不允许重复添加!");
+		}
 		//TManagerMenu menu2 = super.get(TManagerMenu.class, menu.getPid());
 		if (menu.getPid()==0) {
-			menu.setPname("顶级菜单");
+			menu.setPname("一级菜单");
 		}else{
 			TManagerMenu menu2 = super.get(TManagerMenu.class, menu.getPid());
 			menu.setPname(menu2.getMenuname());
 		}
-		super.update(menu);
+		List<TManagerMenu> list = menuDao.getListByPid(menu.getId());
+		for (TManagerMenu tManagerMenu : list) {
+			tManagerMenu.setPname(menu.getMenuname());
+		}
+		super.saveOrUpdateAllEntity(list, EditType.NULL_UN_UPDATE);
+		super.update(menu, EditType.NULL_UN_UPDATE);
 		return null;
 	}
 	
@@ -101,15 +117,16 @@ public class MenuServiceImpl extends AbstractService implements MenuService{
 	 */
 	@Override
 	public String delete(String ids) {
+		Assert.isTrue(StringUtils.hasText(ids), "请选择要删除的数据.");
 		super.removeEntity(TManagerMenu.class, ids, IdTypes.Integer);
 		return "删除成功!";
 	}
 	/**
 	 * 首页获得菜单树
 	 */
-	public LayuiTree getIndexMenuTree(){
+	public AsyncTreeNode getIndexMenuTree(){
 		List<TManagerMenu> listmenu = menuDao.queryListAll(null,null);
-		LayuiTree tree = new LayuiTree();
+		AsyncTreeNode tree = new AsyncTreeNode();
 		loadMenuChild(listmenu,tree,0,true);
 		return tree;
 	}
@@ -117,27 +134,26 @@ public class MenuServiceImpl extends AbstractService implements MenuService{
 	/**
 	 * 菜单模块管理菜单树-级联
 	 */
-	public List<LayuiTree> getMenuTree(){
-		List<TManagerMenu> listmenu = menuDao.queryListAll(null,null);
-		LayuiTree tree = new LayuiTree();
-		tree.setId(0);
-		tree.setName("我的菜单");
-		tree.setSpread(true);
-		loadMenuChild(listmenu,tree,0,false);
-		List<LayuiTree> listtree = new ArrayList<>();
-		listtree.add(tree);
-		return listtree;
+	public List<TreeNode> getMenuTree(){
+		TreeNode node  = new TreeNode();
+		node.setId(0);
+		node.setpId(0);
+		node.setOpen(1);
+		node.setName("全部菜单");
+		List<TreeNode> listtreenode  = menuDao.queryListTree();
+		listtreenode.add(node);
+		return listtreenode;
 	}
 	
 	
-	private static void loadMenuChild(List<TManagerMenu> listmenu,LayuiTree menutree,Integer pid,boolean ishref){
+	private static void loadMenuChild(List<TManagerMenu> listmenu,AsyncTreeNode menutree,Integer pid,boolean ishref){
 		List<TManagerMenu> childList = getMenuListPid(listmenu,pid);
 		if(childList.size()==0) {
 			
 		}else{
-			List<LayuiTree> listtree = new ArrayList<>();
+			List<AsyncTreeNode> listtree = new ArrayList<>();
 			for(TManagerMenu menu:childList){
-				LayuiTree tree = new LayuiTree();
+				AsyncTreeNode tree = new AsyncTreeNode();
 				tree.setId(menu.getId());
 				tree.setName(menu.getMenuname());
 				tree.setHref(ishref?menu.getUrl():"");

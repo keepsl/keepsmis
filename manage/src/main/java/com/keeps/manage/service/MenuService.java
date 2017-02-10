@@ -3,8 +3,9 @@ package com.keeps.manage.service;
 import java.util.List;
 
 import com.keeps.core.service.SoftService;
-import com.keeps.manage.utils.LayuiTree;
+import com.keeps.manage.utils.TreeNode;
 import com.keeps.model.TManagerMenu;
+import com.keeps.tools.utils.AsyncTreeNode;
 import com.keeps.tools.utils.page.Page;
 
 /** 
@@ -88,7 +89,7 @@ public interface MenuService extends SoftService{
 	  * @author:		keeps
 	  * @data:			2017年1月17日
 	 */
-	public LayuiTree getIndexMenuTree();
+	public AsyncTreeNode getIndexMenuTree();
 	
 	/**
 	  * @Title:			getMenuTree 
@@ -98,6 +99,6 @@ public interface MenuService extends SoftService{
 	  * @author:		keeps
 	  * @data:			2017年1月13日
 	 */
-	public List<LayuiTree> getMenuTree();
+	public List<TreeNode> getMenuTree();
 	
 }

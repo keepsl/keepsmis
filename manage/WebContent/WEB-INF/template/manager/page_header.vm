@@ -1,1 +1,1 @@
-#set($layout="layout/layout.vm")
+#set($layout="manager/layout/layout.vm")

@@ -15,16 +15,31 @@ import java.util.Map;
  * 复审人：
  */
 public class Constants {
+	//文章封面图地址
+	public static final String COVER_IMAGE_PATH = "upload/cover/image";
+	//封面图宽高
+	public static final Integer MAX_COVER_IMAGE_WIDTH = 220;
+	public static final Integer MAX_COVER_IMAGE_HEIGHT = 150;
 
+	//上传图片大小单位M
+	public static final Integer MAX_UPLOAD_IMAGE_SIZE = 2;
+	
 	//状态，1启用，2禁用
 	public static final Map<Integer, String> SYSTEM_STATUS = new HashMap<Integer, String>();
 	static{
 		SYSTEM_STATUS.put(1, "启用");
 		SYSTEM_STATUS.put(2, "禁用");
 	}
-	
+	//栏目模版类型1：列表页，2内容页
+	public static final Map<Integer, String> TEMPLATE_TYPE = new HashMap<Integer, String>();
+	static{
+		TEMPLATE_TYPE.put(1, "列表页");
+		TEMPLATE_TYPE.put(2, "内容页");
+	}
 	public static final Map<String, Map<Integer, String>> DICT_ITEM_LIST = new HashMap<String, Map<Integer, String>>();
 	static{
-		DICT_ITEM_LIST.put("status", SYSTEM_STATUS);
+		DICT_ITEM_LIST.put("dic_status", SYSTEM_STATUS);
+		DICT_ITEM_LIST.put("dic_template_type", TEMPLATE_TYPE);
 	}
+
 }

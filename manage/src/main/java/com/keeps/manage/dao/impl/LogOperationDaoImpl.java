@@ -1,11 +1,16 @@
 package com.keeps.manage.dao.impl;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import com.keeps.core.dao.AbstractDao;
 import com.keeps.manage.dao.LogOperationDao;
 import com.keeps.model.TLogOperation;
+import com.keeps.tools.utils.StringUtils;
+import com.keeps.tools.utils.page.Page;
 
 /** 
  * <p>Title: LogOperationDaoImpl.java</p>  
@@ -29,4 +34,18 @@ public class LogOperationDaoImpl extends AbstractDao implements LogOperationDao 
 		return super.executeSQL(sql.toString(), values);
 	}
 	
+	/**
+	 * 查询操作日志列表
+	 */
+	public Page queryList(TLogOperation logOperation){
+		List<Object> values = new ArrayList<Object>();
+		StringBuffer sql = new StringBuffer(" select a.*,b.nickname from t_log_operation a inner join t_user b on a.userid = b.id ");
+		if (StringUtils.hasText(logOperation.getMethod())) {
+			sql.append(" where a.method = ? ");
+			values.add(logOperation.getMethod().trim());
+		}
+		sql.append("order by a.id desc ");
+		return super.queryByNameParamSql(sql.toString() ,null, values.toArray(),logOperation,logOperation.getClass());
+	}
+
 }
