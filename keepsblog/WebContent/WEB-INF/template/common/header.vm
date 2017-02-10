@@ -1,0 +1,46 @@
+<header class="header" style="height: 52px;">
+  <div class="navbar">
+	<h1 class="logo"><a href="../page/index" title="keeps博客" alt="keeps博客">keeps博客</a></h1>
+	<ul class="nav">
+		<li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item menu-item-home"><a href="../page/index">首页</a></li>
+	</ul>
+	<div class="menu pull-right">
+	  <form name="formsearch" action="http://blog.yzmcms.com/plus/search.php" method="get">
+		<input class="search-input" name="q" id="search-keyword" type="text" required="required" placeholder=" 输入你要找的内容" />
+		<button type="submit" class="searchbtn" name="search" title="搜一下！">
+		  <i class="fa"></i>
+		</button>
+	  </form>
+	</div>
+</header>
+<script type="text/javascript">
+$(function () {
+	$.post('../page/menu', null, function(json){
+		if(json&&json.success==true){
+			var menudata = json.message.children;
+			loadMenuChild(menudata,$(".nav"),0);
+		}else{
+			
+		}
+	},'json');
+});
+function loadMenuChild(menudata,parent,ispid){
+	$.each(menudata,function(n,value){
+        var li = '';
+        if(ispid==0){
+	        li = $('<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children"></li>');
+        }else{
+        	li = $('<li class="menu-item menu-item-type-taxonomy menu-item-object-category"></li>');
+        }
+        $(parent).append(li);
+		if(menudata[n].children==null){
+			$(li).append('<a href="">'+menudata[n].name+'</a>');
+		}else{
+			$(li).append('<a href="">'+menudata[n].name+'</a>');
+			var ul  = '<ul class="sub-menu"></ul>';
+			$(li).append(ul);
+			loadMenuChild(menudata[n].children,$(li).find('ul').eq(0),1);
+		}
+	});
+}
+</script>

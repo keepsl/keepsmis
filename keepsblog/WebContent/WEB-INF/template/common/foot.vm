@@ -1,0 +1,10 @@
+<footer class="footer">
+  <div class="footer-inner">
+    <div style="padding:0 20px;overflow:hidden;">
+      <div class="copyright pull-left">
+	  	<a href="http://blog.yzmcms.com/qianduan/">前端</a> | <a href="http://blog.yzmcms.com/chengxu/">程序</a> | <a href="http://blog.yzmcms.com/shenghuo/">生活</a> | <a href="http://blog.yzmcms.com/yule/">娱乐</a> | <a href="http://blog.yzmcms.com/guanyu/">关于</a> |             <a href='http://blog.yzmcms.com/plus/guestbook.php'>留言联系</a>
+        <a href="http://blog.yzmcms.com/" target="_blank">Copyright © 2016, YzmCMS All Rights Reserved. </a>| 京ICP备16034624号</div>
+      <div class="trackcode pull-right"><script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1259844929'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1259844929' type='text/javascript'%3E%3C/script%3E"));</script></div>
+    </div>
+  </div>
+</footer>

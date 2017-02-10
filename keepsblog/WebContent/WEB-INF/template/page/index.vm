@@ -1,0 +1,169 @@
+#set($layout="layout/default-manager.vm")
+<!--[if lt IE 9]>
+<script src="http://blog.yzmcms.com/templets/blog/js/html5.js"></script>
+<![endif]-->
+<div class="placeholder"></div>		
+<script>window._deel = {
+	maillist: '',
+	maillistCode: '',
+	commenton: 0,
+	roll: [0, 0]
+  }</script>
+<script type="text/javascript">$(function() {
+	$(window).scroll(function() {
+	  $offset = $('.placeholder').offset(); //不能用自身的div，不然滚动起来会很卡
+	  if ($(window).scrollTop() > $offset.top) {
+		$('.header').css({
+		  'position': 'fixed',
+		  'top': '0px',
+		  'left': $offset.left + 'px',
+		  'z-index': '999'
+		});
+		$(".container").css({
+		  "margin-top": "93px"
+		});
+	  } else {
+		$('.header').removeAttr('style');
+		$('.container').removeAttr('style');
+	  }
+	});
+  })
+</script>
+	<script type="text/javascript" src="http://blog.yzmcms.com/templets/blog/js/swiper.min.js"></script>	
+    <section class="container">
+      <div class="banner banner-navbar">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img src="http://blog.yzmcms.com/templets/blog/images/banner_1.jpg" alt="yzmcms博客"></div>
+					<div class="swiper-slide"><img src="http://blog.yzmcms.com/templets/blog/images/banner_2.jpg" alt="yzmcms博客"></div>
+					<div class="swiper-slide"><img src="http://blog.yzmcms.com/templets/blog/images/banner_3.jpg" alt="yzmcms博客"></div>
+				</div>
+				<div class="swiper-pagination"></div>
+				<div class="swiper-button-next"></div>
+				<div class="swiper-button-prev"></div>
+			</div>
+      </div>
+    <script>
+		var swiper = new Swiper('.swiper-container', {
+			pagination: '.swiper-pagination',
+			nextButton: '.swiper-button-next',
+			prevButton: '.swiper-button-prev',
+			paginationClickable: true,
+			spaceBetween: 30,
+			centeredSlides: true,
+			autoplay: 5000,
+			autoplayDisableOnInteraction: false,
+			loop: true
+		});
+    </script>
+      <div class="content-wrap">
+        <div class="content">
+          <div class="sticky">
+            <h2 class="title">特别推荐</h2>
+            <ul>
+            	#foreach ($list in $articleRecommendlist)
+					<li class="item">
+						<a href="http://blog.yzmcms.com/html/php/33.html" target="_blank">
+                  			<img src="http://blog.yzmcms.com/uploads/thumbnail/20160728193135284.jpg" alt="$list.title" />
+                  			<h3>#subcut($list.title,20)</h3>
+                  			<p class="muted">#subcut($list.abstract_,42)</p>
+                  		</a>
+					</li>
+				#end
+          	</ul>
+          </div>
+          <h2 class="title">最新发布</h2>
+	     	#foreach ($list in $articleNewlist)
+				<article class="excerpt">
+		            <div class="focus">
+		              <a href="http://blog.yzmcms.com/html/shenghuo/72.html" class="thumbnail" target="_blank">
+		                <img src="http://blog.yzmcms.com/uploads/thumbnail/20170118094330506.jpg" alt="$list.title" title="$list.title"/></a>
+		            </div>
+		            <header>
+		              <h2>
+		                <a href="http://blog.yzmcms.com/html/shenghuo/72.html" title="$list.title" target="_blank">#subcut($list.title,20)</a></h2>
+		            </header>
+		            <p class="note">#subcut($list.abstract_,70)</p>
+		            <p>
+		              <span class="muted">
+		                <i class="icon-user icon12"></i> $list.publishnickname</span>
+		              <span class="muted">
+		                <i class="ico icon-time icon12"></i> $!date.format('yyyy-MM-dd HH:mm:ss',$list.publishtime)</span>
+		              <span class="muted">
+		                <i class="ico icon-eye-open icon12"></i> $list.clicknum次浏览</span>
+		            </p>
+	          	</article>
+			#end
+        </div>
+      </div>
+      </div>
+      <aside class="sidebar">
+        <div class="widget">
+		  <h3 class="widget_tit">热门标签</h3>
+          <div class="tag_list">
+            <ul>
+            #foreach ($list in $taghotlist)
+            <li><a href="http://blog.yzmcms.com/plus/search.php?tag=$list.name" target="_blank">$list.name</a></li>
+            #end
+			</ul>
+          </div>
+        </div>	  
+        <div class="widget d_postlist">
+			<h3 class="widget_tit">热门文章</h3>
+          	<ul>
+				#foreach ($list in $articleHotlist)
+					<li>
+						<a href="http://blog.yzmcms.com/html/shenghuo/72.html">
+			                <span class="thumbnail">
+			                	<img src="http://blog.yzmcms.com/uploads/thumbnail/20170118094330506.jpg" alt="$list.title" title="$list.title"/>
+			               	</span>
+			                <span class="text">#subcut($list.title,20)</span>
+			                <span class="muted">$!date.format('yyyy-MM-dd',$list.publishtime)</span>
+			                <span class="muted">
+			                	<span class="ds-thread-count" data-replace="1">$list.clicknum次阅读</span>
+			                </span>
+	              		</a>
+					</li>
+				#end
+			</ul>
+        </div>
+		<div class="widget d_textbanner">
+			<a class="style03" target="_blank" href="http://www.yzmcms.com/">
+			<strong>广告位</strong>
+			<h2>文字广告位</h2>
+			<p>
+			本套博客模板出售
+			<br>
+			购买模板请到 www.yzmcms.com
+			<br>
+			联系作者：QQ214243830
+			</p>
+			</a>
+		</div>				
+      </aside>
+    </section>
+    <div class="IndexLinkListWrap">
+      <div class="moketitle" style="font-size: 15px;">友情链接</div>
+      <ul class="friendlyLink">
+		<a href="http://www.yzmcms.com" target="_blank">YzmCMS官网</a> <span>|</span> <a href="http://www.duoguyu.com/" target="_blank">多骨鱼</a> <span>|</span> <a href="http://lovefc.cn/" target="_blank">封尘博客</a> <span>|</span> <a href="http://www.ylsc633.com/" target="_blank">叶落山城秋</a> <span>|</span> <a href="http://www.shuchengxian.com/" target="_blank">高蒙博客</a> <span>|</span> <a href="http://www.8hao.com.cn/" target="_blank">张艳博客</a> <span>|</span> <a href="http://www.fx99.cn/" target="_blank">飞信网</a> <span>|</span> 	  
+       </ul>
+    </div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+	    $(function(){
+	        var scrollDiv = document.createElement('div');
+	        $(scrollDiv).attr('id','toTop').html('<ul><li class="backBtn" title="返回顶部"><a href="javascript:;" class="icon_backTo"></a></li></ul>').appendTo('body');
+	        $(window).scroll(function(){
+	            if($(this).scrollTop() > 300){
+	                $('.backBtn').fadeIn();
+	            }else{
+	                $('.backBtn').fadeOut();
+	            }
+	        });
+	        $('.backBtn').click(function(){
+	            $('body,html').animate({scrollTop:0},300);
+	        })
+	    })
+
+		});
+	</script>	
