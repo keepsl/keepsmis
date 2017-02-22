@@ -39,7 +39,7 @@ public interface ArticleService extends SoftService{
 	  * @author:		keeps
 	  * @data:			2017年2月6日
 	 */
-	public TArticle getById(Integer id);
+	public TArticle getById(Integer id,HttpServletRequest request);
 	
 	/**
 	  * @Title:			saveOrUpdate 

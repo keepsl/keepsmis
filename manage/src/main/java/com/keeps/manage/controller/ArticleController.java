@@ -113,7 +113,7 @@ public class ArticleController extends AbstractController {
 	@RequestMapping("edit")
 	public ModelAndView edit(ModelAndView view,HttpServletRequest request, HttpServletResponse response,Integer id) {
 		view.setViewName("manager/article/edit");
-		view.addObject("article",articleService.getById(id));
+		view.addObject("article",articleService.getById(id,request));
 		view.addObject("articletypelist", articleTypeService.queryListAll());
 		List<TTag> taglist = tagService.queryAll();
 		view.addObject("taglist",taglist);

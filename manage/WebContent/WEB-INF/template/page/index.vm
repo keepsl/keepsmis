@@ -64,7 +64,7 @@
 <body>
     <div class="g-header">
         <div class="main g-clear">
-            <img src="${path}/skins/template/img/header/logo_xgfw.png" class="g-fl J_imgWarp"/>
+            <img src="${path}/skins/template/img/header/logo.png" class="g-fl J_imgWarp"/>
             <div class="g-fr">
                 <a class="moremenu J_moreMenu" href="javascript:;"><i class="gi2 gi-36"></i></a>
                 <a class="admin J_adminAction" href="javascript:;"><img src="${path}/skins/template/img/header/admin.png"/><em>3</em>管理员</a>

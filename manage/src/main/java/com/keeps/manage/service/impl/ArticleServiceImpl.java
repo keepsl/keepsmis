@@ -15,6 +15,7 @@ import com.keeps.manage.dao.ArticleDao;
 import com.keeps.manage.service.ArticleService;
 import com.keeps.manage.utils.Constants;
 import com.keeps.manage.utils.ImageUtil;
+import com.keeps.manage.utils.SysConfigUtil;
 import com.keeps.model.TArticle;
 import com.keeps.tools.exception.CapecException;
 import com.keeps.tools.utils.Assert;
@@ -46,12 +47,12 @@ public class ArticleServiceImpl extends AbstractService implements ArticleServic
 	}
 
 	@Override
-	public TArticle getById(Integer id) {
+	public TArticle getById(Integer id,HttpServletRequest request) {
 		TArticle article = super.get(TArticle.class, id);
 		if (StringUtils.hasText(article.getCoverimage())) {
-			article.setViewcoverimage(Constants.COVER_IMAGE_PATH+File.separator+"cut"+article.getCoverimage());
+			article.setViewcoverimage(SysConfigUtil.getConfig("keeps_upload_path")+"/"+Constants.ARTICLE_COVER_IMAGE_PATH+"/"+"cut"+article.getCoverimage());
 		}
-		return super.get(TArticle.class, id);
+		return article;
 	}
 
 	@Override
@@ -72,18 +73,16 @@ public class ArticleServiceImpl extends AbstractService implements ArticleServic
 		if (article.getId()!=null) {
 			newarticle = super.get(TArticle.class, article.getId());
 		}
-		System.getProperty("user.dir");
-		String path = request.getSession().getServletContext().getRealPath("/").replace("\\", "/");
+		String path = Constants.uploadPath+File.separator+Constants.ARTICLE_COVER_IMAGE_PATH;
 		if (coverfile==null) {
 			//=1（截取第一张图做为封面图）并且原图是空的
 			if (article.getIscoverimage()!=null && article.getIscoverimage()==1 && StringUtils.notText(article.getCoverimage())) {
 				//保存第一张图片  TODO
-				
 				//原图存在，删除原图片
 				if (StringUtils.hasText(newarticle.getCoverimage())) {
-					File file = new File(path+Constants.COVER_IMAGE_PATH, newarticle.getCoverimage());
+					File file = new File(Constants.uploadPath, newarticle.getCoverimage());
 					file.delete();
-					file = new File(path+Constants.COVER_IMAGE_PATH, "cut"+newarticle.getCoverimage());
+					file = new File(Constants.uploadPath, "cut"+newarticle.getCoverimage());
 					file.delete();
 				}
 			}
@@ -93,7 +92,7 @@ public class ArticleServiceImpl extends AbstractService implements ArticleServic
 			if(!CommonUtils.isExistStr(filetype.toLowerCase(), new String[]{"jpg","bmp","gif","png"}))
 				throw new CapecException("不允许上传" + filetype + "格式的文件！");
 			String filename = UUID.randomUUID() + originalFilename.substring(originalFilename.lastIndexOf(StringUtils.Symbol.POINT), originalFilename.length());
-			File targetFile = new File(path+Constants.COVER_IMAGE_PATH, filename);
+			File targetFile = new File(path, filename);
 			if (!targetFile.exists()) {
 				targetFile.mkdirs();
 			}
@@ -104,12 +103,12 @@ public class ArticleServiceImpl extends AbstractService implements ArticleServic
 				throw new CapecException("文件上传失败!");
 			}
 			Assert.isTrue(targetFile.length() / (1024 * 1024) <= Constants.MAX_UPLOAD_IMAGE_SIZE,"上传的图片大小请控制在" + Constants.MAX_UPLOAD_IMAGE_SIZE + "M内!");
-			ImageUtil.createThumbnail(targetFile.getPath(), path + Constants.COVER_IMAGE_PATH + File.separator + "cut"+filename,Constants.MAX_COVER_IMAGE_WIDTH, Constants.MAX_COVER_IMAGE_HEIGHT);
+			ImageUtil.createThumbnail(targetFile.getPath(), path + File.separator + "cut"+filename,Constants.MAX_COVER_IMAGE_WIDTH, Constants.MAX_COVER_IMAGE_HEIGHT);
 			//原图存在，删除原图片
 			if (StringUtils.hasText(newarticle.getCoverimage())) {
-				File file = new File(path+Constants.COVER_IMAGE_PATH, newarticle.getCoverimage());
+				File file = new File(path, newarticle.getCoverimage());
 				file.delete();
-				file = new File(path+Constants.COVER_IMAGE_PATH, "cut"+newarticle.getCoverimage());
+				file = new File(path, "cut"+newarticle.getCoverimage());
 				file.delete();
 			}
 			article.setCoverimage(filename);

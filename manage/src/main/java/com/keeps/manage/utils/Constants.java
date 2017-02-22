@@ -15,8 +15,13 @@ import java.util.Map;
  * 复审人：
  */
 public class Constants {
-	//文章封面图地址
-	public static final String COVER_IMAGE_PATH = "upload/cover/image";
+	//项目路径  系统初始化设置
+	public static String realPath = "";
+	//文件上传路径
+	public static String uploadPath = "";
+	
+	//文章封面上传路径
+	public static String ARTICLE_COVER_IMAGE_PATH = "article/cover/image";
 	//封面图宽高
 	public static final Integer MAX_COVER_IMAGE_WIDTH = 220;
 	public static final Integer MAX_COVER_IMAGE_HEIGHT = 150;
