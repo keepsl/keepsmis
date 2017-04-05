@@ -16,6 +16,7 @@ import com.keeps.manage.service.ArticleService;
 import com.keeps.manage.service.ArticleTypeService;
 import com.keeps.model.TArticleType;
 import com.keeps.tools.utils.JsonPost;
+import com.keeps.tools.utils.page.Page;
 
 /** 
  * <p>Title: ArticleController.java</p>  
@@ -66,7 +67,8 @@ public class ArticleTypeController extends AbstractController {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void doInstancePost(Map map) {
-				map.put("message", articleTypeService.queryList(articleType));
+				Page page = articleTypeService.queryList(articleType);
+				map.put("message", page);
 			}
 		});
 	}
