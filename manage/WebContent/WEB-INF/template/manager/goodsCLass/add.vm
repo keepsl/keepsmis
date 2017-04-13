@@ -1,0 +1,20 @@
+#parse("manager/page_header.vm")
+#parse("manager/goodsCLass/add_edit_inner.vm")
+<script>
+$(function () {
+	$("input[name='ishot']").eq(0).parent(".radio-inline").addClass('on');
+	$("input[name='ishot']").eq(0).attr("checked",true);
+	$("input[name='isrecommend']").eq(0).parent(".radio-inline").addClass('on');
+	$("input[name='isrecommend']").eq(0).attr("checked",true);
+});
+function save(callback){
+	$.post('../goodsClass/save', $("#formid").serialize(), function(json){
+		if(json&&json.success==true){
+			callback(true);
+		}else{
+			Log.e(json.message);
+			callback(false);
+		}
+	},'json');
+}
+</script>

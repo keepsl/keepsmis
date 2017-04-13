@@ -1,0 +1,13 @@
+#parse("manager/page_header.vm")
+#parse("manager/article/add_edit_inner.vm")
+<script>
+$(function () {
+	$("#typeid").val(${typeid}==0?'':${typeid});
+	$("input[name='isshow']").eq(0).parent(".radio-inline").addClass('on');
+	$("input[name='isshow']").eq(0).attr("checked",true);
+	$("input[name='ishot']").eq(0).parent(".radio-inline").addClass('on');
+	$("input[name='ishot']").eq(0).attr("checked",true);
+	$("input[name='isrecommend']").eq(0).parent(".radio-inline").addClass('on');
+	$("input[name='isrecommend']").eq(0).attr("checked",true);
+});
+</script>

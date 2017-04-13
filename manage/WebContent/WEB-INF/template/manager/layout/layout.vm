@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html xmlns=http://www.w3.org/1999/xhtml>
+	<head>
+	 	<meta name="renderer" content="webkit">	
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">	
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">	
+		<meta name="apple-mobile-web-app-capable" content="yes">	
+		<meta name="format-detection" content="telephone=no">	
+		<title>keeps</title>
+		<!-- bootstrap包 -->
+		<link rel="stylesheet" href="${path}/plug/bootstrap-3.3.5/css/bootstrap.min.css" />   
+		
+		<link rel="stylesheet" type="text/css" href="${path}/skins/template/css/common.css" media="all">
+
+		<script type="text/javascript" src="${path}/plug/respond.src.js"></script>
+		<!-- jquery基础包 -->
+		<script type="text/javascript" src="${path}/plug/jquery/jquery.min.js"></script> 
+		<!-- jquery form包 -->
+		<script type="text/javascript" src="${path}/plug/jquery/jquery.form.js"></script>
+		<!-- jquery ui包 -->
+		<script type="text/javascript" src="${path}/plug/jqueryui/jquery-ui.min.js"></script>
+		<link rel="stylesheet" href="${path}/plug/jqueryui/css/jquery-ui.css" />  
+
+		<!-- jqgrid5.1包 -->
+		<link rel="stylesheet" href="${path}/plug/jqGrid/css/ui.jqgrid.css" type="text/css" media="all" />
+		<script type="text/javascript" src="${path}/plug/jqGrid/jquery.jqGrid.js"></script>
+		<script  type="text/javascript" src="${path}/plug/jqGrid/grid.locale-cn.js"></script>
+		
+		<script type="text/javascript" src="${path}/plug/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+		
+		<!-- jquery scroll包,滚动条美化 -->
+		<script type="text/javascript" src="${path}/plug/jquery/jquery.nicescroll.js"></script>
+		<script type="text/javascript" src="${path}/plug/jquery/jquery.slimscroll.min.js"></script>
+		
+		<!-- jquery zTree包 -->
+		<link rel="stylesheet" href="${path}/plug/ztree/css/zTreeStyle.css" type="text/css">
+		<script type="text/javascript" src="${path}/plug/ztree/jquery.ztree.all-3.5.min.js"></script>
+		
+		
+		<script type="text/javascript" src="${path}/plug/layer/layer.js"></script> 
+		<script type="text/javascript" src="${path}/javascript/utils.js"></script> 
+		<script type="text/javascript" src="${path}/javascript/common.js"></script> 
+		<script type="text/javascript" src="${path}/javascript/myJqGrid.js"></script> 
+		
+		<!--My97DatePicker-->
+		<script  type="text/javascript" src="${path}/plug/My97DatePicker/WdatePicker.js"></script>
+
+		<!-- select优化 -->
+		<link href="${path}/plug/select2-4.0.3/css/select2.css" type="text/css" rel="stylesheet" />
+		<script type="text/javascript" src="${path}/plug/select2-4.0.3/js/select2.full.js"></script>
+
+	</head>
+
+	<body>
+		$screen_content
+	</body>
+
+</html>

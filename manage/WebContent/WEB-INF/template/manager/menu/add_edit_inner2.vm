@@ -1,0 +1,59 @@
+#parse("manager/page_header.vm")
+<div class="pd-20">
+<form class="layui-form" id="formid" action="">
+  <input type="hidden" name="id" value="$!{menu.id}"/>
+  <div class="layui-form-item">
+    <label class="layui-form-label">菜单名称</label>
+    <div class="layui-input-inline sw-times2">
+      <input type="text" name="menuname" value="$!{menu.menuname}" lay-verify="menuname" autocomplete="off" placeholder="" class="layui-input" maxLength="50"/>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">上级菜单</label>
+    <div class="layui-input-inline sw-times2">
+      #if ($menu.pid!=0) 
+      <select name="pid" lay-verify="">
+        <option value=""></option>
+        <option value="0">顶级菜单</option>
+        #foreach ($list in $menulist)
+	        <option value="$list.id" #if ($list.id==$menu.pid) selected #end>$list.menuname</option>
+        #end
+      </select>
+      #else
+      <input type="hidden" name="pid" value="0"/>
+      <input type="text" name="pname" value="$!{menu.pname}" lay-verify="pname" autocomplete="off" readonly placeholder="" class="layui-input"/>
+      #end
+    </div>
+    <div class="layui-form-mid layui-word-aux">该菜单所属的上级菜单</div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">菜单连接</label>
+    <div class="layui-input-inline sw-times2">
+      <input type="text" name="url" lay-verify="url"  value="$!{menu.url}"  autocomplete="off" placeholder="" class="layui-input"/>
+    </div>
+    <div class="layui-form-mid layui-word-aux">顶级菜单可为空</div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">排序</label>
+      <div class="layui-input-inline">
+        <input type="number" name="sort" lay-verify="number" value="$!{menu.sort}" autocomplete="off" class="layui-input"  maxLength="10"/>
+      </div>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">样式名</label>
+    <div class="layui-input-inline sw-times2">
+      <input type="text" name="icon" lay-verify="icon"  value="$!{menu.icon}"  autocomplete="off" placeholder="" class="layui-input"/>
+    </div>
+    <div class="layui-form-mid layui-word-aux">菜单左边展示的图片</div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">状态</label>
+    <div class="layui-input-inline sw-times2">
+      #dictselecttag('status','status',$!{menu.status})
+    </div>
+    <div class="layui-form-mid layui-word-aux">该菜单启用/禁用状态</div>
+  </div>
+</form>
+</div>

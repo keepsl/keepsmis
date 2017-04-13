@@ -1,0 +1,250 @@
+<script type="text/javascript" charset="utf-8" src="${path}/plug/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${path}/plug/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="${path}/plug/ueditor/ueditor.parse.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="${path}/plug/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" charset="utf-8" src="${path}/javascript/imageRead.js"></script>
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="form1" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="id" value="$!{article.id}"/>
+						<input type="hidden" name="content"  value=""/>
+						<input type="hidden" name="contenttext"  value=""/>
+						<input type="hidden" name="ispublish"  value=""/>
+						<input type="hidden" name="coverimage"  value="$!{article.coverimage}"/>
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>标题</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="title" name="title" value="$!{article.title}" maxlength="100">
+							</div>
+						</div>
+						<div class="form-group">
+						    <label for="pid" class="col-xs-2 control-label"><em class="text-red">*</em>所属栏目</label>
+						    <div class="col-xs-9">
+							      <select class="form-control" name="typeid" id="typeid">
+							      	<option value="" >请选择栏目。。。</option>
+							        #foreach ($list in $articletypelist)
+							        	#if($articletype.id!=$list.id)
+								    		<option value="$list.id" #if ($list.id==$article.typeid) selected #end>$list.name</option>
+								    	#end
+							        #end
+							      </select>
+							      <p class="help-block">该文章所属栏目</p>
+						    </div>
+						</div>
+						<div class="form-group">
+							<label for="templatetype" class="col-xs-2 control-label">关键字</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="keyword" name="keyword" value="$!{article.keyword}" maxlength="100">
+								<p class="help-block">多个关键字请使用,分隔</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="listtemplateurl" class="col-xs-2 control-label">TAG标签</label>
+							<div class="col-xs-9">
+								<input type="hidden" class="form-control" id="taglist" name="taglist" value="$!{article.taglist}">
+								<div class="form-inline clearfix">
+									<span class="group" style="padding-bottom: 0;">
+									#foreach ($list in $taglist)
+										<a class="gbn gbn-xs gbn-gray tag-link" href="javascript:;">$list.name</a>
+							        #end
+							        </span>
+						        </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="articletemplateurl" class="col-xs-2 control-label">文章摘要</label>
+							<div class="col-xs-9">
+								<textarea class="form-control" rows="6" style="height:100px;" id="abstract_" name="abstract_">$!{article.abstract_}</textarea>
+								<p class="help-block">如不填写，则自动提取文章前200字符</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="listtemplateurl" class="col-xs-2 control-label">来源</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="source" name="source" value="$!{article.source}" maxLength="100">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="sort" class="col-xs-2 control-label">点击量</label>
+							<div class="col-xs-2">
+								<input type="number" class="form-control" id="clicknum" name="clicknum" value="$!{article.clicknum}" min="0" max="99999999999" maxlength="11">
+							</div>
+							<label for="sort" class="col-xs-1 control-label">昵称</label>
+							<div class="col-xs-2">
+								<input type="text" class="form-control" id="publishnickname" name="publishnickname" value="$!{article.publishnickname}" maxLength="11">
+							</div>
+							<label for="sort" class="col-xs-1 control-label">发布时间</label>
+							<div class="col-xs-3">
+								<input type="text" class="form-control Wdate g-Wate-left" id="publishtime" name="publishtime" value="$!date.format('yyyy-MM-dd HH:mm:ss',$!{article.publishtime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 control-label check-label">是否展示</label>
+							<div class="col-xs-2">
+								<div class="J_radioBox ">
+									<label class="radio-inline">
+									  <input type="radio" name="isshow" value="1"> 是
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="isshow" value="2"> 否
+									</label>
+							    </div>
+							</div>
+							<label class="col-xs-1 control-label check-label">是否热门</label>
+							<div class="col-xs-2">
+								<div class="J_radioBox ">
+									<label class="radio-inline">
+									  <input type="radio" name="ishot" value="1"> 是
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="ishot" value="2"> 否
+									</label>
+							    </div>
+							</div>
+							<label class="col-xs-1 control-label check-label">是否推荐</label>
+							<div class="col-xs-2">
+								<div class="J_radioBox ">
+									<label class="radio-inline">
+									  <input type="radio" name="isrecommend" value="1"> 是
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="isrecommend" value="2"> 否
+									</label>
+							    </div>
+							</div>
+						</div>
+						<div class="form-group" id="coverimgdiv" style="">
+				  			<label class="col-xs-2 control-label">封面图片：</label>
+					  		<div class="col-xs-9">
+				  				<div class="g-file-box">
+				  					<input type="file" name="coverfile" id="coverfile" onchange="previewImage({file:this,imgId:'image1',divId:'image1',regex:'.jpg.bmp.gif.png',width:'220',height:'150'});" style="width: 220px; height: 150px; font-size: 20px; filter: alpha(opacity=0); position: absolute; opacity: 0;cursor: pointer;" >
+									<img src="#if(!$!{article.viewcoverimage}) ${path}/skins/template/img/01.png #else ${path}/$!{article.viewcoverimage} #end" id="image1"/>
+									<p class="help-block"><a class="gbn gbn-s gbn-gray" href="javascript:;" onclick="resetFile(this,'image1');document.getElementsByName('coverimage')[0].value='';">删除所选</a>&nbsp;&nbsp;&nbsp;封面图片推荐尺寸为220*150.</p>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="content" class="col-xs-2 control-label"><em class="text-red">*</em>文章内容</label>
+							<div class="col-xs-9">
+								<script id="editor" type="text/plain" style="height:400px;" ></script>
+								<p class="help-block">
+									<div class="checkbox">
+									  <label class="J_checkBox">
+									    <!--<input type="checkbox" name="iscoverimage" value="1">提取文章第一张图片为封面图-->
+									  </label>
+									</div>
+								</p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+	$(function(){
+		$("input[name='isshow']").click(function(){
+		 	$(this).closest("label").siblings("label").removeClass("on");
+		 	if($(this).is(':checked')){
+		 		$(this).closest("label").addClass("on");
+		 	}
+		});
+		$("input[name='ishot']").click(function(){
+		 	$(this).closest("label").siblings("label").removeClass("on");
+		 	if($(this).is(':checked')){
+		 		$(this).closest("label").addClass("on");
+		 	}
+		});
+		$("input[name='isrecommend']").click(function(){
+		 	$(this).closest("label").siblings("label").removeClass("on");
+		 	if($(this).is(':checked')){
+		 		$(this).closest("label").addClass("on");
+		 	}
+		});
+		$(".tag-link").click(function(){
+			var keyword = $("#keyword").val();
+			if($(this).hasClass('gbn-gray')){
+				if(keyword==''){
+					$("#keyword").val($(this).html());
+				}else{
+					$("#keyword").val(keyword+","+$(this).html());
+				}
+				$(this).removeClass('gbn-gray');
+			}else{
+				keyword = keyword.replace($(this).html(), '');
+				var strs = keyword.split(",");
+				keyword = '';
+				for (i=0;i<strs.length ;i++ ){
+					if(strs[i]!=''){
+						keyword += strs[i]+",";
+					}
+				}
+				$("#keyword").val(keyword.substring(0,keyword.length-1));
+				$(this).addClass('gbn-gray');
+			}
+		});
+		window.UEDITOR_HOME_URL="${path}/plug/ueditor/";
+		var ue = UE.getEditor('editor');
+		ue.addListener("ready", function(){
+	    	ue.setContent('$!{article.content}');
+	    });
+	});
+	
+	
+function save(callback){
+	$("input[name='ispublish']").val(2);//已发布
+	post(function (success) {
+    	callback(success);
+    });
+}
+function tempsave(callback){
+	$("input[name='ispublish']").val(1);//未发布
+	post(function (success) {
+    	callback(success);
+    });
+}
+function post(callback){
+	$("input[name='content']").val(UE.getEditor('editor').getContent());
+	$("input[name='contenttext']").val(UE.getEditor('editor').getContentTxt());
+	var taglist = '';
+	$(".tag-link").each(function(i,n){
+		var obj = $(n);
+		if(!obj.hasClass('gbn-gray')){
+			taglist += obj.html()+",";
+		}
+	});
+	taglist = taglist.substring(0,taglist.length-1);
+	$("input[name='taglist']").val(taglist);
+	var options = {
+		url: "../article/saveOrUpdate", 
+		dataType: 'json', 
+		data:$("#form1").serialize(),
+		type: "POST",
+		success: function(json) {
+			callback(json.success);
+			if(json&&json.success==true){
+				var strs = json.message.split("|")
+				$("input[name='id']").val(strs[0]);
+				$("input[name='coverimage']").val(strs[1]);
+			}else{
+				Log.e(json.message);
+			}
+		},error:function(){
+			Log.e('请求错误!');
+			callback(false);
+	   	}
+	};
+	$('#form1').ajaxSubmit(options);
+}
+</script>
