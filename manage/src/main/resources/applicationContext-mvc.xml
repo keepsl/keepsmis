@@ -125,7 +125,7 @@
 				<prop key="resource.loader">file</prop>
 				<prop key="file.resource.loader.class">org.apache.velocity.runtime.resource.loader.FileResourceLoader
 				</prop>
-				<prop key="userdirective">com.keeps.manage.utils.PageDirective,com.keeps.manage.utils.Dictkey2valueDirective,com.keeps.manage.utils.DictSelectDirective</prop>
+				<prop key="userdirective">com.keeps.utils.PageDirective,com.keeps.utils.Dictkey2valueDirective,com.keeps.utils.DictSelectDirective</prop>
 			</props>
 		</property>
 	</bean>

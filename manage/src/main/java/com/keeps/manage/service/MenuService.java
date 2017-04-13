@@ -3,10 +3,10 @@ package com.keeps.manage.service;
 import java.util.List;
 
 import com.keeps.core.service.SoftService;
-import com.keeps.manage.utils.TreeNode;
 import com.keeps.model.TManagerMenu;
 import com.keeps.tools.utils.AsyncTreeNode;
 import com.keeps.tools.utils.page.Page;
+import com.keeps.utils.TreeNode;
 
 /** 
  * <p>Title: MenuDao.java</p>  

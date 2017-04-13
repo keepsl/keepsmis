@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.keeps.core.dao.AbstractDao;
 import com.keeps.manage.dao.MenuDao;
-import com.keeps.manage.utils.TreeNode;
+import com.keeps.utils.TreeNode;
 import com.keeps.model.TManagerMenu;
 import com.keeps.tools.utils.StringUtils;
 import com.keeps.tools.utils.page.Page;

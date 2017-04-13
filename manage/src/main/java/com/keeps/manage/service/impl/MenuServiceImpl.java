@@ -10,7 +10,7 @@ import com.keeps.core.model.utils.IdTypes;
 import com.keeps.core.service.AbstractService;
 import com.keeps.manage.dao.MenuDao;
 import com.keeps.manage.service.MenuService;
-import com.keeps.manage.utils.TreeNode;
+import com.keeps.utils.TreeNode;
 import com.keeps.model.TManagerMenu;
 import com.keeps.tools.exception.CapecException;
 import com.keeps.tools.utils.Assert;

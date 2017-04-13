@@ -3,7 +3,7 @@ package com.keeps.manage.dao;
 import java.util.List;
 
 import com.keeps.core.dao.SoftDao;
-import com.keeps.manage.utils.TreeNode;
+import com.keeps.utils.TreeNode;
 import com.keeps.model.TArticleType;
 import com.keeps.tools.utils.page.Page;
 

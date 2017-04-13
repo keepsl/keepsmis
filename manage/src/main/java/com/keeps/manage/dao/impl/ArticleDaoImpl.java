@@ -58,6 +58,7 @@ public class ArticleDaoImpl extends AbstractDao implements ArticleDao {
 		return super.executeSQL(sql, new String[]{"fieid","ids"}, new Object[]{value,ids});
 	}
 
+	@SuppressWarnings("rawtypes")
 	public Integer getCountByTypeids(String typeids){
 		String sql = "select count(1) from t_article a where isdelete = 1 and a.typeid in (:typeids)";
 		List list = super.getByNameParamSql(sql, new String[]{"typeids"}, new Object[]{typeids});
