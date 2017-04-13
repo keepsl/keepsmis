@@ -63,8 +63,8 @@
             <ul>
             	#foreach ($list in $articleRecommendlist)
 					<li class="item">
-						<a href="http://blog.yzmcms.com/html/php/33.html" target="_blank">
-                  			<img src="http://blog.yzmcms.com/uploads/thumbnail/20160728193135284.jpg" alt="$list.title" />
+						<a href="${path}/page/article/$list.id" target="_blank">
+                  			<img src="$list.coverimage" alt="$list.title" />
                   			<h3>#subcut($list.title,20)</h3>
                   			<p class="muted">#subcut($list.abstract_,42)</p>
                   		</a>
@@ -76,12 +76,12 @@
 	     	#foreach ($list in $articleNewlist)
 				<article class="excerpt">
 		            <div class="focus">
-		              <a href="http://blog.yzmcms.com/html/shenghuo/72.html" class="thumbnail" target="_blank">
-		                <img src="http://blog.yzmcms.com/uploads/thumbnail/20170118094330506.jpg" alt="$list.title" title="$list.title"/></a>
+		              <a href="${path}/page/article/$list.id" class="thumbnail" target="_blank">
+		                <img src="$list.coverimage" alt="$list.title" title="$list.title"/></a>
 		            </div>
 		            <header>
 		              <h2>
-		                <a href="http://blog.yzmcms.com/html/shenghuo/72.html" title="$list.title" target="_blank">#subcut($list.title,20)</a></h2>
+		                <a href="${path}/page/article/$list.id" title="$list.title" target="_blank">#subcut($list.title,20)</a></h2>
 		            </header>
 		            <p class="note">#subcut($list.abstract_,70)</p>
 		            <p>
@@ -113,9 +113,9 @@
           	<ul>
 				#foreach ($list in $articleHotlist)
 					<li>
-						<a href="http://blog.yzmcms.com/html/shenghuo/72.html">
+						<a href="${path}/page/article/$list.id">
 			                <span class="thumbnail">
-			                	<img src="http://blog.yzmcms.com/uploads/thumbnail/20170118094330506.jpg" alt="$list.title" title="$list.title"/>
+			                	<img src="$list.coverimage" alt="$list.title" title="$list.title"/>
 			               	</span>
 			                <span class="text">#subcut($list.title,20)</span>
 			                <span class="muted">$!date.format('yyyy-MM-dd',$list.publishtime)</span>

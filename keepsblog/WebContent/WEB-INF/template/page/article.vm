@@ -1,0 +1,241 @@
+#set($layout="layout/default-manager.vm")
+<section class="container">
+      <div class="content-wrap">
+        <div class="content">
+          <header class="article-header">
+            <h1 class="article-title"><h1>$article.title</h1></h1>
+            <div class="meta">
+              <span class="muted">
+                <i class="icon-user icon12"></i>
+                $!date.format('yyyy-MM-dd HH:mm:ss',$article.publishtime)
+              </span>
+              <time class="muted"><i class="ico icon-time icon12"></i>$!date.format('yyyy-MM-dd HH:mm:ss',$article.publishtime)</time>
+              <span class="muted">
+                <i class="ico icon-eye-open icon12"></i>$article.clicknum次浏览</span>
+            </div>
+          </header>
+          <article class="article-content">
+            <blockquote>
+              <p> <strong>摘要：</strong>#subcut($article.abstract_,72)</p>
+			</blockquote>
+            $!{article.content}
+          </article>
+          <nav class="article-nav">
+            <span class="article-nav-prev">上一篇：已经是第一篇</span>
+            <span class="article-nav-next">下一篇：<a href="http://blog.yzmcms.com/html/mysql/51.html">Mysql常见问题总结</a></span>
+		  </nav>
+          <!--comment-->     
+		  <div id="tabs1" class="tab">
+			<div class="tab-menu clearfix">
+			<a class="current" href="javascript:void(0)">文章评论</a>
+			</div>
+		   <script type="text/javascript" src="http://blog.yzmcms.com/templets/blog/js/jquery.qqFace.js"></script>
+		   <script type="text/javascript" src="http://blog.yzmcms.com/templets/blog/js/js.js"></script>
+           <div class="comment_box">
+			<div class="comment">
+				<div class="com_form">
+				   <form action="http://blog.yzmcms.com/plus/comment.php" method="post"  onsubmit="return check_comm(this)">
+				    <input type="hidden" name="articleid" value="10">
+				    <input type="hidden" name="title" value="关于有同学反映YzmCMS程序运行缓慢的问题">
+				    <input type="hidden" name="url" value="http://blog.yzmcms.com/html/mysql/10.html">
+				    <input type="hidden" name="catid" value="10">
+					<textarea class="textarea" id="content" name="content" placeholder="让评论变得如此简单~"></textarea>
+					<p><input type="submit" class="sub_btn" name="dosubmit" value="提交" style="width:100px"><span class="emotion">表情</span><span class="yzm"><img src="http://blog.yzmcms.com/plus/code.php" onclick="this.src=this.src+'?'" class="codeimg" title="看不清，换一张"><input type="text" name="code" required="required"></span></p>
+				   </form>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div class="comment_list">
+				<div class="comment_list_top">共6条评论</div>
+				<div class="comment_list_body">
+				   <ul>
+				     					     <li>
+							<a class="user_pic" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank"><img src="http://blog.yzmcms.com/member/templets/images/default.gif"></a>
+							<div class="comm_right">
+							  <a class="user_name" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank">YzmCMS官方博客_袁志蒙博客网友</a>
+							  <p>111</p>
+							   <p><span class="comm_time">2017-02-07 14:47:19</span> <a href="javascript:toreply('11375');" class="comm_a">回复</a></p>
+							   
+								<div id="rep_11375" class="none">
+								  <form action="http://blog.yzmcms.com/plus/comment.php" method="post"  onsubmit="return check_rep(this)">
+								    <input type="hidden" name="articleid" value="10">
+									<input type="hidden" name="title" value="关于有同学反映YzmCMS程序运行缓慢的问题">
+									<input type="hidden" name="url" value="http://blog.yzmcms.com/html/mysql/10.html">
+									<input type="hidden" name="catid" value="10">
+									<input type="hidden" name="reply" value="11375">
+									<input type="hidden" name="reply_to" value="YzmCMS官方博客_袁志蒙博客网友">
+								   <textarea name="content" class="textarea textarea2" placeholder="让评论变得如此简单~"></textarea>
+								   <input type="submit" class="sub_btn static" name="dosubmit" value="提交" style="width:100px"><span class="yzm yzm2"><img src="http://blog.yzmcms.com/plus/code.php" onclick="this.src=this.src+'?'" class="codeimg" title="看不清，换一张"><input type="text" name="code" required="required"></span>
+								  </form>
+								</div>
+							</div>
+						 </li>
+					  					     <li>
+							<a class="user_pic" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank"><img src="http://blog.yzmcms.com/member/templets/images/default.gif"></a>
+							<div class="comm_right">
+							  <a class="user_name" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank">YzmCMS官方博客_袁志蒙博客网友</a>
+							  <p><img src="http://blog.yzmcms.com/common/images/face/50.gif"/></p>
+							   <p><span class="comm_time">2017-01-05 21:30:03</span> <a href="javascript:toreply('11358');" class="comm_a">回复</a></p>
+							   
+								<div id="rep_11358" class="none">
+								  <form action="http://blog.yzmcms.com/plus/comment.php" method="post"  onsubmit="return check_rep(this)">
+								    <input type="hidden" name="articleid" value="10">
+									<input type="hidden" name="title" value="关于有同学反映YzmCMS程序运行缓慢的问题">
+									<input type="hidden" name="url" value="http://blog.yzmcms.com/html/mysql/10.html">
+									<input type="hidden" name="catid" value="10">
+									<input type="hidden" name="reply" value="11358">
+									<input type="hidden" name="reply_to" value="YzmCMS官方博客_袁志蒙博客网友">
+								   <textarea name="content" class="textarea textarea2" placeholder="让评论变得如此简单~"></textarea>
+								   <input type="submit" class="sub_btn static" name="dosubmit" value="提交" style="width:100px"><span class="yzm yzm2"><img src="http://blog.yzmcms.com/plus/code.php" onclick="this.src=this.src+'?'" class="codeimg" title="看不清，换一张"><input type="text" name="code" required="required"></span>
+								  </form>
+								</div>
+							</div>
+						 </li>
+					  					     <li>
+							<a class="user_pic" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank"><img src="http://blog.yzmcms.com/member/templets/images/default.gif"></a>
+							<div class="comm_right">
+							  <a class="user_name" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank">YzmCMS官方博客_袁志蒙博客网友</a>
+							  <p>5</p>
+							   <p><span class="comm_time">2016-12-16 15:16:52</span> <a href="javascript:toreply('11330');" class="comm_a">回复</a></p>
+							   
+								<div id="rep_11330" class="none">
+								  <form action="http://blog.yzmcms.com/plus/comment.php" method="post"  onsubmit="return check_rep(this)">
+								    <input type="hidden" name="articleid" value="10">
+									<input type="hidden" name="title" value="关于有同学反映YzmCMS程序运行缓慢的问题">
+									<input type="hidden" name="url" value="http://blog.yzmcms.com/html/mysql/10.html">
+									<input type="hidden" name="catid" value="10">
+									<input type="hidden" name="reply" value="11330">
+									<input type="hidden" name="reply_to" value="YzmCMS官方博客_袁志蒙博客网友">
+								   <textarea name="content" class="textarea textarea2" placeholder="让评论变得如此简单~"></textarea>
+								   <input type="submit" class="sub_btn static" name="dosubmit" value="提交" style="width:100px"><span class="yzm yzm2"><img src="http://blog.yzmcms.com/plus/code.php" onclick="this.src=this.src+'?'" class="codeimg" title="看不清，换一张"><input type="text" name="code" required="required"></span>
+								  </form>
+								</div>
+							</div>
+						 </li>
+					  					     <li>
+							<a class="user_pic" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank"><img src="http://blog.yzmcms.com/member/templets/images/default.gif"></a>
+							<div class="comm_right">
+							  <a class="user_name" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank">YzmCMS官方博客_袁志蒙博客网友</a>
+							  <p>eee</p>
+							   <p><span class="comm_time">2016-12-16 15:16:32</span> <a href="javascript:toreply('11329');" class="comm_a">回复</a></p>
+							   
+								<div id="rep_11329" class="none">
+								  <form action="http://blog.yzmcms.com/plus/comment.php" method="post"  onsubmit="return check_rep(this)">
+								    <input type="hidden" name="articleid" value="10">
+									<input type="hidden" name="title" value="关于有同学反映YzmCMS程序运行缓慢的问题">
+									<input type="hidden" name="url" value="http://blog.yzmcms.com/html/mysql/10.html">
+									<input type="hidden" name="catid" value="10">
+									<input type="hidden" name="reply" value="11329">
+									<input type="hidden" name="reply_to" value="YzmCMS官方博客_袁志蒙博客网友">
+								   <textarea name="content" class="textarea textarea2" placeholder="让评论变得如此简单~"></textarea>
+								   <input type="submit" class="sub_btn static" name="dosubmit" value="提交" style="width:100px"><span class="yzm yzm2"><img src="http://blog.yzmcms.com/plus/code.php" onclick="this.src=this.src+'?'" class="codeimg" title="看不清，换一张"><input type="text" name="code" required="required"></span>
+								  </form>
+								</div>
+							</div>
+						 </li>
+					  					     <li>
+							<a class="user_pic" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank"><img src="http://blog.yzmcms.com/member/templets/images/default.gif"></a>
+							<div class="comm_right">
+							  <a class="user_name" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank">YzmCMS官方博客_袁志蒙博客网友</a>
+							  <p><a href="javascript:void(0);" class="user_name" rel="nofollow">YzmCMS官方博客_袁志蒙博客网友</a> 回复 <a href="javascript:void(0);" class="user_name" rel="nofollow">博客网友</a> ：我也这么觉得</p>
+							   <p><span class="comm_time">2016-12-14 14:47:28</span> <a href="javascript:toreply('11326');" class="comm_a">回复</a></p>
+							   
+								<div id="rep_11326" class="none">
+								  <form action="http://blog.yzmcms.com/plus/comment.php" method="post"  onsubmit="return check_rep(this)">
+								    <input type="hidden" name="articleid" value="10">
+									<input type="hidden" name="title" value="关于有同学反映YzmCMS程序运行缓慢的问题">
+									<input type="hidden" name="url" value="http://blog.yzmcms.com/html/mysql/10.html">
+									<input type="hidden" name="catid" value="10">
+									<input type="hidden" name="reply" value="11326">
+									<input type="hidden" name="reply_to" value="YzmCMS官方博客_袁志蒙博客网友">
+								   <textarea name="content" class="textarea textarea2" placeholder="让评论变得如此简单~"></textarea>
+								   <input type="submit" class="sub_btn static" name="dosubmit" value="提交" style="width:100px"><span class="yzm yzm2"><img src="http://blog.yzmcms.com/plus/code.php" onclick="this.src=this.src+'?'" class="codeimg" title="看不清，换一张"><input type="text" name="code" required="required"></span>
+								  </form>
+								</div>
+							</div>
+						 </li>
+					  					     <li>
+							<a class="user_pic" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank"><img src="http://blog.yzmcms.com/member/templets/images/default.gif"></a>
+							<div class="comm_right">
+							  <a class="user_name" href="http://blog.yzmcms.com/member/myhome.php?userid=0" target="blank">YzmCMS官方博客_袁志蒙博客网友</a>
+							  <p>站长，你是笨蛋</p>
+							   <p><span class="comm_time">2016-09-18 13:06:32</span> <a href="javascript:toreply('11160');" class="comm_a">回复</a></p>
+							   
+								<div id="rep_11160" class="none">
+								  <form action="http://blog.yzmcms.com/plus/comment.php" method="post"  onsubmit="return check_rep(this)">
+								    <input type="hidden" name="articleid" value="10">
+									<input type="hidden" name="title" value="关于有同学反映YzmCMS程序运行缓慢的问题">
+									<input type="hidden" name="url" value="http://blog.yzmcms.com/html/mysql/10.html">
+									<input type="hidden" name="catid" value="10">
+									<input type="hidden" name="reply" value="11160">
+									<input type="hidden" name="reply_to" value="YzmCMS官方博客_袁志蒙博客网友">
+								   <textarea name="content" class="textarea textarea2" placeholder="让评论变得如此简单~"></textarea>
+								   <input type="submit" class="sub_btn static" name="dosubmit" value="提交" style="width:100px"><span class="yzm yzm2"><img src="http://blog.yzmcms.com/plus/code.php" onclick="this.src=this.src+'?'" class="codeimg" title="看不清，换一张"><input type="text" name="code" required="required"></span>
+								  </form>
+								</div>
+							</div>
+						 </li>
+					  				   </ul>
+				</div>
+			</div>		   
+		   </div>
+          </div>			
+		  <!--comment:end-->
+      </div>
+      </div>
+      <aside class="sidebar">
+        <div class="widget d_postlist">
+          <h3 class="widget_tit">推荐文章</h3>
+          <ul>
+			<li><a href="http://blog.yzmcms.com/html/mysql/69.html">
+                <span class="thumbnail">
+                  <img src="http://blog.yzmcms.com/uploads/thumbnail/20160827130034852.jpg" alt="mysql的set sql_mode作用" title="mysql的set sql_mode作用"/></span>
+                <span class="text">mysql的set sql_mode作用</span>
+                <span class="muted">2017-01-05</span>
+                <span class="muted">
+                  <span class="ds-thread-count" data-replace="1">49次阅读</span>
+                </span>
+              </a></li><li><a href="http://blog.yzmcms.com/html/mysql/60.html">
+                <span class="thumbnail">
+                  <img src="http://blog.yzmcms.com/uploads/20160921/14744390378361.jpg" alt="Mysql索引会失效的几种情况总结" title="Mysql索引会失效的几种情况总结"/></span>
+                <span class="text">Mysql索引会失效的几种情况总结</span>
+                <span class="muted">2016-09-21</span>
+                <span class="muted">
+                  <span class="ds-thread-count" data-replace="1">179次阅读</span>
+                </span>
+              </a></li><li><a href="http://blog.yzmcms.com/html/mysql/57.html">
+                <span class="thumbnail">
+                  <img src="http://blog.yzmcms.com/uploads/thumbnail/20160913102406185.jpg" alt="MySQL数据类型总结" title="MySQL数据类型总结"/></span>
+                <span class="text">MySQL数据类型总结</span>
+                <span class="muted">2016-09-13</span>
+                <span class="muted">
+                  <span class="ds-thread-count" data-replace="1">102次阅读</span>
+                </span>
+              </a></li><li><a href="http://blog.yzmcms.com/html/mysql/56.html">
+                <span class="thumbnail">
+                  <img src="http://blog.yzmcms.com/uploads/thumbnail/20160909140822804.jpg" alt="PDO Statement::bindParam 的一个陷阱" title="PDO Statement::bindParam 的一个陷阱"/></span>
+                <span class="text">PDO Statement::bindParam 的一个陷阱</span>
+                <span class="muted">2016-09-09</span>
+                <span class="muted">
+                  <span class="ds-thread-count" data-replace="1">76次阅读</span>
+                </span>
+              </a></li><li><a href="http://blog.yzmcms.com/html/mysql/51.html">
+                <span class="thumbnail">
+                  <img src="http://blog.yzmcms.com/uploads/thumbnail/20160827130034852.jpg" alt="Mysql常见问题总结" title="Mysql常见问题总结"/></span>
+                <span class="text">Mysql常见问题总结</span>
+                <span class="muted">2016-08-27</span>
+                <span class="muted">
+                  <span class="ds-thread-count" data-replace="1">67次阅读</span>
+                </span>
+              </a></li><li><a href="http://blog.yzmcms.com/html/mysql/10.html">
+                <span class="thumbnail">
+                  <img src="http://blog.yzmcms.com/uploads/thumbnail/20160707141443469.jpg" alt="关于有同学反映YzmCMS程序运行缓慢的问题" title="关于有同学反映YzmCMS程序运行缓慢的问题"/></span>
+                <span class="text">关于有同学反映YzmCMS程序运行缓慢的问题</span>
+                <span class="muted">2016-07-07</span>
+                <span class="muted">
+                  <span class="ds-thread-count" data-replace="1">416次阅读</span>
+                </span>
+              </a></li>          </ul>
+        </div>		
+      </aside>
+    </section>

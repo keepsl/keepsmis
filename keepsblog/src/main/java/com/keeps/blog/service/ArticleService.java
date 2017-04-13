@@ -2,6 +2,8 @@ package com.keeps.blog.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.keeps.core.service.SoftService;
 import com.keeps.model.TArticle;
 
@@ -18,9 +20,11 @@ import com.keeps.model.TArticle;
  */
 public interface ArticleService extends SoftService{
 	  
-	  public List<TArticle> queryTopRecommendList();
+	public List<TArticle> queryTopRecommendList(HttpServletRequest request);
 	  
-	  public List<TArticle> queryTopNewList();
+	public List<TArticle> queryTopNewList(HttpServletRequest request);
 	  
-	  public List<TArticle> queryTopHotList();
+	public List<TArticle> queryTopHotList(HttpServletRequest request);
+	  
+	public TArticle getById(Integer id,HttpServletRequest request);
 }

@@ -14,16 +14,14 @@
 	</div>
 </header>
 <script type="text/javascript">
-$(function () {
-	$.post('../page/menu', null, function(json){
-		if(json&&json.success==true){
-			var menudata = json.message.children;
-			loadMenuChild(menudata,$(".nav"),0);
-		}else{
-			
-		}
-	},'json');
-});
+$.post('../page/menu', null, function(json){
+	if(json&&json.success==true){
+		var menudata = json.message.children;
+		loadMenuChild(menudata,$(".nav"),0);
+	}else{
+		
+	}
+},'json');
 function loadMenuChild(menudata,parent,ispid){
 	$.each(menudata,function(n,value){
         var li = '';

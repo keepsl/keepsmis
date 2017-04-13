@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,7 +16,6 @@ import com.keeps.blog.service.ArticleService;
 import com.keeps.blog.service.ArticleTypeService;
 import com.keeps.blog.service.TagService;
 import com.keeps.core.controller.AbstractController;
-import com.keeps.model.TArticleType;
 import com.keeps.tools.utils.JsonPost;
 
 /** 
@@ -44,12 +44,27 @@ public class IndexPageCntroller extends AbstractController {
 	public ModelAndView index(ModelAndView view,HttpServletRequest request, HttpServletResponse response) {
 		view.setViewName("page/index");
 		view.addObject("taghotlist", tagService.queryTopHotList());
-		view.addObject("articleHotlist",articleService.queryTopHotList());
-		view.addObject("articleNewlist",articleService.queryTopNewList());
-		view.addObject("articleRecommendlist",articleService.queryTopRecommendList());
+		view.addObject("articleHotlist",articleService.queryTopHotList(request));
+		view.addObject("articleNewlist",articleService.queryTopNewList(request));
+		view.addObject("articleRecommendlist",articleService.queryTopRecommendList(request));
 		return view;
 	}
 	
+	/**
+	  * @Title:			article 
+	  * @Description:	文章页面
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年2月13日
+	 */
+	@RequestMapping("article/{id}")
+	public ModelAndView article(ModelAndView view,HttpServletRequest request, HttpServletResponse response,@PathVariable("id")Integer id) {
+		view.setViewName("page/article");
+		view.addObject("article", articleService.getById(id,request));
+		return view;
+	}
+ 
 	/**
 	  * @Title:			getArticleTypeTree 
 	  * @Description:	获得栏目
