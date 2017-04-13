@@ -81,14 +81,14 @@ function ajax_set_fieid(value,id,url){
 		query();
 	});
 }
-function deleteMenu(){
+function delete_obj(){
 	var ids = myGrid.bindGridDelEvent('../article/delete',function (success) {
 		if(success){
 		}
 	});
 }
 
-function addMenu(){
+function add_obj(){
 	var saveSuccess = function (iframe,callback) {
         iframe.save(function (success) {
         	if(success){
@@ -104,7 +104,7 @@ function addMenu(){
     }
 	openArticleWin('../article/add?typeid='+$("input[name='typeid']").val(),'发布文章',980,600,saveSuccess,tempSaveSuccess);
 }
-function editMenu(){
+function edit_obj(){
 	var id = myGrid.selectedId(1);
 	if(id!=null){
 		var saveSuccess = function (iframe,callback) {

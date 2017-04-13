@@ -43,7 +43,8 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 
 	@Override
 	public Page queryList(SzlGoods goods) {
-		return goodsDao.queryList(goods);
+		Page page = goodsDao.queryList(goods);
+		return page;
 	}
 
 	@Override

@@ -25,7 +25,11 @@
 							      <select class="form-control" name="typeid" id="typeid">
 							      		<option value="" >请选择栏目。。。</option>
 							        #foreach ($list in $articletypelist)
-								   		<option value="$list.id" #if ($list.id==$tag.typeid) selected #end>$list.name</option>
+							        	#if($typeid)
+								       		<option value="$list.id" #if ($list.id==$typeid) selected #end>$list.name</option>
+								        #else
+									    	<option value="$list.id" #if ($list.id==$tag.typeid) selected #end>$list.name</option>
+								        #end
 							        #end
 							      </select>
 							      <p class="help-block">该标签所绑定的栏目</p>

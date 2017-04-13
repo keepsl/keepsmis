@@ -16,9 +16,9 @@
                 		<div class="col-xs-12">
 					  		<div class="col-container clearfix">
 					  			<div class="button-inline g-fl">
-							  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="addMenu();"><i></i>新增</a>
-			                        <a class="gbn gbn-edit" id="btn_modify" href="javascript:;" onclick="editMenu();"><i></i>编辑</a>
-			                        <a class="gbn gbn-del" id="btn_del" href="javascript:;" onclick="deleteMenu();"><i></i>删除</a>
+							  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="add_obj();"><i></i>新增</a>
+			                        <a class="gbn gbn-edit" id="btn_modify" href="javascript:;" onclick="edit_obj();"><i></i>编辑</a>
+			                        <a class="gbn gbn-del" id="btn_del" href="javascript:;" onclick="delete_obj();"><i></i>删除</a>
 							    </div>
 					  			<form class="form-inline g-fr" role="form" id="form1" onsubmit="return false;">
 					  				<input type="hidden" name="typeid" value="0"/>

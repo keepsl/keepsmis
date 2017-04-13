@@ -78,7 +78,7 @@ function query(){
 		myGrid.query(param);
 	}
 }
-function deleteMenu(){
+function delete_obj(){
 	var ids = myGrid.bindGridDelEvent('../articletype/delete',function (success) {
 		if(success){
 			initTree();
@@ -86,7 +86,7 @@ function deleteMenu(){
 	});
 }
 
-function addMenu(){
+function add_obj(){
 	var onSuccess = function (iframe,callback) {
         iframe.save(function (success) {
         	if(success){
@@ -99,7 +99,7 @@ function addMenu(){
 	openWin('../articletype/add','新增文章栏目',700,500,'',onSuccess);
 }
 
-function editMenu(){
+function edit_obj(){
 	var ids = myGrid.selectedId(1);
 	if(ids!=null){
 		var onSuccess = function (iframe,callback) {

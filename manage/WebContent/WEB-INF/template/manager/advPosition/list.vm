@@ -18,12 +18,12 @@
 					  			<div class="button-inline g-fl">
 							  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="add_obj();"><i></i>新增</a>
 			                        <a class="gbn gbn-edit" id="btn_modify" href="javascript:;" onclick="edit_obj();"><i></i>编辑</a>
-			                        <a class="gbn gbn-del" id="btn_del" href="javascript:;" onclick="delete_menu();"><i></i>删除</a>
+			                        <a class="gbn gbn-del" id="btn_del" href="javascript:;" onclick="delete_obj();"><i></i>删除</a>
 							    </div>
 					  			<form class="form-inline g-fr" role="form" id="form1" onsubmit="return false;">
 					  				<input type="hidden" name="typeid" value="0"/>
 			                        <span class="group">
-			                            <label>标签名称:</label>
+			                            <label>广告位名称:</label>
 			                            <input type="text" class="form-control" id="tagname" name="tagname">
 			                        </span>
 			                        <span class="group">
@@ -46,4 +46,4 @@
          </div>
 	</div>
 </div>
-<script type="text/javascript" src="${path}/javascript/szl/taglist.js?date=201701220001"></script>
+<script type="text/javascript" src="${path}/javascript/advPositionlist.js?date=201701220002"></script>

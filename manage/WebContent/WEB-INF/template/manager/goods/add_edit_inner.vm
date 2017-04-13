@@ -18,7 +18,7 @@
 						<input type="hidden" name="goodsimage"  value="$!{goods.goodsimage}"/>
 						<input type="hidden" name="qrcodepath"  value="$!{goods.qrcodepath}"/>
 						<div class="form-group">
-							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>商品名称</label>
+							<label for="goodsname" class="col-xs-2 control-label"><em class="text-red">*</em>商品名称</label>
 							<div class="col-xs-9">
 								<input type="text" class="form-control" id="goodsname" name="goodsname" value="$!{goods.goodsname}" maxlength="500">
 							</div>
@@ -39,7 +39,7 @@
 							      <p class="help-block">该商品所属分类</p>
 						    </div>
 						</div>
-						<div class="form-group" id="coverimgdiv" style="">
+						<div class="form-group">
 				  			<label class="col-xs-2 control-label"><em class="text-red">*</em>商品图片：</label>
 					  		<div class="col-xs-3">
 				  				<div class="g-file-box">
@@ -59,21 +59,21 @@
 						</div>
 						
 						<div class="form-group">
-							<label for="goodssource" class="col-xs-2 control-label"><em class="text-red">*</em>商品来源</label>
+							<label for="goodssource" class="col-xs-2 control-label"><em class="text-red">*</em>商品来源：</label>
 							<div class="col-xs-9">
 								#dictselecttag('goodssource','dic_goods_source',$!{goods.goodssource})
 							</div>
 						</div>
 						
 						<div class="form-group">
-							<label for="templatetype" class="col-xs-2 control-label">TAG标签：</label>
+							<label for="taglist" class="col-xs-2 control-label">TAG标签：</label>
 							<div class="col-xs-9">
 								<input type="text" class="form-control" id="taglist" name="taglist" value="$!{goods.taglist}" maxlength="500">
 								<p class="help-block">多个关键字请使用,分隔</p>
 							</div>
 						</div>
 						<!--<div class="form-group">
-							<label for="listtemplateurl" class="col-xs-2 control-label">TAG标签</label>
+							<label for="tag" class="col-xs-2 control-label">TAG标签</label>
 							<div class="col-xs-9">
 								<div class="form-inline clearfix">
 									<span class="group" style="padding-bottom: 0;">
@@ -85,25 +85,25 @@
 							</div>
 						</div>-->
 						<div class="form-group">
-							<label for="sort" class="col-xs-2 control-label"><em class="text-red">*</em>开始时间</label>
+							<label for="starttime" class="col-xs-2 control-label"><em class="text-red">*</em>开始时间：</label>
 							<div class="col-xs-3">
 								<input type="text" class="form-control Wdate g-Wate-left" id="starttime" name="starttime" value="$!date.format('yyyy-MM-dd HH:mm:ss',$!{goods.starttime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});">
 							</div>
-							<label for="sort" class="col-xs-2 control-label">结束时间</label>
+							<label for="endtime" class="col-xs-2 control-label">结束时间</label>
 							<div class="col-xs-3">
 								<input type="text" class="form-control Wdate g-Wate-left" id="endtime" name="endtime" value="$!date.format('yyyy-MM-dd HH:mm:ss',$!{goods.endtime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="sort" class="col-xs-2 control-label"><em class="text-red">*</em>现价：</label>
+							<label for="currentprice" class="col-xs-2 control-label"><em class="text-red">*</em>现价：</label>
 							<div class="col-xs-2">
 								<input type="number" class="form-control" id="currentprice" name="currentprice" value="$!{goods.currentprice}" min="0" max="99999999999" maxlength="11">
 							</div>
-							<label for="sort" class="col-xs-1 control-label">优惠券：</label>
+							<label for="couponprice" class="col-xs-1 control-label">优惠券：</label>
 							<div class="col-xs-2">
 								<input type="number" class="form-control" id="couponprice" name="couponprice" value="$!{goods.couponprice}" min="0" max="99999999999" maxlength="11">
 							</div>
-							<label for="sort" class="col-xs-1 control-label">用券后：</label>
+							<label for="couponafterprice" class="col-xs-1 control-label">用券后：</label>
 							<div class="col-xs-2">
 								<input type="number" class="form-control" readonly id="couponafterprice" name="couponafterprice" value="$!{goods.couponafterprice}" min="0" max="99999999999" maxlength="11">
 							</div>
@@ -113,7 +113,7 @@
 							<div class="col-xs-2">
 								<input type="number" class="form-control" id="tocouponnum" name="tocouponnum" value="$!{goods.tocouponnum}" min="0" max="99999999999" maxlength="11">
 							</div>
-							<label class="col-xs-1 control-label control-label">热门：</label>
+							<label for="ishot" class="col-xs-1 control-label">热门：</label>
 							<div class="col-xs-2">
 								<div class="J_radioBox" style="padding-top:7px">
 									<label class="radio-inline">
@@ -124,7 +124,7 @@
 									</label>
 							    </div>
 							</div>
-							<label class="col-xs-1 control-label control-label">推荐：</label>
+							<label for="isrecommend" class="col-xs-1 control-label">推荐：</label>
 							<div class="col-xs-2">
 								<div class="J_radioBox" style="padding-top:7px">
 									<label class="radio-inline">
@@ -137,28 +137,28 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="articletemplateurl" class="col-xs-2 control-label"><em class="text-red">*</em>推广长连接：</label>
+							<label for="tolongurl" class="col-xs-2 control-label"><em class="text-red">*</em>推广长连接：</label>
 							<div class="col-xs-9">
 								<textarea class="form-control" rows="6" style="height:100px;" id="tolongurl" name="tolongurl">$!{goods.tolongurl}</textarea>
 								<p class="help-block">推广连接，务必填写正确。</p>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="articletemplateurl" class="col-xs-2 control-label">优惠券连接：</label>
+							<label for="tocouponsurl" class="col-xs-2 control-label">优惠券连接：</label>
 							<div class="col-xs-9">
 								<textarea class="form-control" rows="6" style="height:100px;" id="tocouponsurl" name="tocouponsurl">$!{goods.tocouponsurl}</textarea>
 								<p class="help-block">优惠券连接，务必填写正确。</p>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="articletemplateurl" class="col-xs-2 control-label">商品路径：</label>
+							<label for="origurl" class="col-xs-2 control-label">商品路径：</label>
 							<div class="col-xs-9">
 								<textarea class="form-control" rows="6" style="height:100px;" id="origurl" name="origurl">$!{goods.origurl}</textarea>
 								<p class="help-block">该商品在淘宝/天猫/京东上的原始连接，可为空</p>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="articletemplateurl" class="col-xs-2 control-label">商品描述：</label>
+							<label for="description" class="col-xs-2 control-label">商品描述：</label>
 							<div class="col-xs-9">
 								<textarea class="form-control" rows="6" style="height:100px;" id="description" name="description">$!{goods.description}</textarea>
 								<!--<p class="help-block"></p>-->

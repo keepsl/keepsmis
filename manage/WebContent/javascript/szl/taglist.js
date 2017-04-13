@@ -41,14 +41,14 @@ function query(){
 		myGrid.query(param);
 	}
 }
-function deleteMenu(){
+function delete_obj(){
 	var ids = myGrid.bindGridDelEvent('../szltag/delete',function (success) {
 		if(success){
 		}
 	});
 }
 
-function addMenu(){
+function add_obj(){
 	var onSuccess = function (iframe,callback) {
         iframe.save(function (success) {
         	if(success){
@@ -60,7 +60,7 @@ function addMenu(){
 	openWin('../szltag/add?typeid='+$("input[name='typeid']").val(),'新增标签',550,350,'',onSuccess);
 }
 
-function editMenu(){
+function edit_obj(){
 	var id = myGrid.selectedId(1);
 	if(id!=null){
 		var onSuccess = function (iframe,callback) {

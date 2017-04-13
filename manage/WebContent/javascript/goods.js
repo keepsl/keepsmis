@@ -102,7 +102,7 @@ function query(){
 		myGrid.query(param);
 	}
 }
-function deleteMenu(){
+function delete_obj(){
 	var ids = myGrid.bindGridDelEvent('../goods/delete',function (success) {
 		if(success){
 			initTree();
@@ -110,7 +110,7 @@ function deleteMenu(){
 	});
 }
 
-function addMenu(){
+function add_obj(){
 	var onSuccess = function (iframe,callback) {
         iframe.saveOrUpdate(function (success) {
         	if(success){
@@ -123,7 +123,7 @@ function addMenu(){
 	openWin('../goods/add?classid='+$("input[name='classid']").val(),'新增商品分类',980,600,'',onSuccess);
 }
 
-function editMenu(){
+function edit_obj(){
 	var ids = myGrid.selectedId(1);
 	if(ids!=null){
 		var onSuccess = function (iframe,callback) {
