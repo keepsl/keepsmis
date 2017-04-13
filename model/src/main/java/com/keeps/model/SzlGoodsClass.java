@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.keeps.core.model.AbstractModel;
 import com.keeps.core.model.plus.ModelPlusSchool;
@@ -139,7 +137,6 @@ public class SzlGoodsClass  extends AbstractModel implements ModelPlusSchool{
 		this.classsettle = classsettle;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "createtime", nullable = false, length = 19)
 	public Date getCreatetime() {
 		return this.createtime;
@@ -149,7 +146,6 @@ public class SzlGoodsClass  extends AbstractModel implements ModelPlusSchool{
 		this.createtime = createtime;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updatetime", nullable = false, length = 19)
 	public Date getUpdatetime() {
 		return this.updatetime;

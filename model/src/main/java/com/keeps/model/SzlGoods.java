@@ -10,8 +10,6 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import com.keeps.core.model.AbstractModel;
@@ -25,69 +23,103 @@ import com.keeps.core.model.plus.ModelPlusSchool;
 public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 
 	private Integer id;
+	private Integer pclassid;
 	private Integer classid;
 	private String goodsname;
+	private String origurl;
+	private String toshorturl;
+	private String  tolongurl;
+	private String qrcodepath;
+	private String taokouling;
+	private String tocouponsurl;
 	private String goodsimage;
 	private Float originalprice;
 	private Float currentprice;
 	private Float couponafterprice;
 	private Float couponprice;
-	private Date starttime;
-	private Date endtime;
+	private String starttime;
+	private String endtime;
+	private Integer realtocouponnum;
 	private Integer tocouponnum;
-	private String goodstag;
+	private String taglistid;
+	private String taglistname;
 	private Integer goodssource;
 	private Integer ishot;
 	private Integer isrecommend;
 	private Integer isdelete;
+	private String description;
 	private Date createtime;
 	private Date updatetime;
 	private Integer createperson;
 
-	private String viewgoodsImage;
-	private String className;
+	private String viewgoodsimage;
+	private String viewqrcodepath;
+	private String classname;
 
 	public SzlGoods() {
 	}
 
-	public SzlGoods(Integer id, Integer classid, String goodsname, String goodsimage, Float currentprice,
-			Float couponafterprice, Float couponprice, Date starttime, Date endtime, Integer tocouponnum, String goodstag,
-			Integer goodssource, Date createtime, Date updatetime, Integer createperson) {
+	public SzlGoods(Integer id, Integer pclassid, Integer classid, String goodsname, String origurl, String toshorturl, String tolongurl, String qrcodepath, 
+			String taokouling, String tocouponsurl, String goodsimage, Float currentprice,
+			Float couponafterprice, Float couponprice, String starttime, String endtime, Integer realtocouponnum,
+			Integer tocouponnum, String taglistid, String taglistname,
+			Integer goodssource, String description, Date createtime, Date updatetime, Integer createperson) {
 		this.id = id;
+		this.pclassid = pclassid;
 		this.classid = classid;
 		this.goodsname = goodsname;
+		this.origurl = origurl;
+		this.toshorturl = toshorturl;
+		this.tolongurl = tolongurl;
+		this.qrcodepath = qrcodepath;
+		this.taokouling = taokouling;
+		this.tocouponsurl = tocouponsurl;
 		this.goodsimage = goodsimage;
 		this.currentprice = currentprice;
 		this.couponafterprice = couponafterprice;
 		this.couponprice = couponprice;
 		this.starttime = starttime;
 		this.endtime = endtime;
+		this.realtocouponnum = realtocouponnum;
 		this.tocouponnum = tocouponnum;
-		this.goodstag = goodstag;
+		this.taglistid = taglistid;
+		this.taglistname = taglistname;
 		this.goodssource = goodssource;
+		this.description = description;
 		this.createtime = createtime;
 		this.updatetime = updatetime;
 		this.createperson = createperson;
 	}
-	public SzlGoods(Integer id, Integer classid, String goodsname, String goodsimage, Float originalprice,
-			Float currentprice, Float couponafterprice, Float couponprice, Date starttime, Date endtime, Integer tocouponnum,
-			String goodstag, Integer goodssource, Integer ishot, Integer isrecommend, Integer isdelete, Date createtime,
+	public SzlGoods(Integer id, Integer pclassid, Integer classid, String goodsname, String origurl, String toshorturl, String tolongurl, String qrcodepath, 
+			String taokouling, String tocouponsurl, String goodsimage, Float originalprice,
+			Float currentprice, Float couponafterprice, Float couponprice, String starttime, String endtime, Integer realtocouponnum, Integer tocouponnum,
+			String taglistid, String taglistname, Integer goodssource, Integer ishot, Integer isrecommend, Integer isdelete, String description, Date createtime,
 			Date updatetime, Integer createperson) {
 		this.id = id;
+		this.pclassid = pclassid;
 		this.classid = classid;
 		this.goodsname = goodsname;
+		this.origurl = origurl;
+		this.toshorturl = toshorturl;
+		this.tolongurl = tolongurl;
+		this.qrcodepath = qrcodepath;
+		this.taokouling = taokouling;
+		this.tocouponsurl = tocouponsurl;
 		this.goodsimage = goodsimage;
 		this.originalprice = originalprice;
 		this.currentprice = currentprice;
 		this.couponafterprice = couponafterprice;
 		this.starttime = starttime;
 		this.endtime = endtime;
+		this.realtocouponnum = realtocouponnum;
 		this.tocouponnum = tocouponnum;
-		this.goodstag = goodstag;
+		this.taglistid = taglistid;
+		this.taglistname = taglistname;
 		this.goodssource = goodssource;
 		this.ishot = ishot;
 		this.isrecommend = isrecommend;
 		this.isdelete = isdelete;
+		this.description = description;
 		this.createtime = createtime;
 		this.updatetime = updatetime;
 		this.createperson = createperson;
@@ -102,6 +134,15 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	@Column(name = "pclassid", nullable = false)
+	public Integer getPclassid() {
+		return pclassid;
+	}
+
+	public void setPclassid(Integer pclassid) {
+		this.pclassid = pclassid;
 	}
 
 	@Column(name = "classid", nullable = false)
@@ -122,6 +163,60 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 		this.goodsname = goodsname;
 	}
 
+	@Column(name = "origurl")
+	public String getOrigurl() {
+		return origurl;
+	}
+
+	public void setOrigurl(String origurl) {
+		this.origurl = origurl;
+	}
+
+	@Column(name = "toshorturl")
+	public String getToshorturl() {
+		return toshorturl;
+	}
+
+	public void setToshorturl(String toshorturl) {
+		this.toshorturl = toshorturl;
+	}
+
+	@Column(name = "tolongurl", nullable = false)
+	public String getTolongurl() {
+		return tolongurl;
+	}
+
+	public void setTolongurl(String tolongurl) {
+		this.tolongurl = tolongurl;
+	}
+
+	@Column(name = "qrcodepath")
+	public String getQrcodepath() {
+		return qrcodepath;
+	}
+
+	public void setQrcodepath(String qrcodepath) {
+		this.qrcodepath = qrcodepath;
+	}
+
+	@Column(name = "taokouling")
+	public String getTaokouling() {
+		return taokouling;
+	}
+
+	public void setTaokouling(String taokouling) {
+		this.taokouling = taokouling;
+	}
+
+	@Column(name = "tocouponsurl")
+	public String getTocouponsurl() {
+		return tocouponsurl;
+	}
+
+	public void setTocouponsurl(String tocouponsurl) {
+		this.tocouponsurl = tocouponsurl;
+	}
+
 	@Column(name = "goodsimage", nullable = false, length = 40)
 	public String getGoodsimage() {
 		return this.goodsimage;
@@ -131,7 +226,7 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 		this.goodsimage = goodsimage;
 	}
 
-	@Column(name = "originalprice", precision = 10, scale = 0)
+	@Column(name = "originalprice")
 	public Float getOriginalprice() {
 		return this.originalprice;
 	}
@@ -140,7 +235,7 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 		this.originalprice = originalprice;
 	}
 
-	@Column(name = "currentprice", nullable = false, precision = 10, scale = 0)
+	@Column(name = "currentprice", nullable = false)
 	public Float getCurrentprice() {
 		return this.currentprice;
 	}
@@ -149,7 +244,7 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 		this.currentprice = currentprice;
 	}
 
-	@Column(name = "couponafterprice", nullable = false, precision = 10, scale = 0)
+	@Column(name = "couponafterprice", nullable = false)
 	public Float getCouponafterprice() {
 		return this.couponafterprice;
 	}
@@ -158,7 +253,7 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 		this.couponafterprice = couponafterprice;
 	}
 
-	@Column(name = "couponprice", nullable = false, precision = 10, scale = 0)
+	@Column(name = "couponprice", nullable = false)
 	public Float getCouponprice() {
 		return this.couponprice;
 	}
@@ -167,24 +262,31 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 		this.couponprice = couponprice;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "starttime", nullable = false, length = 19)
-	public Date getStarttime() {
+	public String getStarttime() {
 		return this.starttime;
 	}
 
-	public void setStarttime(Date starttime) {
+	public void setStarttime(String starttime) {
 		this.starttime = starttime;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "endtime", nullable = false, length = 19)
-	public Date getEndtime() {
+	public String getEndtime() {
 		return this.endtime;
 	}
 
-	public void setEndtime(Date endtime) {
+	public void setEndtime(String endtime) {
 		this.endtime = endtime;
+	}
+
+	@Column(name = "realtocouponnum", nullable = false)
+	public Integer getRealtocouponnum() {
+		return realtocouponnum;
+	}
+
+	public void setRealtocouponnum(Integer realtocouponnum) {
+		this.realtocouponnum = realtocouponnum;
 	}
 
 	@Column(name = "tocouponnum", nullable = false)
@@ -196,15 +298,25 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 		this.tocouponnum = tocouponnum;
 	}
 
-	@Column(name = "goodstag", nullable = false)
-	public String getGoodstag() {
-		return this.goodstag;
+	@Column(name = "taglistid")
+	public String getTaglistid() {
+		return taglistid;
 	}
 
-	public void setGoodstag(String goodstag) {
-		this.goodstag = goodstag;
+	public void setTaglistid(String taglistid) {
+		this.taglistid = taglistid;
 	}
 
+	@Column(name = "taglistname")
+	public String getTaglistname() {
+		return taglistname;
+	}
+
+	public void setTaglistname(String taglistname) {
+		this.taglistname = taglistname;
+	}
+
+	
 	@Column(name = "goodssource", nullable = false)
 	public Integer getGoodssource() {
 		return this.goodssource;
@@ -241,8 +353,16 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 		this.isdelete = isdelete;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "createtime", nullable = false, length = 19)
+	@Column(name = "description", nullable = false)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Column(name = "createtime", length = 19)
 	public Date getCreatetime() {
 		return this.createtime;
 	}
@@ -251,8 +371,7 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 		this.createtime = createtime;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updatetime", nullable = false, length = 19)
+	@Column(name = "updatetime", length = 19)
 	public Date getUpdatetime() {
 		return this.updatetime;
 	}
@@ -271,21 +390,30 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 	}
 
 	@Transient
-	public String getViewgoodsImage() {
-		return viewgoodsImage;
+	public String getViewgoodsimage() {
+		return viewgoodsimage;
 	}
 
-	public void setViewgoodsImage(String viewgoodsImage) {
-		this.viewgoodsImage = viewgoodsImage;
+	public void setViewgoodsimage(String viewgoodsimage) {
+		this.viewgoodsimage = viewgoodsimage;
 	}
 
 	@Transient
-	public String getClassName() {
-		return className;
+	public String getViewqrcodepath() {
+		return viewqrcodepath;
 	}
 
-	public void setClassName(String className) {
-		this.className = className;
+	public void setViewqrcodepath(String viewqrcodepath) {
+		this.viewqrcodepath = viewqrcodepath;
+	}
+
+	@Transient
+	public String getClassname() {
+		return classname;
+	}
+
+	public void setClassname(String classname) {
+		this.classname = classname;
 	}
 
 }

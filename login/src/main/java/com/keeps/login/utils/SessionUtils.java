@@ -3,7 +3,6 @@ package com.keeps.login.utils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.keeps.tools.utils.StringUtils;
 import com.keeps.tools.utils.UserSchool;
 
 public class SessionUtils{
