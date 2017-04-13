@@ -1,0 +1,184 @@
+#set($layout="layout/default-manager.vm")
+<div class="wrapper home-oper-area">
+	<div class="cate-area">
+			#foreach ($list in $goodsclasslist)
+				<a data-ga-event="首页:点击:首页_分类_$list.classname" href="${path}/goods/list/$list.id" class="cate-item #if($velocityCount%2==1) with-line #end">
+					<div class="inner"><i class="cate-icon $list.classicon"></i>$list.classname</div>
+				</a>
+			#end
+	</div>
+	<div class="banner-area swiper-container">
+		<div class="swiper-wrapper">
+			<a data-ga-event="首页:点击:首页_banner1_高颜值水杯低价抢不停" target="_blank" class="swiper-slide" href="/c/216/?channel=30">
+				<img src="http://7xiwnz.com2.z0.glb.qiniucdn.com/zhekou_operate_element/20170331/1902305833.jpg">
+			</a>
+			<a data-ga-event="首页:点击:首页_banner1_清洁好物5折起，洁面你“皂”了吗" target="_blank" class="swiper-slide" href="/c/215/?channel=30">
+				<img src="http://7xiwnz.com2.z0.glb.qiniucdn.com/zhekou_operate_element/20170331/1859188547.jpg">
+			</a>
+		</div>
+		<div class="swiper-bottom">
+			<div class="swiper-pager"></div>
+		</div>
+	</div>
+	<div class="small-banner-area">
+		<div href="javascript:;" class="small-banner-item">
+			<a data-ga-event="首页:点击:首页_banner2" target="_blank" href="https://s.click.taobao.com/J7ySesw?channel=30">
+			<img src="http://7xiwnz.com2.z0.glb.qiniucdn.com/zhekou_operate_element/20170331/1039013544.jpg">
+			</a>
+		</div>
+		<div href="javascript:;" class="small-banner-item">
+			<a data-ga-event="首页:点击:首页_banner3" target="_blank" href="https://temai.taobao.com/index.htm?pid=mm_114743487_21888784_76800126&amp;channel=30">
+			<img src="http://7xiwnz.com2.z0.glb.qiniucdn.com/zhekou_operate_element/20170331/1040517595.jpg">
+			</a>
+		</div>
+	</div>
+</div>
+<div class="wrapper home-wrapper">
+	<div class="zk-list clearfix" id="couponList">
+		#foreach ($list in $goodslist.record)
+			<div class="zk-item">
+				<div class="img-area">
+					<a title="$list.goodsname" target="_blank" href="${path}/goods/info/$list.id">
+						<div data-ga-event="商品_右上角领券:点击:首页" class="lq">
+							<div class="lq-t">
+								<p class="lq-t-d1">领优惠券</p>
+								<p class="lq-t-d2">省<span>$list.couponprice</span>元</p>
+							</div>
+							<div class="lq-b"></div>
+						</div>
+						<div class="bottom-info">
+							<p data-endtime="$list.endtime" class="time-count"></p>
+						</div>
+						<img data-ga-event="商品_图片:点击:首页" class="lazy" data-original="${viewpath}/$list.goodsimage" alt="$list.goodsname">
+					</a>
+				</div>
+				<p class="title-area elli"><span class="post-free">包邮</span>$list.goodsname</p>
+				<div class="raw-price-area">现价：&yen;$list.currentprice<p class="sold">已领 $list.tocouponnum 张券</p></div>
+				<div class="info">
+					<div class="price-area">
+						<span class="price">&yen;<em class="number-font">$NumericTool.format("#0",$list.couponafterprice)</em><em class="decimal">.$NumericTool.getTheDecimal($list.couponafterprice)</em><i></i></span>
+					</div>
+					<div class="buy-area">
+						<a data-ga-event="商品_立即领券:点击:首页" rel="nofollow" target="_blank" href="$list.tocouponsurl">
+							<span class="coupon-amount">去#dictk2vtag('dic_goods_source',$!{list.goodssource})</span>
+							#if($list.tocouponsurl)<span class="btn-title">火速领券</span>#end
+						</a>
+					</div>
+					<div class="platform-area"><img src="${path}/skins/template/img/#if($list.goodssource==1)platform_taobao.png#elseif($list.goodssource==2)platform_tmall.png#end">#dictk2vtag('dic_goods_source',$!{list.goodssource})</div>
+				</div>
+			</div>
+		#end
+	</div>
+	<div data-ga-event="查看更多按钮:点击:首页" class="more-coupon">
+		<span id="moreCoupon" class="btn loading-text">查看更多优惠券</span>
+	</div>
+</div>
+
+<script type="text/javascript" src="${path}/plug/jquery/swiper3.1.0.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    var sw = new Swiper('.banner-area',{
+        autoplay: 3000,
+        loop:true,
+        pagination: '.swiper-pager'
+    });
+
+    Util.sideFixedMenu($('.home-wrapper'));
+
+    var couponList = $('#couponList'),loadingText = $('.loading-text');
+    var page = 1,pagesize = 40,load = 1,channel = 30;
+
+    $(document).on('scroll',function(){
+        if(page%4 > 0){
+            var _top = $(document).scrollTop(),
+                scroll_height = Util.pageSize()['scrollHeight'],
+                client_height = Util.pageSize()['clientHeight'];
+            if(_top + client_height >= (scroll_height-800)){
+                getCouponList();
+            }
+		}
+    });
+
+    loadingText.on('click',function(){
+        getCouponList();
+	});
+
+    function getCouponList(){
+        if(!load){
+            return;
+        }
+        $.ajax({
+            url:'/getHomeCouponList',
+            type:'GET',
+            dataType:'json',
+            data:{
+                'channel':channel,
+                'page':page,
+                'pagesize':pagesize
+            },
+            beforeSend:function(){
+                load = 0;
+                loadingText.html('努力加载中...');
+            },
+            success:function(data){
+                if(data.code == 1){
+                    Util.createCouponList(data.data,couponList,channel,'首页');
+                    if(data.data.length >= pagesize){
+                        page ++;
+                        load = 1;
+                        loadingText.html('查看更多优惠券');
+                    }else{
+                        loadingText.html('没有更多了');
+                    }
+                }
+            }
+        });
+    }
+
+    //sno
+	var sTabItem = $('.s-tab .tab-list li');
+    sTabItem.on('click',function(){
+        var _this = $(this);
+        if(!_this.hasClass('active')){
+            $('.s-tab .tab-list li.active').removeClass('active');
+            _this.addClass('active');
+            var i = _this.data('index');
+            $('.s-tab .content p.active').removeClass('active');
+            $('.s-tab .content p[data-index='+i+']').addClass('active');
+		}
+	});
+});
+</script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-85524221-4', 'auto');
+    ga('send', 'pageview');
+
+</script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?4e4ac0c8849435d8fd6f6e73fbe0a0f2";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>

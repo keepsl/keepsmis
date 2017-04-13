@@ -1,0 +1,109 @@
+<div id="header" class="header">
+	<div class="header-top">
+		<div class="wrapper">
+			<a class="logo-area" href="/?channel=30">
+				<img src="${path}/skins/template/images/logo.png" alt="省着来" class="logo"/>
+				<img src="${path}/skins/template/images/logoicon.png" alt="省着来" class="slogan">
+			</a>
+			<div class="slogan-area">
+				<i class="slogan-icon slogan-icon-1"></i>
+				<p>正品好货</p>
+				<i class="slogan-icon slogan-icon-2"></i>
+				<p>人工精选</p>
+				<i class="slogan-icon slogan-icon-3"></i>
+				<p>专享优惠券</p>
+				<i class="slogan-icon slogan-icon-4"></i>
+				<p>全场包邮</p>
+			</div>
+			<div class="search-area">
+				<div class="input-area"><i></i><input class="search-input" type="text" value="输入关键词或淘宝链接"></div>
+				<a href="javascript:;" class="search-btn">搜索</a>
+			</div>
+		</div>
+	</div>
+	<div class="tab-area-plh">
+		<div class="tab-area">
+			<div class="wrapper">
+				<div class="cate-area">
+					<a data-ga-event="头部:点击:头部_精选推荐" href="${path}/page/index" class="cate-item jxtj active"><span class="cate-rec"></span></a>
+					<a data-ga-event="头部:点击:头部_9块9包邮"href="/k9/?channel=30" class="cate-item hot">9块9包邮</a>
+					<a data-ga-event="头部:点击:头部_20元封顶"href="/k20/?channel=30" class="cate-item">20元封顶</a>
+					<a data-ga-event="头部:点击:头部_49元精选"href="/k49/?channel=30" class="cate-item">49元精选</a>
+				</div>
+				<div class="search-area">
+					<i></i>
+					<input class="search-input" type="text" value="输入关键词或淘宝链接">
+				</div>
+			</div>
+			
+			<div class="hori-cate-area">
+				<div class="cate-l-1">
+					<div class="wrapper ">
+						#foreach ($list in $goodsclasslist)
+						<a class="" href="/g/nvzhuang/?channel=30">$list.classname</a>
+						#end
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+    var headerBar = $('.header-bar'),
+		tabArea = $('#header .tab-area'),
+		si = $('.search-input'),
+		sb = $('.search-btn');
+
+    headerBar.find('.close').on('click',function(){
+        headerBar.remove();
+        var d = new Date();
+        d.setTime(d.getTime()+(24*60*60*1000));
+        $.cookie('hideHeaderBar',1,{
+            path:'/',
+			expires:d
+		});
+	});
+
+
+    $(document).on('scroll',function(){
+        var _top = $(document).scrollTop();
+        if(_top >= 400){
+            tabArea.addClass('fixed');
+        }else{
+            tabArea.removeClass('fixed');
+		}
+    });
+
+    si.on('focus',function(){
+        if($(this).val() == '输入关键词或淘宝链接'){
+            si.val('');
+        }
+    }).on('blur',function(){
+        if($(this).val() == ''){
+            si.val('输入关键词或淘宝链接');
+        }
+    }).on('keyup',function(e){
+        var keycode = e.keyCode,
+            q = $(this).val();
+        si.val(q);
+        if(keycode == 13 && q.trim()){
+            goSearch(q.trim());
+        }
+    });
+
+    sb.on('click',function(){
+        var q = $(si[0]).val();
+        if(q.trim() && q.trim() != '输入关键词或淘宝链接'){
+            goSearch(q.trim());
+        }
+    });
+
+    function goSearch(q){
+        ga('send','event','搜索','搜索','搜索');
+		window.location.href = '/s/?q='+q+'&channel=30';
+	}
+});
+</script>

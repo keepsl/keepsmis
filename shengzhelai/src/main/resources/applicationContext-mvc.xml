@@ -109,7 +109,8 @@
 				<prop key="resource.loader">file</prop>
 				<prop key="file.resource.loader.class">org.apache.velocity.runtime.resource.loader.FileResourceLoader
 				</prop>
-				<prop key="userdirective">com.keeps.tools.utils.SubCutDirective,</prop>
+				<prop key="userdirective">com.keeps.tools.utils.SubCutDirective,com.keeps.utils.PageDirective,com.keeps.utils.Dictkey2valueDirective,com.keeps.utils.DictSelectDirective</prop>
+				
 			</props>
 		</property>
 	</bean>

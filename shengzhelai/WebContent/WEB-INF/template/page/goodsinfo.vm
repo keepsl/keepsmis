@@ -1,0 +1,82 @@
+#set($layout="layout/default-manager.vm")
+<div class="wrapper zk-detail">
+	<div class="wrapper-l zk-main">
+		<p class="bread-area">
+			您的位置：<a href="${path}/page/index">省着来</a>
+			&nbsp;&nbsp;&gt;&nbsp;&nbsp;<a href="${path}/goods/list/${pclassid}">${pclassname}</a>
+			&nbsp;&nbsp;&gt;&nbsp;&nbsp;<a href="${path}/goods/list/${classid}">${classname}</a>
+			&nbsp;&nbsp;&gt;&nbsp;&nbsp;$goods.goodsname
+		</p>
+		<div class="zk-content">
+			<div class="img-area"><img src="${viewpath}/$goods.goodsimage" alt="New Balance/NB 580系列休闲运动鞋 官方旗舰店"></div>
+			<div class="info-area">
+				<h1 class="title elli"><span>包邮</span>$goods.goodsname</h1>
+				<p class="endtime" id="eventTimeStr"></p>
+				<div class="platform"><i style="background-image: url(${path}/skins/template/img/#if($goods.goodssource==1)platform_taobao.png#elseif($goods.goodssource==2)platform_tmall.png#end);"></i>#dictk2vtag('dic_goods_source',${goods.goodssource})</div>
+				<div class="stat">
+					<p class="price-area">
+						<span class="ori-price">现价：&yen;819.0</span>
+						<span class="price">&yen;<em class="int">$NumericTool.format("#0",$goods.couponafterprice)</em><em class="decimal">.$NumericTool.getTheDecimal($goods.couponafterprice)</em><i>券后价</i></span>
+					</p>
+					<div class="buy-area">
+						<p class="desc">有效期内领券下单，享受立减优惠！</p>
+						<a data-ga-event="折扣详情页:点击:领券按钮" href="$goods.tocouponsurl" class="buy-btn">
+							<div class="line line-l"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+							<div class="line line-r"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+							领券立减<em>$NumericTool.subZeroAndDot($goods.couponprice)</em>元
+						</a>
+					</div>
+				</div>
+				<div class="tags">
+					<div class="tag-list">
+						<a data-ga-event="折扣详情页:点击:标签" class="tag-item" href="/g/yundongxie/">运动鞋</a>
+						<a data-ga-event="折扣详情页:点击:标签" class="tag-item" href="/g/yundongxie/">运动鞋</a>
+						<a data-ga-event="折扣详情页:点击:标签" class="tag-item" href="/g/xiezi/">鞋子</a>
+					</div>
+					<p class="coll"><i></i>按<em>Ctrl&nbsp;+&nbsp;D</em>加入收藏</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="wrapper-r">
+		<div class="rel-zk-area" style="margin-top: 60px;">
+			<p class="head"><span>最近浏览</span><a data-ga-event="折扣详情页:点击:最近浏览_查看更多" href="/history/" class="more-his">查看更多</a></p>
+			<div class="hot-zk-list clearfix swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide">
+						<a data-ga-event="折扣详情页:点击:最近浏览_卡片" class="zk-img-item" title="咚咚 酷黑速干眼线水笔" href="/zk/3697166/">
+							<img class="lazy" data-original="http://gd4.alicdn.com/imgextra/i4/154090037/TB2E_c4cFXXXXXYXpXXXXXXXXXX_!!154090037.jpg_400x400" alt="咚咚 酷黑速干眼线水笔">
+						</a>
+						<a data-ga-event="折扣详情页:点击:最近浏览_卡片" class="zk-img-item" title="爱丽小屋 play 101双头修容棒 3.4g" href="/zk/3909002/">
+							<img class="lazy" data-original="http://gd3.alicdn.com/imgextra/i3/2529912907/TB2iIryhrXlpuFjSszfXXcSGXXa_!!2529912907.jpg_400x400" alt="爱丽小屋 play 101双头修容棒 3.4g">
+						</a>
+						<a data-ga-event="折扣详情页:点击:最近浏览_卡片" class="zk-img-item" title="New Balance/NB 580系列休闲运动鞋 官方旗舰店" href="/zk/3106229/">
+							<img class="lazy" data-original="http://img.alicdn.com/bao/uploaded/i4/TB1AVrMPVXXXXXraXXXXXXXXXXX_!!0-item_pic.jpg_400x400" alt="New Balance/NB 580系列休闲运动鞋 官方旗舰店">
+						</a>
+						<a data-ga-event="折扣详情页:点击:最近浏览_卡片" class="zk-img-item" title="FANBIYA 苹果通用入耳式耳机" href="/zk/1756196/">
+							<img class="lazy" data-original="http://img.alicdn.com/imgextra/i2/2121404148/TB2YYUtkXXXXXc0XXXXXXXXXXXX_!!2121404148.jpg_400x400" alt="FANBIYA 苹果通用入耳式耳机">
+							<p class="fixed-bottom">即将失效</p>
+						</a>
+					</div>
+					<div class="swiper-slide">
+						<a data-ga-event="折扣详情页:点击:最近浏览_卡片" class="zk-img-item" title="普兰氏 VIP冰点冻力蚕丝面膜 5片" href="/zk/1085327/">
+							<img class="lazy" data-original="http://gd1.alicdn.com/imgextra/i1/929627316/TB25g78kt0opuFjSZFxXXaDNVXa_!!929627316.jpg_400x400" alt="普兰氏 VIP冰点冻力蚕丝面膜 5片">
+						</a>
+						<a data-ga-event="折扣详情页:点击:最近浏览_卡片" class="zk-img-item" title="Masmea 户外防蚊喷雾 " href="/zk/2682793/">
+							<img class="lazy" data-original="http://gaitaobao3.alicdn.com/tfscom/i4/159309707/TB2IYYliNdkpuFjy0FbXXaNnpXa_!!159309707.jpg_400x400" alt="Masmea 户外防蚊喷雾 ">
+							<p class="fixed-bottom">即将失效</p>
+						</a>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="${path}/plug/jquery/swiper3.1.0.min.js"></script>
+<script type="text/javascript">
+	var sw = new Swiper('.swiper-container',{
+        autoplay: 3000,
+        loop:false
+    });
+</script>
