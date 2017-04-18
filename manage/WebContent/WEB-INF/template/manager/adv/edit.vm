@@ -1,20 +1,9 @@
-#parse("manager/page_header.vm")
-#parse("manager/tag/add_edit_inner.vm")
-<input type="hidden" id="ishot" value="$!{tag.ishot}"/>
+#parse("manager/adv/add_edit_inner.vm")
+<input type="hidden" id="isShow" value="$!{adv.isShow}"/>
 <script type="text/javascript">
 $(function () {
-	var eqishot = $('#ishot').val()*1-1;
-	$("input[name='ishot']").eq(eqishot).parent(".radio-inline").addClass('on');
-	$("input[name='ishot']").eq(eqishot).attr("checked",true);
+	var eqisShow = $('#isShow').val()*1-1;
+	$("input[name='isShow']").eq(eqisShow).parent(".radio-inline").addClass('on');
+	$("input[name='isShow']").eq(eqisShow).attr("checked",true);
 });
-function update(callback){
-	$.post('../tag/update', $("#formid").serialize(), function(json){
-		if(json&&json.success==true){
-			callback(true);
-		}else{
-			Log.e(json.message);
-			callback(false);
-		}
-	},'json');
-}
 </script>

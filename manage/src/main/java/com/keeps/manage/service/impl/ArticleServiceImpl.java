@@ -14,13 +14,13 @@ import com.keeps.core.service.AbstractService;
 import com.keeps.manage.dao.ArticleDao;
 import com.keeps.manage.service.ArticleService;
 import com.keeps.utils.Constants;
-import com.keeps.utils.ImageUtil;
 import com.keeps.utils.SysConfigUtil;
 import com.keeps.model.TArticle;
 import com.keeps.tools.exception.CapecException;
 import com.keeps.tools.utils.Assert;
 import com.keeps.tools.utils.CommonUtils;
 import com.keeps.tools.utils.EditType;
+import com.keeps.tools.utils.ImageUtils;
 import com.keeps.tools.utils.StringUtils;
 import com.keeps.tools.utils.page.Page;
 
@@ -103,7 +103,7 @@ public class ArticleServiceImpl extends AbstractService implements ArticleServic
 				throw new CapecException("文件上传失败!");
 			}
 			Assert.isTrue(targetFile.length() / (1024 * 1024) <= Constants.MAX_UPLOAD_IMAGE_SIZE,"上传的图片大小请控制在" + Constants.MAX_UPLOAD_IMAGE_SIZE + "M内!");
-			ImageUtil.createThumbnail(targetFile.getPath(), path + File.separator + "cut"+filename,Constants.MAX_COVER_IMAGE_WIDTH, Constants.MAX_COVER_IMAGE_HEIGHT);
+			ImageUtils.cut4(targetFile.getPath(), path + File.separator + "cut"+filename,Constants.MAX_COVER_IMAGE_WIDTH, Constants.MAX_COVER_IMAGE_HEIGHT);
 			//原图存在，删除原图片
 			if (StringUtils.hasText(newarticle.getCoverimage())) {
 				File file = new File(path, newarticle.getCoverimage());

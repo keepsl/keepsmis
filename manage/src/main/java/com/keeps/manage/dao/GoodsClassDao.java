@@ -19,6 +19,7 @@ import com.keeps.tools.utils.page.Page;
  * 复审人：
  */
 public interface GoodsClassDao extends SoftDao{
+	
 
 	public Page queryList(SzlGoodsClass goods_class);
 	
@@ -27,6 +28,8 @@ public interface GoodsClassDao extends SoftDao{
 	public List<TreeNode> queryListTree();
 	
 	public Integer updateFieidById(String fieid,Integer value,String ids);
+	
+	public SzlGoodsClass getByClassname(String classname);
 
 	
 }

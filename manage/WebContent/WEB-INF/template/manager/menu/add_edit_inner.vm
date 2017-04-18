@@ -1,4 +1,5 @@
 #parse("manager/page_header.vm")
+<script type="text/javascript" src="${path}/javascript/selectTree.js?date=2017040600009"></script>
 <style>
     html,body{
         overflow-y: hidden;
@@ -25,9 +26,13 @@
 							      <select class="form-control" name="pid" id="pid">
 							        <option value="0">一级菜单</option>
 							        #foreach ($list in $menulist)
-							        	#if($menu.id!=$list.id)
-								    		<option value="$list.id" #if ($list.id==$menu.pid) selected #end>$list.menuname</option>
-								    	#end
+							        	#if($pid)
+								       		<option value="$list.id" #if ($list.id==$pid) selected #end parent="$list.pid">$list.menuname</option>
+								        #else
+								        	#if($menu.id!=$list.id)
+									    		<option value="$list.id" #if ($list.id==$menu.pid) selected #end parent="$list.pid">$list.menuname</option>
+									    	#end
+								        #end
 							        #end
 							      </select>
 							      <p class="help-block">该菜单所属的上级菜单。</p>
@@ -63,3 +68,7 @@
 		</div>
 	<div>
 </div>
+<script>
+
+$("#pid").selectTotree();
+</script>

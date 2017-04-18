@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.keeps.core.dao.AbstractDao;
 import com.keeps.manage.dao.GoodsDao;
 import com.keeps.model.SzlGoods;
+import com.keeps.tools.utils.DateUtils;
 import com.keeps.tools.utils.StringUtils;
 import com.keeps.tools.utils.page.Page;
 
@@ -42,6 +43,27 @@ public class GoodsDaoImpl extends AbstractDao implements GoodsDao {
 			sql.append(" and a.goodsname like ? ");
 			values.add("%"+goods.getGoodsname().trim()+"%");
 		}
+		if (goods.getGoodssource()!=null && goods.getGoodssource() != 0) {
+			sql.append(" and a.goodssource = ? ");
+			values.add(goods.getGoodssource());
+		}
+		if (goods.getIshot()!=null && goods.getIshot() != 0) {
+			sql.append(" and a.ishot = ? ");
+			values.add(goods.getIshot());
+		}
+		if (goods.getIsrecommend()!=null && goods.getIsrecommend() != 0) {
+			sql.append(" and a.isrecommend = ? ");
+			values.add(goods.getIsrecommend());
+		}
+		if (goods.getSearchtype()!=null) {
+			if (goods.getSearchtype()==1) {
+				sql.append(" and a.endtime >= ? ");
+				values.add(DateUtils.getNow("yyyy-MM-dd"));
+			}else if(goods.getSearchtype()==2){
+				sql.append(" and a.endtime < ? ");
+				values.add(DateUtils.getNow("yyyy-MM-dd"));
+			}
+		}
 		sql.append(" order by a.updatetime desc ");
 		return super.queryByNameParamSql(sql.toString() ,null, values.toArray(),goods,goods.getClass());
 	
@@ -60,6 +82,13 @@ public class GoodsDaoImpl extends AbstractDao implements GoodsDao {
 		List list = super.getByNameParamSql(sql, new String[]{"classids"}, new Object[]{classids});
 		return Integer.parseInt(list.get(0).toString());
 	
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public Integer getCountByGoodsname(String goodsname){
+		String sql = "select count(1) from szl_goods a where a.isdelete = 1 and a.goodsname = (:goodsname)";
+		List list = super.getByNameParamSql(sql, new String[]{"goodsname"}, new Object[]{goodsname});
+		return Integer.parseInt(list.get(0).toString());
 	}
 	
 	

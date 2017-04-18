@@ -1,0 +1,141 @@
+#parse("manager/page_header.vm")
+<script type="text/javascript" src="${path}/javascript/fileutil.js?date=2017040600001"></script>
+<style>
+	html,body{
+        overflow-y: hidden;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div>
+	<p class="bg-warning J_tipBox">功能介绍：请先根据指定的Excel格式整理课程表数据，然后再导入到系统中。</p>
+	<div  class="container-fluid g-t-mg">
+		<div class="row" >
+	    	<div class="col-xs-12">
+	        	<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" id="form1">
+					<div class="form-group">
+				  		<div class="col-xs-offset-2 col-xs-9">
+				  			<a class="g-fr" href="../goods/download">点击此处下载模板</a>
+				  		</div>
+				  	</div>
+					<div class="form-group">
+					    <label class="col-xs-2 control-label"><em class="text-red">*</em>选择商品：</label>
+				  		<div class="col-xs-9">
+							<div class="input-group J_FileBox">
+								<input type="text" class="form-control J_fileInput" readonly="readonly">
+								<span class="input-group-btn">
+									<div class="file-button-area">
+									    <a class="btn btn-default">
+											<span class="gb-right">
+												<span class="gb-text">浏览</span>
+											</span>
+										</a>
+										<input type="file" class="upload-file J_fileButton" id="goodsfile" onClick="this.blur()" name="goodsfile" onchange="batchImport(this)"/>
+									</div>
+								</span>
+							</div>
+					    </div>
+				  	</div>
+				  	
+				  	<div class="form-group">
+				  		<div class="col-xs-offset-2 col-xs-9">
+						  	<div class="progress-label">等待上传...</div>
+						  	<div class="g-progressbar bg-bar J_progressBar4 " id="progressbar"></div>
+				  		</div>
+				    </div>
+				    
+				    <div class="form-group">
+				  		<div class="col-xs-offset-2 col-xs-10">
+				  			<p class="col-xs-9 form-control-static" style="color:red" id="msgtip"></p>
+				  		</div>
+				    </div>
+				    
+			  	</form>
+		  	<div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+var progressTimer,progressbar = $("#progressbar"),progressLabel = $(".progress-label");
+function getProgress(flag) {//flag 第几次请求
+	$.getJSON('../goods/progressbar?flag='+flag,function(data){
+		progressLabel.text(data.upcontent);
+		setprogressbarValue(data.uplength*1,function(success){
+			if(success){}
+		});
+	});
+}
+function batchImport(_this){
+	var bo = checkFileName(_this,'xls,xlsx');
+	if(!bo){
+		layer.msg("导入文件格式不正确,仅支持Excel文件!");
+		$(".J_fileInput").val('');
+	}else{
+		$(".J_fileInput").val(_this.value);
+	}
+}
+var load = 1;
+function saveFile(callback){
+	if($("#goodsfile").val()==''){
+		layer.msg("请选择要导入的文件!");
+		callback(false);
+		return;
+	}
+	if(!load){
+        return;
+    }
+	$("#msgtip").hide();
+	progressbar.progressbar({
+		value: false,
+	  	change: function() {
+	  	},complete: function() {
+	    }
+	});	
+	getProgress(1);
+    progressTimer = setInterval('getProgress(-1)', 500);
+	var options = {
+		url: "../goods/imp/file", 
+		dataType: 'json', 
+		data:$("#form1").serialize(),
+		type: "POST",
+		beforeSend:function(){
+            load = 0;
+        },
+		success: function(json) {
+			window.clearInterval(progressTimer);
+			setprogressbarValue(100,function(success){
+				if(success){
+					callback(json.success);
+					load=1;
+					if(json.success){
+						progressLabel.text("导入完成!");
+					}else{
+						progressLabel.text("导入失败!");
+						$("#msgtip").show().html(json.message);
+					}
+				}
+			});
+		},error:function(){
+			callback(false);
+			load=1;
+			window.clearInterval(progressTimer);
+			progressbar.progressbar("value",100);
+			progressLabel.text("导入失败!");
+			layer.msg("请求地址错误!");
+	   	}
+	};
+	$('#form1').ajaxSubmit(options);	
+}
+function setprogressbarValue(value,callback){
+	var vInterval = setInterval(function(){
+		var progressbarValue = progressbar.progressbar("value");
+	  	if (progressbarValue >= value*1) {
+	       	window.clearInterval(vInterval);
+	       	callback(true);
+	    }else{
+	    	progressbarValue++;
+	    	progressbar.progressbar("value",progressbarValue*1);
+	    }
+	} ,20);
+}
+</script>

@@ -22,13 +22,13 @@
 						<input type="hidden" name="ispublish"  value=""/>
 						<input type="hidden" name="coverimage"  value="$!{article.coverimage}"/>
 						<div class="form-group">
-							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>标题</label>
+							<label for="title" class="col-xs-2 control-label"><em class="text-red">*</em>标题</label>
 							<div class="col-xs-9">
 								<input type="text" class="form-control" id="title" name="title" value="$!{article.title}" maxlength="100">
 							</div>
 						</div>
 						<div class="form-group">
-						    <label for="pid" class="col-xs-2 control-label"><em class="text-red">*</em>所属栏目</label>
+						    <label for="typeid" class="col-xs-2 control-label"><em class="text-red">*</em>所属栏目</label>
 						    <div class="col-xs-9">
 							      <select class="form-control" name="typeid" id="typeid">
 							      	<option value="" >请选择栏目。。。</option>
@@ -42,14 +42,14 @@
 						    </div>
 						</div>
 						<div class="form-group">
-							<label for="templatetype" class="col-xs-2 control-label">关键字</label>
+							<label for="keyword" class="col-xs-2 control-label">关键字</label>
 							<div class="col-xs-9">
 								<input type="text" class="form-control" id="keyword" name="keyword" value="$!{article.keyword}" maxlength="100">
 								<p class="help-block">多个关键字请使用,分隔</p>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="listtemplateurl" class="col-xs-2 control-label">TAG标签</label>
+							<label for="taglist" class="col-xs-2 control-label">TAG标签</label>
 							<div class="col-xs-9">
 								<input type="hidden" class="form-control" id="taglist" name="taglist" value="$!{article.taglist}">
 								<div class="form-inline clearfix">
@@ -62,28 +62,28 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="articletemplateurl" class="col-xs-2 control-label">文章摘要</label>
+							<label for="abstract_" class="col-xs-2 control-label">文章摘要</label>
 							<div class="col-xs-9">
 								<textarea class="form-control" rows="6" style="height:100px;" id="abstract_" name="abstract_">$!{article.abstract_}</textarea>
 								<p class="help-block">如不填写，则自动提取文章前200字符</p>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="listtemplateurl" class="col-xs-2 control-label">来源</label>
+							<label for="source" class="col-xs-2 control-label">来源</label>
 							<div class="col-xs-9">
 								<input type="text" class="form-control" id="source" name="source" value="$!{article.source}" maxLength="100">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="sort" class="col-xs-2 control-label">点击量</label>
+							<label for="clicknum" class="col-xs-2 control-label">点击量</label>
 							<div class="col-xs-2">
 								<input type="number" class="form-control" id="clicknum" name="clicknum" value="$!{article.clicknum}" min="0" max="99999999999" maxlength="11">
 							</div>
-							<label for="sort" class="col-xs-1 control-label">昵称</label>
+							<label for="publishnickname" class="col-xs-1 control-label">昵称</label>
 							<div class="col-xs-2">
 								<input type="text" class="form-control" id="publishnickname" name="publishnickname" value="$!{article.publishnickname}" maxLength="11">
 							</div>
-							<label for="sort" class="col-xs-1 control-label">发布时间</label>
+							<label for="publishtime" class="col-xs-1 control-label">发布时间</label>
 							<div class="col-xs-3">
 								<input type="text" class="form-control Wdate g-Wate-left" id="publishtime" name="publishtime" value="$!date.format('yyyy-MM-dd HH:mm:ss',$!{article.publishtime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});">
 							</div>
@@ -91,7 +91,7 @@
 						<div class="form-group">
 							<label class="col-xs-2 control-label check-label">是否展示</label>
 							<div class="col-xs-2">
-								<div class="J_radioBox ">
+								<div class="J_radioBox">
 									<label class="radio-inline">
 									  <input type="radio" name="isshow" value="1"> 是
 									</label>
@@ -102,7 +102,7 @@
 							</div>
 							<label class="col-xs-1 control-label check-label">是否热门</label>
 							<div class="col-xs-2">
-								<div class="J_radioBox ">
+								<div class="J_radioBox">
 									<label class="radio-inline">
 									  <input type="radio" name="ishot" value="1"> 是
 									</label>
@@ -113,7 +113,7 @@
 							</div>
 							<label class="col-xs-1 control-label check-label">是否推荐</label>
 							<div class="col-xs-2">
-								<div class="J_radioBox ">
+								<div class="J_radioBox">
 									<label class="radio-inline">
 									  <input type="radio" name="isrecommend" value="1"> 是
 									</label>
@@ -124,7 +124,7 @@
 							</div>
 						</div>
 						<div class="form-group" id="coverimgdiv" style="">
-				  			<label class="col-xs-2 control-label">封面图片：</label>
+				  			<label class="col-xs-2 control-label">封面图片</label>
 					  		<div class="col-xs-9">
 				  				<div class="g-file-box">
 				  					<input type="file" name="coverfile" id="coverfile" onchange="previewImage({file:this,imgId:'image1',divId:'image1',regex:'.jpg.bmp.gif.png',width:'220',height:'150'});" style="width: 220px; height: 150px; font-size: 20px; filter: alpha(opacity=0); position: absolute; opacity: 0;cursor: pointer;" >

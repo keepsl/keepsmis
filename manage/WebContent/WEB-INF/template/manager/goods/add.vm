@@ -1,4 +1,3 @@
-#parse("manager/page_header.vm")
 #parse("manager/goods/add_edit_inner.vm")
 <script>
 $(function () {

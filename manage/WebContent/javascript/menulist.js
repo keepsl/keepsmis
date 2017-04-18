@@ -81,7 +81,7 @@ function addMenu(){
         	callback(success);
         });
     }
-	openWin('../menu/add','新增菜单',700,500,'',onSuccess);
+	openWin('../menu/add?pid='+$("input[name='pid']").val(),'新增菜单',700,500,'',onSuccess);
 }
 
 function editMenu(){

@@ -23,6 +23,5 @@ public interface AdvPositionDao {
 	public List<TAdvPosition> queryAll();
 	
 	public Integer updateFieidById(String fieid,Integer value,String ids);
-
-
+	
 }

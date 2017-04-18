@@ -2,6 +2,10 @@ package com.keeps.manage.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.keeps.core.service.SoftService;
 import com.keeps.model.TAdv;
 import com.keeps.tools.utils.page.Page;
@@ -25,7 +29,7 @@ public interface AdvService extends SoftService{
 	
 	public TAdv getById(Integer id);
 	
-	public String saveOrUpdate(TAdv adv);
+	public String saveOrUpdate(TAdv adv, MultipartFile advcontentfile, HttpServletRequest request);
 	
 	public String updateFieidById(String fieid,Integer value,String ids);
 

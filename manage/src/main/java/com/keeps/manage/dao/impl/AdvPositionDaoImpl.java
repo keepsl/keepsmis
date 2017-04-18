@@ -28,18 +28,34 @@ public class AdvPositionDaoImpl extends AbstractDao implements AdvPositionDao {
 	@Override
 	public Page queryList(TAdvPosition advPosition) {
 		List<Object> values = new ArrayList<Object>();
-		StringBuffer sql = new StringBuffer(" select a.* from t_adv_position a  ");
+		StringBuffer sql = new StringBuffer(" select a.id,  ");
+		sql.append("  ap_name as apName,  ");
+		sql.append("  ap_intro as apIntro,  ");
+		sql.append("  ap_class as apClass,  ");
+		sql.append("  ap_display as apDisplay,  ");
+		sql.append("  is_show as isShow,  ");
+		sql.append("  ap_width as apWidth,  ");
+		sql.append("  ap_height as apHeight,  ");
+		sql.append("  ap_price as apPrice,  ");
+		sql.append("  adv_num as advNum,  ");
+		sql.append("  click_num as clickNum,  ");
+		sql.append("  default_content as defaultContent,  ");
+		sql.append("  is_cache as isCache, ");
+		sql.append("  createtime,  ");
+		sql.append("  updatetime,  ");
+		sql.append("  createperson  ");
+		sql.append("  from t_adv_position a ");
 		if (StringUtils.hasText(advPosition.getApName())) {
-			sql.append(" where a.ap_name = ? ");
-			values.add(advPosition.getApName().trim());
+			sql.append(" where a.ap_name like ? ");
+			values.add("%"+advPosition.getApName().trim()+"%");
 		}
 		return super.queryByNameParamSql(sql.toString() ,null, values.toArray(),advPosition,advPosition.getClass());
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<TAdvPosition> queryAll(){
-		StringBuffer sql = new StringBuffer(" select a.* from t_adv_position a ");
-		return super.getByPropertySql(sql.toString(), null, TAdvPosition.class);
+		StringBuffer sql = new StringBuffer(" from TAdvPosition where isShow = 1 ");
+		return super.getByPropertyHql(sql.toString(), null, TAdvPosition.class);
 	}
 	
 	@Override

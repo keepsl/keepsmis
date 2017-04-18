@@ -35,8 +35,12 @@ function previewImage(obj) {
     }
 }
 
-function resetFile(file,id){
-	document.getElementById(id).src="../skins/template/img/01.png"; 
+function resetFile(file,id,defaultname){
+	if(defaultname==undefined || defaultname=='' || defaultname == null){
+		document.getElementById(id).src="../skins/template/img/01.png"; 
+	}else{
+		document.getElementById(id).src="../skins/template/img/"+defaultname; 
+	}
     file.value = "";//清空选中文件
     var browserVersion = window.navigator.userAgent.toUpperCase();
     if (browserVersion.indexOf("MSIE") > -1) {

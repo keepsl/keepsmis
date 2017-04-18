@@ -1,7 +1,8 @@
 #parse("manager/page_header.vm")
+<script type="text/javascript" charset="utf-8" src="${path}/javascript/imageRead.js"></script>
 <style>
     html,body{
-        overflow-y: hidden;
+    	overflow:auto;
         height: 100%;
         background-color:#fff;
     }
@@ -11,35 +12,86 @@
 		<div  class="container-fluid g-t-mg2">
 			<div class="row" >
 				<div class="col-xs-12" >
-					<form class="form-horizontal" role="form" id="formid">
-						<input type="hidden" name="id" value="$!{tag.id}"/>
+					<form class="form-horizontal" role="form" id="formid" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="id" value="$!{adv.id}"/>
+						<input type="hidden" name="advContentpath"  value="$!{adv.advContent}"/>
+						<input type="hidden" name="apClass" value="$!{advPosition.apClass}"/>
+						<input type="hidden" name="apDisplay" value="$!{advPosition.apDisplay}"/>
 						<div class="form-group">
-							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>标签名</label>
+							<label for="advTitle" class="col-xs-2 control-label"><em class="text-red">*</em>广告名称</label>
 							<div class="col-xs-9">
-								<input type="text" class="form-control" id="name" name="name" value="$!{tag.name}" maxlength="10">
+								<input type="text" class="form-control" id="advTitle" name="advTitle" value="$!{adv.advTitle}" maxlength="10">
 							</div>
 						</div>
 						<div class="form-group">
-						    <label for="typeid" class="col-xs-2 control-label"><em class="text-red">*</em>绑定栏目</label>
-						    <div class="col-xs-9">
-							      <select class="form-control" name="typeid" id="typeid">
-							      		<option value="" >请选择栏目。。。</option>
-							        #foreach ($list in $articletypelist)
-								   		<option value="$list.id" #if ($list.id==$tag.typeid) selected #end>$list.name</option>
-							        #end
-							      </select>
-							      <p class="help-block">该标签所绑定的栏目</p>
-						    </div>
+							<label for="advLink" class="col-xs-2 control-label"><em class="text-red">*</em>广告连接</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="advLink" name="advLink" value="$!{adv.advLink}" maxlength="100">
+							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-2 control-label check-label">是否热门</label>
+							<label for="apId" class="col-xs-2 control-label"><em class="text-red">*</em>所属广告位</label>
+							<div class="col-xs-9">
+								#if ($!{advPosition.id})
+									<input type="hidden" name="apId" value="$!{advPosition.id}"/>
+									<p class="form-control-static">$advPosition.apName</p>
+								#else
+									<select class="form-control" name="apId" id="apId" >
+								      	<option value="" attrapClass="" attrapDisplay="">请选择所属广告位。。。</option>
+								        #foreach ($list in $listadvPosition)
+									   		<option value="$list.id" attrapClass="$list.apClass" attrWidth="$list.apWidth" attrHeight="$list.apHeight" attrapDisplay="$list.apDisplay">$list.apName</option>
+								        #end
+								    </select>
+								#end
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="starttime" class="col-xs-2 control-label"><em class="text-red">*</em>开始时间</label>
+							<div class="col-xs-3">
+								<input type="text" class="form-control Wdate g-Wate-left" id="starttime" name="starttime" value="$!date.format('yyyy-MM-dd',$!{adv.starttime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+							</div>
+							<label for="endtime" class="col-xs-2 control-label">结束时间</label>
+							<div class="col-xs-3">
+								<input type="text" class="form-control Wdate g-Wate-left" id="endtime" name="endtime" value="$!date.format('yyyy-MM-dd',$!{adv.endtime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+							</div>
+						</div>
+						<div id="opClass1">
+							<div class="form-group" id="coverimgdiv">
+					  			<label class="col-xs-2 control-label"><em class="text-red">*</em>图片/Flash</label>
+						  		<div class="col-xs-9">
+					  				<div class="g-file-box">
+					  					<input type="file" name="advcontentfile" id="advcontentfile" onchange="previewImage({file:this,imgId:'image1',divId:'image1',regex:'.jpg.bmp.gif.png',width:'330',height:'180'});" style="width: 330px; height: 180px; font-size: 20px; filter: alpha(opacity=0); position: absolute; opacity: 0;cursor: pointer;" >
+										<img style="width:330px;height:180px" src="#if(!$!{adv.advContent}) ${path}/skins/template/img/02.png #else ${viewpath}/cut$!{adv.advContent} #end" id="image1"/>
+										<p class="help-block"><a class="gbn gbn-s gbn-gray" href="javascript:;" onclick="resetFile(this,'image1','02.png');document.getElementsByName('advContentpath')[0].value='';">删除所选</a>&nbsp;&nbsp;&nbsp;<lable id="tipMHmsg"><!--封面图片推荐尺寸为660*360.--></lable></p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div id="opClass2">
+							<div class="form-group">
+								<label for="apDisplay" class="col-xs-2 control-label"><em class="text-red">*</em>文字内容</label>
+								<div class="col-xs-9">
+									<input type="text" class="form-control" id="advContent" name="advContent" value="$!{adv.advContent}" min="0" max="99999999999" maxlength="100">
+									<p class="help-block">最多$!{adv.apWidth}个字</p>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="apDisplay" class="col-xs-2 control-label"><em class="text-red">*</em>排序</label>
+							<div class="col-xs-9">
+								<input type="number" class="form-control" id="slideSort" name="slideSort" value="$!{adv.slideSort}" min="0" max="99999999999" maxlength="11">
+								<p class="help-block">主要针对多广告使用,单广告可无视.</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="isShow" class="col-xs-2 control-label check-label"><em class="text-red">*</em>是否展示</label>
 							<div class="col-xs-9">
 								<div class="J_radioBox ">
 									<label class="radio-inline">
-									  <input type="radio" name="ishot" value="1"> 是
+									  <input type="radio" name="isShow" value="1"> 是
 									</label>
 									<label class="radio-inline">
-									  <input type="radio" name="ishot" value="2"> 否
+									  <input type="radio" name="isShow" value="2"> 否
 									</label>
 							    </div>
 							</div>
@@ -51,10 +103,61 @@
 	<div>
 </div>
 <script>
-	 $(":radio").click(function(){
-	 	$(".radio-inline").removeClass("on");
-	 	if($(this).is(':checked')){
-	 		$(this).closest("label").addClass("on");
-	 	}
+	$(function(){
+		//编辑初始化
+		var apClass = $("input[name='apClass']").val();
+		if(apClass!=''){
+			if(apClass == 2){
+				$("#opClass1").hide();
+				$("#opClass2").show();
+			}else{
+				$("#opClass2").hide();
+				$("#opClass1").show();
+			}
+		}else{
+			$("#opClass1").hide();
+			$("#opClass2").hide();
+		}
+		$("select[name='apId']").change(function(){
+			var apClass = $("select[name='apId']").find("option:selected").attr('attrapClass');
+			var apDisplay = $("select[name='apId']").find("option:selected").attr('attrapDisplay');
+			//1、根据选中的广告位展示相关内容，2、根据选中的广告位提示上传图片的宽高
+			$("input[name='apClass']").val(apClass);
+			$("input[name='apDisplay']").val(apDisplay);
+			if(apClass!=''){
+				if(apClass == 2){
+					$("#opClass1").hide();
+					$("#opClass2").show();
+				}else{
+					var apWidth = $("select[name='apId']").find("option:selected").attr('attrWidth');
+					var apHeight = $("select[name='apId']").find("option:selected").attr('attrHeight');
+					$("#tipMHmsg").html("封面图片推荐尺寸为"+apWidth+"*"+apHeight+".");
+					$("#opClass2").hide();
+					$("#opClass1").show();
+				}
+			}else{
+				$("#opClass1").hide();
+				$("#opClass2").hide();
+			}
+		});
 	});
+	function saveOrUpdate(callback){
+		var options = {
+			url: "../adv/saveOrUpdate", 
+			dataType: 'json',
+			type: "POST",
+			success: function(json) {
+				callback(json.success);
+				if(json&&json.success==true){
+					
+				}else{
+					Log.e(json.message);
+				}
+			},error:function(){
+				Log.e('请求错误!');
+				callback(false);
+		   	}
+		};
+		$('#formid').ajaxSubmit(options);
+	}
 </script>

@@ -23,4 +23,5 @@ public interface GoodsDao extends SoftDao{
 	
 	public Integer getCountByGoodsClassIds(String classids);
 
+	public Integer getCountByGoodsname(String goodsname);
 }

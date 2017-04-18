@@ -1,8 +1,8 @@
 function MyJqGrid(obj){
-	this.jqGridId = "jqGridId";
-	this.jqGridPagerId = "jqGridPagerId";
-	//this.jqGridId = obj.jqGridId?obj.jqGridId:'jqGridId';
-	//this.jqGridPagerId = obj.jqGridPagerId?obj.jqGridPagerId:'jqGridPagerId';
+	//this.jqGridId = "jqGridId";
+	//this.jqGridPagerId = "jqGridPagerId";
+	this.jqGridId = obj.jqGridId?obj.jqGridId:'jqGridId';
+	this.jqGridPagerId = obj.jqGridPagerId?obj.jqGridPagerId:'jqGridPagerId';
 	this.multiselect=true;
 	this.jqGridActionbarId = "jqGridActionbarId";
 	this.isinit= false;

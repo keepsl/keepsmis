@@ -25,5 +25,10 @@ public interface AdvDao extends SoftDao{
 	
 	public Integer updateFieidById(String fieid,Integer value,String ids);
 
+	public Integer getCountByApId(Integer apId);
+
+	public List<TAdv> getAdvByApId(Integer apId);
+
+	public List<TAdv> getGroupApidListByIds(String ids);
 
 }

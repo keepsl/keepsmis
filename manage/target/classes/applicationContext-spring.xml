@@ -65,6 +65,7 @@
 			<tx:method name="del*" propagation="REQUIRED" />
 			<tx:method name="remove*" propagation="REQUIRED" />
 			<tx:method name="put*" propagation="REQUIRED" />
+			<tx:method name="cache*" propagation="REQUIRED"/>
 			<tx:method name="use*" propagation="NOT_SUPPORTED"/>
 			<tx:method name="get*" propagation="NOT_SUPPORTED" read-only="true" />
 			<tx:method name="count*" propagation="NOT_SUPPORTED" read-only="true" />
@@ -83,8 +84,12 @@
 	     <!-- 支持上传文件
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>  
      --> 
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+     <bean id="multipartResolver" class="com.keeps.tools.interceptor.MultipartListenerResolver">
+     	<property name="defaultEncoding" value="UTF-8" />
+		<property name="maxUploadSize" value="3073741824" />
+     </bean>
+    <!-- <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="maxUploadSize" value="3073741824" />
-	</bean>
+	</bean> -->
 </beans>

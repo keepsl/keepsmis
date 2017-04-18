@@ -10,7 +10,7 @@
     <div class="row" >
     	<div class="col-xs-12">
             <div class="J_conWarp g-warning-box">
-            	<h4 class="g-title">标签管理</h4>
+            	<h4 class="g-title">商品标签管理</h4>
             	<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
             		<div class="row">
                 		<div class="col-xs-12">

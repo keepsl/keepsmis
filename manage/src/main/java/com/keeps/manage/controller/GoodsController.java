@@ -1,5 +1,6 @@
 package com.keeps.manage.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,14 +15,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.keeps.core.controller.AbstractController;
 import com.keeps.manage.service.GoodsClassService;
 import com.keeps.manage.service.GoodsService;
 import com.keeps.manage.service.TagService;
+import com.keeps.manage.service.impl.GoodsServiceImpl;
 import com.keeps.model.SzlGoods;
 import com.keeps.model.TTag;
 import com.keeps.tools.utils.DateUtils;
 import com.keeps.tools.utils.JsonPost;
+import com.keeps.utils.FileUtil;
 
 /** 
  * <p>Title: GoodsController.java</p>  
@@ -45,6 +49,18 @@ public class GoodsController extends AbstractController{
 	@Autowired
 	private TagService tagService;
 	
+	@RequestMapping("progressbar")
+	public @ResponseBody String progressbar(HttpServletRequest request,Integer flag) {
+		Map<Object, Object> map= new HashMap<>();
+		if (flag==1) {
+			GoodsServiceImpl.uplength = 0;
+			GoodsServiceImpl.upcontent = "正在上传...";
+		}
+		map.put("uplength", GoodsServiceImpl.uplength);
+		map.put("upcontent", GoodsServiceImpl.upcontent);
+		return new Gson().toJson(map);
+	}
+	
 	@RequestMapping("index")
 	public ModelAndView index(ModelAndView view,HttpServletRequest request, HttpServletResponse response) {
 		view.setViewName("manager/goods/list");
@@ -62,7 +78,11 @@ public class GoodsController extends AbstractController{
 			}
 		});
 	}
-	
+	@RequestMapping("imp")
+	public ModelAndView imp(ModelAndView model){
+		model.setViewName("manager/goods/imp");
+		return model;
+	}
 	@RequestMapping("add")
 	public ModelAndView add(ModelAndView view,HttpServletRequest request, HttpServletResponse response,Integer classid) {
 		view.setViewName("manager/goods/add");
@@ -159,6 +179,42 @@ public class GoodsController extends AbstractController{
 				arg0.put("message", goodsService.updateFieidById("isrecommend",value,id));
 			}
 		});
+	}
+	
+	/**
+	  * @Title:			downloadTemplate 
+	  * @Description:	下载模版
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月16日
+	 */
+	@RequestMapping("download")
+	public void downloadTemplate(HttpServletRequest request,HttpServletResponse response){
+		String filepath = request.getSession().getServletContext().getRealPath("/skins/template/download/goods_template.xls");
+		String fileName = "商品信息导入模版.xls";
+		FileUtil.downloadFile(filepath, fileName,response);
+	}
+	
+	/**
+	  * @Title:			importCourseFile 
+	  * @Description:	批量导入商品
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月16日
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("imp/file")
+	public @ResponseBody Map impGodos(final @RequestParam(value = "goodsfile", required = false) MultipartFile goodsfile,final HttpServletRequest request, final HttpServletResponse response){
+		Map map = super.doJsonPost(new JsonPost() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void doInstancePost(Map arg0) {
+				arg0.put("message",goodsService.saveGoodsfileData(goodsfile, request));
+			}
+		});
+        return map;
 	}
 	
 }

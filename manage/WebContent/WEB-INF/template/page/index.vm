@@ -117,8 +117,8 @@
 		    			<ul class="nav-second-level">
 			        		#foreach ($menu in $list.children)
 			          			<li>
-			          				<a #if ($menu.children.size() > 0) href="javascript:;" #else class="J_menuItem" href="${path}/$menu.href" #end >${menu.name}#if ($menu.children.size() > 0)<i class="gi0 gi-23"></i>#end</a>
-			          				#if ($menu.children.size() > 0)
+			          				<a #if ($!menu.children.size()) href="javascript:;" #else class="J_menuItem" href="${path}/$menu.href" #end >${menu.name}#if ($!menu.children.size())<i class="gi0 gi-23"></i>#end</a>
+			          				#if ($!menu.children.size())
 			          				<ul class="nav-third-level">
 				          				#foreach ($pmenu in $menu.children)
 				          				<li><a class="J_menuItem" href="${path}/$pmenu.href" > <i class="gi0 gi-25"></i>${pmenu.name}</a></li>

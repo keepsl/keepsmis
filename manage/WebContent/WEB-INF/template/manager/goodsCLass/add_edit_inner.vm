@@ -15,13 +15,13 @@
 					<form class="form-horizontal" role="form" id="formid">
 						<input type="hidden" name="id" value="$!{goodsClass.id}"/>
 						<div class="form-group">
-							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>商品分类名称</label>
+							<label for="className" class="col-xs-2 control-label"><em class="text-red">*</em>商品分类名：</label>
 							<div class="col-xs-9">
 								<input type="text" class="form-control" id="className" name="classname" value="$!{goodsClass.classname}" maxlength="100">
 							</div>
 						</div>
 						<div class="form-group">
-						    <label for="pid" class="col-xs-2 control-label"><em class="text-red">*</em>上级分类</label>
+						    <label for="pid" class="col-xs-2 control-label"><em class="text-red">*</em>上级分类：</label>
 						    <div class="col-xs-9">
 							      <select class="form-control" name="pid" id="pid">
 							        <option value="0">一级分类</option>
@@ -39,21 +39,21 @@
 						    </div>
 						</div>
 						<div class="form-group">
-							<label for="icon" class="col-xs-2 control-label"><em class="text-red">*</em>图标</label>
+							<label for="classicon" class="col-xs-2 control-label"><em class="text-red">*</em>图标：</label>
 							<div class="col-xs-9">
 								<input type="text" class="form-control" id="classicon" name="classicon" value="$!{goodsClass.classicon}" maxlength="50">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="sort" class="col-xs-2 control-label"><em class="text-red">*</em>顺序</label>
+							<label for="classsort" class="col-xs-2 control-label"><em class="text-red">*</em>顺序：</label>
 							<div class="col-xs-9">
 								<input type="number" class="form-control" id="classsort" name="classsort" value="$!{goodsClass.classsort}" maxlength="10">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-xs-2 control-label check-label"><em class="text-red">*</em>是否热门</label>
+							<label class="col-xs-2 control-label check-label"><em class="text-red">*</em>是否热门：</label>
 							<div class="col-xs-9">
-								<div class="J_radioBox ">
+								<div class="J_radioBox">
 									<label class="radio-inline">
 									  <input type="radio" name="ishot" value="1"> 是
 									</label>
@@ -65,9 +65,9 @@
 						</div>
 						
 						<div class="form-group">
-							<label class="col-xs-2 control-label check-label"><em class="text-red">*</em>是否推荐</label>
+							<label class="col-xs-2 control-label check-label"><em class="text-red">*</em>是否推荐：</label>
 							<div class="col-xs-9">
-								<div class="J_radioBox ">
+								<div class="J_radioBox">
 									<label class="radio-inline">
 									  <input type="radio" name="isrecommend" value="1"> 是
 									</label>

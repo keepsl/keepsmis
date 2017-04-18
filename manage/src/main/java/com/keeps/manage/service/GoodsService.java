@@ -29,4 +29,5 @@ public interface GoodsService extends SoftService{
 	
 	public String updateFieidById(String fieid,Integer value,String ids);
 
+	public String saveGoodsfileData(MultipartFile file, HttpServletRequest request);
 }

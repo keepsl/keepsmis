@@ -1,3 +1,4 @@
+#parse("manager/page_header.vm")
 <script type="text/javascript" charset="utf-8" src="${path}/javascript/imageRead.js"></script>
 <script type="text/javascript" src="${path}/javascript/selectTree.js?date=2017040600009"></script>
 <style>
@@ -18,7 +19,7 @@
 						<input type="hidden" name="goodsimage"  value="$!{goods.goodsimage}"/>
 						<input type="hidden" name="qrcodepath"  value="$!{goods.qrcodepath}"/>
 						<div class="form-group">
-							<label for="goodsname" class="col-xs-2 control-label"><em class="text-red">*</em>商品名称</label>
+							<label for="goodsname" class="col-xs-2 control-label"><em class="text-red">*</em>商品名称：</label>
 							<div class="col-xs-9">
 								<input type="text" class="form-control" id="goodsname" name="goodsname" value="$!{goods.goodsname}" maxlength="500">
 							</div>
@@ -73,7 +74,7 @@
 							</div>
 						</div>
 						<!--<div class="form-group">
-							<label for="tag" class="col-xs-2 control-label">TAG标签</label>
+							<label for="tag" class="col-xs-2 control-label">TAG标签：</label>
 							<div class="col-xs-9">
 								<div class="form-inline clearfix">
 									<span class="group" style="padding-bottom: 0;">
@@ -87,11 +88,11 @@
 						<div class="form-group">
 							<label for="starttime" class="col-xs-2 control-label"><em class="text-red">*</em>开始时间：</label>
 							<div class="col-xs-3">
-								<input type="text" class="form-control Wdate g-Wate-left" id="starttime" name="starttime" value="$!date.format('yyyy-MM-dd HH:mm:ss',$!{goods.starttime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});">
+								<input type="text" class="form-control Wdate g-Wate-left" id="starttime" name="starttime" value="$!date.format('yyyy-MM-dd',$!{goods.starttime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
 							</div>
-							<label for="endtime" class="col-xs-2 control-label">结束时间</label>
+							<label for="endtime" class="col-xs-2 control-label">结束时间：</label>
 							<div class="col-xs-3">
-								<input type="text" class="form-control Wdate g-Wate-left" id="endtime" name="endtime" value="$!date.format('yyyy-MM-dd HH:mm:ss',$!{goods.endtime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});">
+								<input type="text" class="form-control Wdate g-Wate-left" id="endtime" name="endtime" value="$!date.format('yyyy-MM-dd',$!{goods.endtime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
 							</div>
 						</div>
 						<div class="form-group">

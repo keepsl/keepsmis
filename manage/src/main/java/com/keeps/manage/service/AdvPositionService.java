@@ -2,6 +2,10 @@ package com.keeps.manage.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.keeps.core.service.SoftService;
 import com.keeps.model.TAdvPosition;
 import com.keeps.tools.utils.page.Page;
@@ -22,13 +26,15 @@ public interface AdvPositionService extends SoftService{
 	public Page queryList(TAdvPosition advPosition);
 	
 	public List<TAdvPosition> queryAll();
-	
+
 	public TAdvPosition getById(Integer id);
 	
-	public String saveOrUpdate(TAdvPosition advPosition);
+	public String saveOrUpdate(TAdvPosition advPosition, MultipartFile defaultcontentfile, HttpServletRequest request);
 	
 	public String updateFieidById(String fieid,Integer value,String ids);
 
 	public String delete(String ids);
+	
+	public String cacheAdvFile(String ids);
 	
 }

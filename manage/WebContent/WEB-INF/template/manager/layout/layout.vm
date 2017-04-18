@@ -8,11 +8,7 @@
 		<meta name="apple-mobile-web-app-capable" content="yes">	
 		<meta name="format-detection" content="telephone=no">	
 		<title>keeps</title>
-		<!-- bootstrap包 -->
-		<link rel="stylesheet" href="${path}/plug/bootstrap-3.3.5/css/bootstrap.min.css" />   
 		
-		<link rel="stylesheet" type="text/css" href="${path}/skins/template/css/common.css" media="all">
-
 		<script type="text/javascript" src="${path}/plug/respond.src.js"></script>
 		<!-- jquery基础包 -->
 		<script type="text/javascript" src="${path}/plug/jquery/jquery.min.js"></script> 
@@ -27,6 +23,8 @@
 		<script type="text/javascript" src="${path}/plug/jqGrid/jquery.jqGrid.js"></script>
 		<script  type="text/javascript" src="${path}/plug/jqGrid/grid.locale-cn.js"></script>
 		
+		<!-- bootstrap包 -->
+		<link rel="stylesheet" href="${path}/plug/bootstrap-3.3.5/css/bootstrap.min.css" />   
 		<script type="text/javascript" src="${path}/plug/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 		
 		<!-- jquery scroll包,滚动条美化 -->
@@ -49,6 +47,8 @@
 		<!-- select优化 -->
 		<link href="${path}/plug/select2-4.0.3/css/select2.css" type="text/css" rel="stylesheet" />
 		<script type="text/javascript" src="${path}/plug/select2-4.0.3/js/select2.full.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="${path}/skins/template/css/common.css" media="all">
 
 	</head>
 

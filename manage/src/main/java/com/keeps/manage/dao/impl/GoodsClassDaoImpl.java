@@ -3,6 +3,7 @@ package com.keeps.manage.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Repository;
 
 import com.keeps.core.dao.AbstractDao;
@@ -80,4 +81,14 @@ public class GoodsClassDaoImpl extends AbstractDao implements GoodsClassDao {
 		return super.executeSQL(sql, new String[]{"fieid","ids"}, new Object[]{value,ids});
 	}
 	
+	@SuppressWarnings("unchecked")
+	public SzlGoodsClass getByClassname(String classname){
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select * from szl_goods_class where classname=? ");
+		List<Object> values = new ArrayList<Object>();
+		values.add(classname);
+		List<SzlGoodsClass> list = super.getByPropertySql(sb.toString(), values.toArray(), SzlGoodsClass.class);
+		return CollectionUtils.isNotEmpty(list)?list.get(0):null;
+	}
+
 }

@@ -1,0 +1,44 @@
+<div class="g-total-pd" id="jqGridWarp">
+	<div class="row">
+		<div class="col-xs-12">
+	  		<div class="col-container clearfix">
+	  			<div class="button-inline">
+	  				<a class="gbn" href="javascript:;" onclick="imp_obj()"><i></i>导入</a>
+			  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="add_obj();"><i></i>新增</a>
+                    <a class="gbn gbn-edit" id="btn_modify" href="javascript:;" onclick="edit_obj();"><i></i>编辑</a>
+                    <a class="gbn gbn-del" id="btn_del" href="javascript:;" onclick="delete_obj();"><i></i>删除</a>
+			    </div>
+	  			<form class="form-inline clearfix" role="form" id="form1" onsubmit="return false;">
+	  				<input type="hidden" name="classid"/>
+                    <span class="group">
+                        <label>名称:</label>
+                        <input type="text" class="form-control" name="goodsname" style="width:220px">
+                    </span>
+                    <span class="group">
+			            <label>来源：</label>
+			            #dictselecttag('goodssource','dic_goods_source',0)
+			        </span>
+			        <span class="group">
+			            <label>热门：</label>
+			            #dictselecttag('ishot','dic_open_close',0)
+			        </span>
+			        <span class="group">
+			            <label>推荐：</label>
+			            #dictselecttag('isrecommend','dic_open_close',0)
+			        </span>
+                    <span class="group">
+                    	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
+                    </span>
+                </form>
+        	</div>
+        </div>
+    </div><!-- 查询表单域 -->
+    
+	<div class="row" >
+		<div class="col-xs-12">
+	  		<div>
+	  			<table id="jqGridId"></table><div id="jqGridPagerId"></div>
+	  		</div>
+		</div>
+	</div><!-- 列表区域 -->
+</div>

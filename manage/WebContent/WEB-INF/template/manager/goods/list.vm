@@ -8,13 +8,14 @@
 
 <div class="container-fluid">
     <div class="row" >
+    
     	<div class="col-xs-2" >
             <div id="treediv" class="J_conWarp g-area-loading">
                 <h4 class="g-title">商品分类</h4>
                 <div class="g-total-pd">
                 	<!--<div id="areTreeDiv" class="input-group g-search-box2">
-					 	<span class="input-group-addon" id="searchTerm" onclick="searchTerm()"></span>
-					 	<input type="text" class="form-control" id="termname" name="termname" placeholder="搜索">
+					 	<span class="input-group-addon" id="searchTerm" onclick="searchGoodsclass()"></span>
+					 	<input type="text" class="form-control" id="classname" name="classname" placeholder="搜索">
 					</div>-->
                     <ul id="treeid" class="ztree reset-box-sizing"></ul>
                </div>
@@ -23,41 +24,25 @@
     	
     	<div class="col-xs-10">
             <div class="J_conWarp g-warning-box">
-            	<h4 class="g-title">商品管理</h4>
-            	<!--<h4 class="g-title">商品管理<span class="intro J_arrowAction" style="cursor:pointer;">功能介绍<i class="gi-down"></i></span></h4>-->
-            	<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
-            		<div class="row">
-                		<div class="col-xs-12">
-					  		<div class="col-container clearfix">
-					  			<div class="button-inline g-fl">
-							  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="add_obj();"><i></i>新增</a>
-			                        <a class="gbn gbn-edit" id="btn_modify" href="javascript:;" onclick="edit_obj();"><i></i>编辑</a>
-			                        <a class="gbn gbn-del" id="btn_del" href="javascript:;" onclick="delete_obj();"><i></i>删除</a>
-							    </div>
-					  			<form class="form-inline g-fr" role="form" id="form1" onsubmit="return false;">
-					  				<input type="hidden" name="classid"/>
-			                        <span class="group">
-			                            <label>名称:</label>
-			                            <input type="text" class="form-control" id="goodsname" name="goodsname">
-			                        </span>
-			                        <span class="group">
-			                        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
-			                        </span>
-			                    </form>
-	                    	</div>
-	                    </div>
-                    </div><!-- 查询表单域 -->
-                    
-               		<div class="row" >
-						<div class="col-xs-12">
-					  		<div>
-					  			<table id="jqGridId"></table><div id="jqGridPagerId"></div>
-					  		</div>
-						</div>
-					</div><!-- 列表区域 -->
-            	</div>
+
+            	<ul class="nav nav-tabs g-nav-tab1" role="tablist" id="myTab">
+					<li role="presentation" id="goodsli" class="active"><a href="#goodspanel" role="tab" data-toggle="tab">正常出售商品</a></li>
+					<li role="presentation" id="expiregoodsli" ><a href="#expiregoodspanel" role="tab" data-toggle="tab">到期商品</a></li>
+				</ul>
+				
+            	<div class="tab-content">
+            		<div role="tabpanel" class="tab-pane" id="goodspanel">
+		            	#parse("manager/goods/goodspanel.vm")
+		            </div>
+		            
+		            <div role="tabpanel" class="tab-pane" id="expiregoodspanel">
+		            	#parse("manager/goods/expiregoodspanel.vm")
+		            </div>
+            	</div><!-- end -->
+            	
             </div>
          </div>
 	</div>
 </div>
+<script src="${path}/plug/respond.src.js"></script>
 <script type="text/javascript" src="${path}/javascript/goods.js?date=201704060008"></script>

@@ -76,8 +76,9 @@ public class MenuController extends AbstractController {
 	  * @data:			2017年1月13日
 	 */
 	@RequestMapping("add")
-	public ModelAndView add(ModelAndView view,HttpServletRequest request, HttpServletResponse response) {
+	public ModelAndView add(ModelAndView view,HttpServletRequest request, HttpServletResponse response,Integer pid) {
 		view.setViewName("manager/menu/add");
+		view.addObject("pid", pid);
 		view.addObject("menulist", menuService.queryListAll(1,null));
 		return view;
 	}
