@@ -19,6 +19,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import com.keeps.tools.exception.CapecException;
+
 public class ImageUtils {
 	public static final void scale(String srcImageFile, String result, int scale) {
 		try {
@@ -407,8 +409,88 @@ public class ImageUtils {
 
 		return (length / 2);
 	}
+	public static void cut4(String src, String dist, float width, float height) {
+        try {
+            File srcfile = new File(src);
+            
+            if (!srcfile.exists()) {
+                throw new CapecException(src+":图片文件不存在");
+            }
+            
+            BufferedImage image = ImageIO.read(srcfile);
 
+            // 获得缩放的比例
+            double ratio = 1.0;
+            // 判断如果高、宽都不大于设定值，则不处理
+            if (image.getHeight() > height || image.getWidth() > width) {
+                if (image.getHeight() > image.getWidth()) {
+                    ratio = height / image.getHeight();
+                } else {
+                    ratio = width / image.getWidth();
+                }
+            }
+            // 计算新的图面宽度和高度
+            int newWidth = (int) (image.getWidth() * ratio);
+            int newHeight = (int) (image.getHeight() * ratio);
+
+            BufferedImage bfImage = new BufferedImage(newWidth, newHeight,
+                    BufferedImage.TYPE_INT_RGB);
+            bfImage.getGraphics().drawImage(
+                    image.getScaledInstance(newWidth, newHeight,
+                            Image.SCALE_SMOOTH), 0, 0, null);
+
+            File newFile=new File(dist);
+            if (!newFile.exists()) {
+            	newFile.mkdirs();
+            }
+            ImageIO.write(bfImage, "JPEG", newFile);
+        } catch (Exception e) {
+            throw new CapecException(e);
+        }
+    }
+	
+	 /**  
+     * 图像切割（改）     *  
+     * @param srcImageFile           源图像地址 
+     * @param dirImageFile           新图像地址 
+     * @param x                      目标切片起点x坐标 
+     * @param y                      目标切片起点y坐标 
+     * @param destWidth              目标切片宽度 
+     * @param destHeight             目标切片高度 
+     */ 
+    public static void absCut(String srcImageFile,String dirImageFile, int x, int y, int destWidth, int destHeight, String imageType) {  
+        try {  
+            Image img;  
+            ImageFilter cropFilter;
+            BufferedImage bi = ImageIO.read(new File(srcImageFile));  
+            int srcWidth = bi.getWidth();
+            int srcHeight = bi.getHeight();   
+            if (srcWidth >= destWidth && srcHeight >= destHeight) {  
+                Image image = bi.getScaledInstance(srcWidth, srcHeight,  
+                        Image.SCALE_DEFAULT);
+                cropFilter = new CropImageFilter(x, y, destWidth, destHeight);  
+                img = Toolkit.getDefaultToolkit().createImage(  
+                        new FilteredImageSource(image.getSource(), cropFilter));  
+                BufferedImage tag = new BufferedImage(destWidth, destHeight,  
+                        BufferedImage.TYPE_INT_RGB);  
+                Graphics g = tag.getGraphics();  
+                g.drawImage(img, 0, 0, null);
+                g.dispose();
+                File file=new File(dirImageFile);
+                if(!file.exists()){
+                	file.mkdirs();  
+                } 
+                // 输出为文件   
+                ImageIO.write(tag, imageType.toLowerCase(), file);   
+            }  
+        } catch (Exception e) {   
+        	throw new CapecException(e);
+        }  
+    }
 	public static void main(String[] args) {
-		scale2("c:/QR/IMG_0004.JPG", "c:/QR/IMG_0004_SCALE.JPG", 300, 300, true);
+		//scale2("c:/QR/1040517595.jpg", "c:/QR/IMG_0004_SCALE.JPG", 300, 300, true);
+		cut("c:/QR/1040517595.jpg", "c:/QR/1040517595_CUT.JPG", 0, 0, 300, 300);
+		cut2("c:/QR/1040517595.jpg", "c:/QR/1040517595_CUT3.JPG", 300, 300);
+		cut4("c:/QR/1040517595.jpg", "c:/QR/1040517595_CUT2.JPG", 300, 300);
 	}
 }

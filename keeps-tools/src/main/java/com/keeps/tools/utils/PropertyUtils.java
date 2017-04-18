@@ -10,6 +10,8 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.alibaba.druid.sql.dialect.oracle.ast.stmt.OracleIfStatement.Else;
+
 public class PropertyUtils {
 	private static final Log LOG = LogFactory.getLog(PropertyUtils.class);
 

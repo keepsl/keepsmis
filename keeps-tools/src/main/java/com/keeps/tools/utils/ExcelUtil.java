@@ -3,10 +3,12 @@ package com.keeps.tools.utils;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -108,12 +110,17 @@ public class ExcelUtil {
         if (cell.getCellType() == cell.CELL_TYPE_BOOLEAN) {
             return String.valueOf(cell.getBooleanCellValue()).trim().replace("\n", "");
         } else if (cell.getCellType() == cell.CELL_TYPE_NUMERIC) {
-        	DecimalFormat df = new DecimalFormat("0");  
+        	if(HSSFDateUtil.isCellDateFormatted(cell)){
+        		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        		return sdf.format(HSSFDateUtil.getJavaDate(cell.getNumericCellValue()));
+        	}
+        	DecimalFormat df = new DecimalFormat("#.##");  
             return String.valueOf(df.format(cell.getNumericCellValue())).trim().replace("\n", "");
         } else {
             return String.valueOf(cell.getStringCellValue()).trim().replace("\n", "");
         }
     }
+	
 	
 	/**
 	  * @Title:			isMergedRow 

@@ -36,10 +36,10 @@ public class VelocityStaticView extends VelocityLayoutView {
 
 	public static String MAIN_PAGE_INDEX = "index.html";
 
-	private static HtmlCreator creator = null;
+	private static HtmlCreator creators = null;
 
 	public static void setHtmlCreator(HtmlCreator creator) {
-		creator = creator;
+		creators = creator;
 	}
 
 	protected void renderScreenContent(Context velocityContext) throws Exception {

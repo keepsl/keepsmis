@@ -1,10 +1,12 @@
 package com.keeps.tools.utils;
 
-import com.keeps.tools.common.SoftUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+
+import com.keeps.tools.common.SoftUtils;
 /**
  * <p>
  * Title: IoUtils.java
@@ -21,6 +23,16 @@ import java.io.UnsupportedEncodingException;
  * @date 创建日期：2017年4月8日 修改日期： 修改人： 复审人：
  */
 public class IoUtils implements SoftUtils {
+	private static final long serialVersionUID = 1L;
+
+	public static void close(OutputStreamWriter osw) {
+		try {
+			if (osw != null)
+				osw.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
 	public static void close(InputStream is) {
 		try {
 			if (is != null)
@@ -29,7 +41,6 @@ public class IoUtils implements SoftUtils {
 			throw new RuntimeException(e.getMessage());
 		}
 	}
-
 	public static void close(OutputStream os) {
 		try {
 			if (os != null)

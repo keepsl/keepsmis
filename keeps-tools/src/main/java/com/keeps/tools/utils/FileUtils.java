@@ -10,7 +10,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -366,9 +368,25 @@ public class FileUtils implements SoftUtils {
 		return file;
 	}
 
+	public static void createFile(String path,String name,String content){
+		File file = validatePath(path, name, null);
+		OutputStreamWriter osw = null;
+		PrintWriter pw = null;
+		try {
+			osw = new OutputStreamWriter(new FileOutputStream(file), "UTF-8");
+			pw = new PrintWriter(osw);
+			pw.write(content.toCharArray());
+			osw.flush();
+		} catch (Exception localException) {
+		} finally {
+			IoUtils.close(osw);
+			if(pw!=null)
+				pw.close();
+		}
+	}
 	public static void main(String[] s) {
 		String as = "aaab.jgp";
-
 		System.out.println(".".intern());
+		createFile("F:\\testupdatefile", "load.vm", "dddd");
 	}
 }

@@ -23,28 +23,21 @@ import org.apache.log4j.Logger;
  * 复审人：
  */
 public class CookieUtils {
-	private static Logger log = Logger.getLogger(CookieUtils.class);
 	public static final int maxAge=1800;
 
-	public static String getCookieId(HttpServletRequest req, String cookieName) {
-		Cookie[] cookies = req.getCookies();
+/*	public static String getCookieId(HttpServletRequest request, String cookieName) {
 		try {
-			if (cookies == null || cookies.length <= 0)
-				return null;
-			for (Cookie cookie : cookies) {
-				if (cookie == null)
-					continue;
-				if (cookieName.equals(cookie.getName())) {
-					String v = cookie.getValue();
-					log.info("从cookie中取到了cookieid:" + v);
-					return URLDecoder.decode(v, "utf-8").trim();
-				}
+			Cookie cookie = getCookie(request,cookieName);
+			if (cookie!=null) {
+				String v = cookie.getValue();
+				log.info("从cookie中取到了cookieid:" + v);
+				return URLDecoder.decode(v, "utf-8").trim();
 			}
-		} catch (UnsupportedEncodingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
-	}
+		return "";
+	}*/
 	/**
 	 * 从cookie中获取值Cookie
 	 * @param request
@@ -55,9 +48,12 @@ public class CookieUtils {
 		Cookie[]cookies=request.getCookies();
 		if(null==cookies||cookies.length==0)return null;
 		for(Cookie cookie:cookies){
-			if(cookie.getName().equalsIgnoreCase(cookieName))return cookie;
+			if (cookie == null)
+				continue;
+			if(cookie.getName().equalsIgnoreCase(cookieName))
+				return cookie;
 		}
-		return  null;
+		return null;
 	}
 	
 	/**
