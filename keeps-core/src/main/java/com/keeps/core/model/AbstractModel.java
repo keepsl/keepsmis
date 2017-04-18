@@ -1,6 +1,7 @@
 package com.keeps.core.model;
 
 import com.keeps.core.model.AbstractSoftModelEntity;
+import com.keeps.core.model.utils.ModelUtil;
 
 /** 
  * <p>Title: AbstractModel.java</p>  
@@ -15,5 +16,6 @@ import com.keeps.core.model.AbstractSoftModelEntity;
  */
 public abstract class AbstractModel extends AbstractSoftModelEntity<String> {
 	public void idhandle() {
+		ModelUtil.randomUUID(this);
 	}
 }
