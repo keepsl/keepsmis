@@ -24,6 +24,9 @@ public class Constants {
 	//文件访问服务器路径
 	public static String file_view_path="";
 
+	//广告生成文件路径
+	public static String ADV_FILE_PATH = "file/adv/cache";
+
 	//文章封面上传路径
 	public static String ARTICLE_COVER_IMAGE_PATH = "article/cover/image";
 	//商品图片路径
@@ -38,7 +41,25 @@ public class Constants {
 		GOODS_CUT_IMAGE_WIDTH_HEIGHT2.put(1,800);
 		GOODS_CUT_IMAGE_WIDTH_HEIGHT2.put(2, 800);
 	}
-	//商品图片路径
+	
+	//广告位默认图片路径
+	public static String ADV_POSITION_IMAGE_PATH = "advPosition/cover/image";
+	//宽高组
+	public static final Map<Integer, Integer> ADV_POSITION_CUT_IMAGE_WIDTH_HEIGHT = new HashMap<Integer, Integer>();
+	static{
+		ADV_POSITION_CUT_IMAGE_WIDTH_HEIGHT.put(1, 660);
+		ADV_POSITION_CUT_IMAGE_WIDTH_HEIGHT.put(2, 360);
+	}
+	
+	//广告默认图片路径
+	public static String ADV_IMAGE_PATH = "adv/cover/image";
+	public static final Map<Integer, Integer> ADV_CUT_IMAGE_WIDTH_HEIGHT = new HashMap<Integer, Integer>();
+	static{
+		ADV_CUT_IMAGE_WIDTH_HEIGHT.put(1, 660);
+		ADV_CUT_IMAGE_WIDTH_HEIGHT.put(2, 360);
+	}
+	
+	//商品领券二维码路径
 	public static String GOODS_QRCODE_IMAGE_PATH = "goods/qrcode/image";
 		
 	//封面图宽高
@@ -47,6 +68,13 @@ public class Constants {
 
 	//上传图片大小单位M
 	public static final Integer MAX_UPLOAD_IMAGE_SIZE = 2;
+	
+	//开关状态，1是，2否
+	public static final Map<Integer, String> SYSTEM_OPEN_CLOSE = new HashMap<Integer, String>();
+	static{
+		SYSTEM_OPEN_CLOSE.put(1, "是");
+		SYSTEM_OPEN_CLOSE.put(2, "否");
+	}
 	
 	//状态，1启用，2禁用
 	public static final Map<Integer, String> SYSTEM_STATUS = new HashMap<Integer, String>();
@@ -67,11 +95,33 @@ public class Constants {
 		GOODS_SOURCE.put(2, "天猫");
 		GOODS_SOURCE.put(3, "京东");
 	}
+	
+	//广告为类别
+	public static final Map<Integer, String> ADV_POSITION_CLASS = new HashMap<Integer, String>();
+	static{
+		ADV_POSITION_CLASS.put(1, "图片");
+		ADV_POSITION_CLASS.put(2, "文字");
+		ADV_POSITION_CLASS.put(3, "幻灯");
+		ADV_POSITION_CLASS.put(4, "Flash");
+	}
+	
+	//广告位展示方式
+	public static final Map<Integer, String> ADV_POSITION_DISPLAY = new HashMap<Integer, String>();
+	static{
+		ADV_POSITION_DISPLAY.put(1, "幻灯片");
+		ADV_POSITION_DISPLAY.put(2, "多广告展示");
+		ADV_POSITION_DISPLAY.put(3, "单广告展示");
+	}
+		//通用
 	public static final Map<String, Map<Integer, String>> DICT_ITEM_LIST = new HashMap<String, Map<Integer, String>>();
 	static{
+		DICT_ITEM_LIST.put("dic_open_close", SYSTEM_OPEN_CLOSE);
 		DICT_ITEM_LIST.put("dic_status", SYSTEM_STATUS);
 		DICT_ITEM_LIST.put("dic_template_type", TEMPLATE_TYPE);
 		DICT_ITEM_LIST.put("dic_goods_source", GOODS_SOURCE);
+		DICT_ITEM_LIST.put("dic_adv_position_class", ADV_POSITION_CLASS);
+		DICT_ITEM_LIST.put("dic_adv_position_display", ADV_POSITION_DISPLAY);
+
 	}
 
 }

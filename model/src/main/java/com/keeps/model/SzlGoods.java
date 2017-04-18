@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.keeps.core.model.AbstractModel;
+import com.keeps.core.model.AbstractModelLong;
 import com.keeps.core.model.plus.ModelPlusSchool;
 
 /**
@@ -20,9 +20,9 @@ import com.keeps.core.model.plus.ModelPlusSchool;
  */
 @Entity
 @Table(name = "szl_goods")
-public class SzlGoods extends AbstractModel implements ModelPlusSchool{
+public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 
-	private Integer id;
+	private Long id;
 	private Integer pclassid;
 	private Integer classid;
 	private String goodsname;
@@ -55,11 +55,12 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 	private String viewgoodsimage;
 	private String viewqrcodepath;
 	private String classname;
+	private Integer searchtype;//查询类型，1正常出售商品，2到期商品
 
 	public SzlGoods() {
 	}
 
-	public SzlGoods(Integer id, Integer pclassid, Integer classid, String goodsname, String origurl, String toshorturl, String tolongurl, String qrcodepath, 
+	public SzlGoods(Long id, Integer pclassid, Integer classid, String goodsname, String origurl, String toshorturl, String tolongurl, String qrcodepath, 
 			String taokouling, String tocouponsurl, String goodsimage, Float currentprice,
 			Float couponafterprice, Float couponprice, String starttime, String endtime, Integer realtocouponnum,
 			Integer tocouponnum, String taglistid, String taglistname,
@@ -90,7 +91,7 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 		this.updatetime = updatetime;
 		this.createperson = createperson;
 	}
-	public SzlGoods(Integer id, Integer pclassid, Integer classid, String goodsname, String origurl, String toshorturl, String tolongurl, String qrcodepath, 
+	public SzlGoods(Long id, Integer pclassid, Integer classid, String goodsname, String origurl, String toshorturl, String tolongurl, String qrcodepath, 
 			String taokouling, String tocouponsurl, String goodsimage, Float originalprice,
 			Float currentprice, Float couponafterprice, Float couponprice, String starttime, String endtime, Integer realtocouponnum, Integer tocouponnum,
 			String taglistid, String taglistname, Integer goodssource, Integer ishot, Integer isrecommend, Integer isdelete, String description, Date createtime,
@@ -128,11 +129,11 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	public Long getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
@@ -414,6 +415,15 @@ public class SzlGoods extends AbstractModel implements ModelPlusSchool{
 
 	public void setClassname(String classname) {
 		this.classname = classname;
+	}
+
+	@Transient
+	public Integer getSearchtype() {
+		return searchtype;
+	}
+
+	public void setSearchtype(Integer searchtype) {
+		this.searchtype = searchtype;
 	}
 
 }

@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.keeps.core.model.AbstractModel;
+import com.keeps.core.model.AbstractModelInteger;
 import com.keeps.core.model.plus.ModelPlusSchool;
 
 /**
@@ -20,7 +20,7 @@ import com.keeps.core.model.plus.ModelPlusSchool;
  */
 @Entity
 @Table(name = "t_article")
-public class TArticle extends AbstractModel implements ModelPlusSchool{
+public class TArticle extends AbstractModelInteger implements ModelPlusSchool{
 
 	private Integer id;
 	private String title;

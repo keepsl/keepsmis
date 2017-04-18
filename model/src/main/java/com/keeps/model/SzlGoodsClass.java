@@ -11,7 +11,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.keeps.core.model.AbstractModel;
+import com.keeps.core.model.AbstractModelInteger;
 import com.keeps.core.model.plus.ModelPlusSchool;
 
 /**
@@ -19,7 +19,7 @@ import com.keeps.core.model.plus.ModelPlusSchool;
  */
 @Entity
 @Table(name = "szl_goods_class")
-public class SzlGoodsClass  extends AbstractModel implements ModelPlusSchool{
+public class SzlGoodsClass  extends AbstractModelInteger implements ModelPlusSchool{
 
 	private Integer id;
 	private Integer pid;

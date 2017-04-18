@@ -14,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.keeps.core.model.AbstractModel;
+import com.keeps.core.model.AbstractModelInteger;
 import com.keeps.core.model.plus.ModelPlusSchool;
 
 /**
@@ -22,7 +22,7 @@ import com.keeps.core.model.plus.ModelPlusSchool;
  */
 @Entity
 @Table(name = "szl_goods_to_tag")
-public class SzlGoodsToTag extends AbstractModel implements ModelPlusSchool {
+public class SzlGoodsToTag extends AbstractModelInteger implements ModelPlusSchool {
 
 	private Integer id;
 	private Integer tagid;

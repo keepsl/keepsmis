@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.keeps.core.model.AbstractModel;
+import com.keeps.core.model.AbstractModelInteger;
 import com.keeps.core.model.plus.ModelPlusSchool;
 
 /**
@@ -23,7 +23,7 @@ import com.keeps.core.model.plus.ModelPlusSchool;
  */
 @Entity
 @Table(name = "t_manager_menu")
-public class TManagerMenu extends AbstractModel implements ModelPlusSchool {
+public class TManagerMenu extends AbstractModelInteger implements ModelPlusSchool {
 
 	private Integer id;
 	private Integer pid;

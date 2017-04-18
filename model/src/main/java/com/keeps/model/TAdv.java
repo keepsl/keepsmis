@@ -2,7 +2,6 @@ package com.keeps.model;
 // default package
 // Generated 2017-4-12 16:33:33 by Hibernate Tools 3.2.2.GA
 
-import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +9,9 @@ import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
-import com.keeps.core.model.AbstractModel;
+import com.keeps.core.model.AbstractModelInteger;
 import com.keeps.core.model.plus.ModelPlusSchool;
 
 /**
@@ -21,7 +19,7 @@ import com.keeps.core.model.plus.ModelPlusSchool;
  */
 @Entity
 @Table(name = "t_adv")
-public class TAdv extends AbstractModel implements ModelPlusSchool{
+public class TAdv extends AbstractModelInteger implements ModelPlusSchool{
 
 	private Integer id;
 	private Integer apId;
@@ -29,21 +27,28 @@ public class TAdv extends AbstractModel implements ModelPlusSchool{
 	private String advLink;
 	private String advContent;
 	private Integer isShow;
-	private Date starttime;
-	private Date endtime;
+	private String starttime;
+	private String endtime;
 	private Integer slideSort;
 	private Integer clickNum;
-	private BigDecimal advPrice;
+	private Float advPrice;
 	private Date createtime;
 	private Date updatetime;
 	private Integer createperson;
 	
+	private String advContentpath;//图片内容
+	private Integer apClass;
+	private String apName;
+	private Integer apDisplay;
+	private Integer advNum;
+	private Integer countnum;
+
 	public TAdv() {
 	}
 
 
-	public TAdv(Integer apId, String advTitle, String advLink, String advContent, Integer isShow, Date starttime,
-			Date endtime, Integer slideSort, Integer clickNum, BigDecimal advPrice, Date createtime, Date updatetime, Integer createperson) {
+	public TAdv(Integer apId, String advTitle, String advLink, String advContent, Integer isShow, String starttime,
+			String endtime, Integer slideSort, Integer clickNum, Float advPrice, Date createtime, Date updatetime, Integer createperson) {
 		this.apId = apId;
 		this.advTitle = advTitle;
 		this.advLink = advLink;
@@ -61,7 +66,6 @@ public class TAdv extends AbstractModel implements ModelPlusSchool{
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-
 	@Column(name = "id", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;
@@ -108,7 +112,7 @@ public class TAdv extends AbstractModel implements ModelPlusSchool{
 	}
 
 	@Column(name = "is_show", nullable = false)
-	public Integer isIsShow() {
+	public Integer getIsShow() {
 		return this.isShow;
 	}
 
@@ -116,23 +120,21 @@ public class TAdv extends AbstractModel implements ModelPlusSchool{
 		this.isShow = isShow;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "starttime", nullable = false, length = 19)
-	public Date getStarttime() {
+	public String getStarttime() {
 		return this.starttime;
 	}
 
-	public void setStarttime(Date starttime) {
+	public void setStarttime(String starttime) {
 		this.starttime = starttime;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "endtime", nullable = false, length = 19)
-	public Date getEndtime() {
+	public String getEndtime() {
 		return this.endtime;
 	}
 
-	public void setEndtime(Date endtime) {
+	public void setEndtime(String endtime) {
 		this.endtime = endtime;
 	}
 
@@ -154,12 +156,12 @@ public class TAdv extends AbstractModel implements ModelPlusSchool{
 		this.clickNum = clickNum;
 	}
 
-	@Column(name = "adv_price", nullable = false, precision = 10, scale = 3)
-	public BigDecimal getAdvPrice() {
+	@Column(name = "adv_price", nullable = false, precision = 10, scale = 2)
+	public Float getAdvPrice() {
 		return this.advPrice;
 	}
 
-	public void setAdvPrice(BigDecimal advPrice) {
+	public void setAdvPrice(Float advPrice) {
 		this.advPrice = advPrice;
 	}
 
@@ -191,4 +193,68 @@ public class TAdv extends AbstractModel implements ModelPlusSchool{
 		this.createperson = createperson;
 	}
 
+	@Transient
+	public Integer getApClass() {
+		return apClass;
+	}
+
+
+	public void setApClass(Integer apClass) {
+		this.apClass = apClass;
+	}
+
+	@Transient
+	public String getApName() {
+		return apName;
+	}
+
+
+	public void setApName(String apName) {
+		this.apName = apName;
+	}
+
+	@Transient
+	public Integer getApDisplay() {
+		return apDisplay;
+	}
+
+
+	public void setApDisplay(Integer apDisplay) {
+		this.apDisplay = apDisplay;
+	}
+
+
+	@Transient
+	public String getAdvContentpath() {
+		return advContentpath;
+	}
+
+
+	public void setAdvContentpath(String advContentpath) {
+		this.advContentpath = advContentpath;
+	}
+
+
+	@Transient
+	public Integer getAdvNum() {
+		return advNum;
+	}
+
+
+	public void setAdvNum(Integer advNum) {
+		this.advNum = advNum;
+	}
+
+	@Transient
+	public Integer getCountnum() {
+		return countnum;
+	}
+
+
+	public void setCountnum(Integer countnum) {
+		this.countnum = countnum;
+	}
+	
+	
+	
 }

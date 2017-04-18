@@ -15,7 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.keeps.core.model.AbstractModel;
+import com.keeps.core.model.AbstractModelInteger;
 import com.keeps.core.model.plus.ModelPlusSchool;
 
 /**
@@ -23,7 +23,7 @@ import com.keeps.core.model.plus.ModelPlusSchool;
  */
 @Entity
 @Table(name = "t_tag")
-public class TTag  extends AbstractModel implements ModelPlusSchool {
+public class TTag  extends AbstractModelInteger implements ModelPlusSchool {
 
 	private Integer id;
 	private String name;
@@ -43,7 +43,7 @@ public class TTag  extends AbstractModel implements ModelPlusSchool {
 		this.name = name;
 		this.typeid = typeid;
 		this.clicknum = clicknum;
-		this.ishot = this.ishot;
+		this.ishot = ishot;
 		this.createtime = createtime;
 		this.updatetime = updatetime;
 		this.createperson = createperson;

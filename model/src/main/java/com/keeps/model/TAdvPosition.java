@@ -12,8 +12,9 @@ import java.util.Date;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import com.keeps.core.model.AbstractModel;
+import com.keeps.core.model.AbstractModelInteger;
 import com.keeps.core.model.plus.ModelPlusSchool;
 
 /**
@@ -21,7 +22,7 @@ import com.keeps.core.model.plus.ModelPlusSchool;
  */
 @Entity
 @Table(name = "t_adv_position")
-public class TAdvPosition extends AbstractModel implements ModelPlusSchool{
+public class TAdvPosition extends AbstractModelInteger implements ModelPlusSchool{
 
 	private Integer id;
 	private String apName;
@@ -31,19 +32,21 @@ public class TAdvPosition extends AbstractModel implements ModelPlusSchool{
 	private Integer isShow;
 	private Integer apWidth;
 	private Integer apHeight;
-	private Long apPrice;
+	private Float apPrice;
 	private Integer advNum;
 	private Integer clickNum;
 	private String defaultContent;
+	private Integer isCache;
 	private Date createtime;
 	private Date updatetime;
 	private Integer createperson;
-	
+	private Integer apWidthWord;//文字字数 -》apWidth
+	private String defaultContentWord;//默认文字 -》defaultContent
 	public TAdvPosition() {
 	}
 	
 	public TAdvPosition(String apName, String apIntro, Integer apClass, Integer apDisplay, Integer isShow, Integer apWidth,
-			Integer apHeight, Long apPrice, Integer advNum, Integer clickNum, String defaultContent, Date createtime, Date updatetime, Integer createperson) {
+			Integer apHeight, Float apPrice, Integer advNum, Integer clickNum, String defaultContent, Integer isCache, Date createtime, Date updatetime, Integer createperson) {
 		this.apName = apName;
 		this.apIntro = apIntro;
 		this.apClass = apClass;
@@ -55,6 +58,7 @@ public class TAdvPosition extends AbstractModel implements ModelPlusSchool{
 		this.advNum = advNum;
 		this.clickNum = clickNum;
 		this.defaultContent = defaultContent;
+		this.isCache = isCache;
 		this.createtime = createtime;
 		this.updatetime = updatetime;
 		this.createperson = createperson;
@@ -91,7 +95,7 @@ public class TAdvPosition extends AbstractModel implements ModelPlusSchool{
 	}
 
 	@Column(name = "ap_class", nullable = false)
-	public Integer isApClass() {
+	public Integer getApClass() {
 		return this.apClass;
 	}
 
@@ -100,7 +104,7 @@ public class TAdvPosition extends AbstractModel implements ModelPlusSchool{
 	}
 
 	@Column(name = "ap_display", nullable = false)
-	public Integer isApDisplay() {
+	public Integer getApDisplay() {
 		return this.apDisplay;
 	}
 
@@ -109,7 +113,7 @@ public class TAdvPosition extends AbstractModel implements ModelPlusSchool{
 	}
 
 	@Column(name = "is_show", nullable = false)
-	public Integer isIsShow() {
+	public Integer getIsShow() {
 		return this.isShow;
 	}
 
@@ -135,12 +139,12 @@ public class TAdvPosition extends AbstractModel implements ModelPlusSchool{
 		this.apHeight = apHeight;
 	}
 
-	@Column(name = "ap_price", nullable = false, precision = 10, scale = 0)
-	public Long getApPrice() {
+	@Column(name = "ap_price", nullable = false, precision = 10, scale = 2)
+	public Float getApPrice() {
 		return this.apPrice;
 	}
 
-	public void setApPrice(Long apPrice) {
+	public void setApPrice(Float apPrice) {
 		this.apPrice = apPrice;
 	}
 
@@ -171,6 +175,14 @@ public class TAdvPosition extends AbstractModel implements ModelPlusSchool{
 		this.defaultContent = defaultContent;
 	}
 
+	@Column(name = "is_cache", nullable = false)
+	public Integer getIsCache() {
+		return isCache;
+	}
+
+	public void setIsCache(Integer isCache) {
+		this.isCache = isCache;
+	}
 
 	@Column(name = "createtime", length = 19)
 	public Date getCreatetime() {
@@ -197,6 +209,24 @@ public class TAdvPosition extends AbstractModel implements ModelPlusSchool{
 
 	public void setCreateperson(Integer createperson) {
 		this.createperson = createperson;
+	}
+
+	@Transient
+	public Integer getApWidthWord() {
+		return apWidthWord;
+	}
+
+	public void setApWidthWord(Integer apWidthWord) {
+		this.apWidthWord = apWidthWord;
+	}
+
+	@Transient
+	public String getDefaultContentWord() {
+		return defaultContentWord;
+	}
+
+	public void setDefaultContentWord(String defaultContentWord) {
+		this.defaultContentWord = defaultContentWord;
 	}
 
 }

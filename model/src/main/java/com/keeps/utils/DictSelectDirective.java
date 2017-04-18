@@ -33,17 +33,21 @@ public class DictSelectDirective extends Directive{
 			key = (Integer) ((SimpleNode) node.jjtGetChild(2)).value(internalContext);
 			key = key==null?0:key;
 		}
+		
 		Map<Integer, String> mapdata  = Constants.DICT_ITEM_LIST.get(dicItem);
 		StringBuffer sb = new StringBuffer();
 		sb.append("<select class='form-control' name=\""+name+"\" >"); 
 		Iterator<Map.Entry<Integer, String>> entries = mapdata.entrySet().iterator();
+		if (key==0) {
+			sb.append("<option value = ''>全部</option>");
+		}
 		while (entries.hasNext()) {
 			Map.Entry<Integer, String> entry = entries.next();
 			if (key.equals(entry.getKey())) {
 				sb.append("<option value = '"+entry.getKey()+"' selected>"+entry.getValue()+"</option>");
 			}else{
 				sb.append("<option value = '"+entry.getKey()+"'>"+entry.getValue()+"</option>");
-			}
+			}	
 		}
 		sb.append("</select>");
 		writer.write(sb.toString());

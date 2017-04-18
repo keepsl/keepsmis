@@ -12,7 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.keeps.core.model.AbstractModel;
+import com.keeps.core.model.AbstractModelInteger;
 import com.keeps.core.model.plus.ModelPlusSchool;
 
 /**
@@ -20,7 +20,7 @@ import com.keeps.core.model.plus.ModelPlusSchool;
  */
 @Entity
 @Table(name = "szl_tag")
-public class SzlTag extends AbstractModel implements ModelPlusSchool {
+public class SzlTag extends AbstractModelInteger implements ModelPlusSchool {
 
 	private Integer id;
 	private String tagname;

@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.keeps.core.model.AbstractModel;
+import com.keeps.core.model.AbstractModelInteger;
 import com.keeps.core.model.plus.ModelPlusSchool;
 
 /**
@@ -21,7 +21,7 @@ import com.keeps.core.model.plus.ModelPlusSchool;
  */
 @Entity
 @Table(name = "t_dict")
-public class TDict extends AbstractModel implements ModelPlusSchool{
+public class TDict extends AbstractModelInteger implements ModelPlusSchool{
 
 	private Integer id;
 	private String dicitem;

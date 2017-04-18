@@ -16,7 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import com.keeps.core.model.AbstractModel;
+import com.keeps.core.model.AbstractModelInteger;
 import com.keeps.core.model.plus.ModelPlusSchool;
 
 /**
@@ -24,7 +24,7 @@ import com.keeps.core.model.plus.ModelPlusSchool;
  */
 @Entity
 @Table(name = "t_article_type")
-public class TArticleType extends AbstractModel implements ModelPlusSchool{
+public class TArticleType extends AbstractModelInteger implements ModelPlusSchool{
 
 	private Integer id;
 	private String name;
