@@ -1,0 +1,46 @@
+#set($layout="layout/default-manager.vm")
+<div class="wrapper collection-wrapper">
+	<div class="rel-zk-area">
+		<p class="head"><span>最近浏览</span></p>
+		<div class="rel-zk-list clearfix" style="min-height: 500px;">
+			#foreach ($list in $historyList)
+				<div class="zk-item">
+					<div class="img-area">
+						<a title="$list.goodsname" target="_blank" href="${path}/goods/info/$list.id">
+							<div data-ga-event="商品_右上角领券:点击:首页" class="lq">
+								<div class="lq-t">
+									<p class="lq-t-d1">领优惠券</p>
+									<p class="lq-t-d2">省<span>$list.couponprice</span>元</p>
+								</div>
+								<div class="lq-b"></div>
+							</div>
+							<div class="bottom-info">
+								<p data-endtime="$list.endtime" class="time-count"></p>
+							</div>
+							<img data-ga-event="商品_图片:点击:首页" class="lazy" data-original="${viewgoodspath}/$list.goodsimage" alt="$list.goodsname">
+						</a>
+					</div>
+					<p class="title-area elli"><span class="post-free">包邮</span>$list.goodsname</p>
+					<div class="raw-price-area">现价：&yen;$list.currentprice<p class="sold">已领 $list.tocouponnum 张券</p></div>
+					<div class="info">
+						<div class="price-area">
+							<span class="price">&yen;<em class="number-font">$NumericTool.format("#0",$list.couponafterprice)</em><em class="decimal">.$NumericTool.getTheDecimal($list.couponafterprice)</em><i></i></span>
+						</div>
+						<div class="buy-area">
+							<a data-ga-event="商品_立即领券:点击:首页" rel="nofollow" target="_blank" href="$list.tocouponsurl">
+								<span class="coupon-amount">去#dictk2vtag('dic_goods_source',$!{list.goodssource})</span>
+								#if($list.tocouponsurl)<span class="btn-title">火速领券</span>#end
+							</a>
+						</div>
+						<div class="platform-area"><img src="${path}/skins/template/img/#if($list.goodssource==1)platform_taobao.png#elseif($list.goodssource==2)platform_tmall.png#end">#dictk2vtag('dic_goods_source',$!{list.goodssource})</div>
+					</div>
+				</div>
+			#end
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    Util.zkItemTimeCount(2);
+});
+</script>

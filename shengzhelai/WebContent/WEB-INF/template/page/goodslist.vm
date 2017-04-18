@@ -48,7 +48,7 @@
 					<div class="bottom-info">
 						<p data-endtime="$list.endtime" class="time-count"></p>
 					</div>
-					<img data-ga-event="商品_图片:点击:品类页" class="lazy" data-original="${viewpath}/$list.goodsimage" alt="$list.goodsname">
+					<img data-ga-event="商品_图片:点击:品类页" class="lazy" data-original="${viewgoodspath}/$list.goodsimage" alt="$list.goodsname">
 				</a>
 			</div>
 			<p class="title-area elli"><span class="post-free">包邮</span>$list.goodsname</p>

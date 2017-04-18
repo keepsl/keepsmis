@@ -1,4 +1,7 @@
 #set($layout="layout/default-manager.vm")
+<script type="text/javascript">
+	var globalChannel = '';
+</script>
 <div class="wrapper home-oper-area">
 	<div class="cate-area">
 			#foreach ($list in $goodsclasslist)
@@ -9,28 +12,14 @@
 	</div>
 	<div class="banner-area swiper-container">
 		<div class="swiper-wrapper">
-			<a data-ga-event="首页:点击:首页_banner1_高颜值水杯低价抢不停" target="_blank" class="swiper-slide" href="/c/216/?channel=30">
-				<img src="http://7xiwnz.com2.z0.glb.qiniucdn.com/zhekou_operate_element/20170331/1902305833.jpg">
-			</a>
-			<a data-ga-event="首页:点击:首页_banner1_清洁好物5折起，洁面你“皂”了吗" target="_blank" class="swiper-slide" href="/c/215/?channel=30">
-				<img src="http://7xiwnz.com2.z0.glb.qiniucdn.com/zhekou_operate_element/20170331/1859188547.jpg">
-			</a>
+			<script src='${viewadvpath}/layout_adv_27.js'></script>
 		</div>
 		<div class="swiper-bottom">
 			<div class="swiper-pager"></div>
 		</div>
 	</div>
 	<div class="small-banner-area">
-		<div href="javascript:;" class="small-banner-item">
-			<a data-ga-event="首页:点击:首页_banner2" target="_blank" href="https://s.click.taobao.com/J7ySesw?channel=30">
-			<img src="http://7xiwnz.com2.z0.glb.qiniucdn.com/zhekou_operate_element/20170331/1039013544.jpg">
-			</a>
-		</div>
-		<div href="javascript:;" class="small-banner-item">
-			<a data-ga-event="首页:点击:首页_banner3" target="_blank" href="https://temai.taobao.com/index.htm?pid=mm_114743487_21888784_76800126&amp;channel=30">
-			<img src="http://7xiwnz.com2.z0.glb.qiniucdn.com/zhekou_operate_element/20170331/1040517595.jpg">
-			</a>
-		</div>
+		<script src='${viewadvpath}/layout_adv_29.js'></script>
 	</div>
 </div>
 <div class="wrapper home-wrapper">
@@ -49,7 +38,7 @@
 						<div class="bottom-info">
 							<p data-endtime="$list.endtime" class="time-count"></p>
 						</div>
-						<img data-ga-event="商品_图片:点击:首页" class="lazy" data-original="${viewpath}/$list.goodsimage" alt="$list.goodsname">
+						<img data-ga-event="商品_图片:点击:首页" class="lazy" data-original="${viewgoodspath}/$list.goodsimage" alt="$list.goodsname">
 					</a>
 				</div>
 				<p class="title-area elli"><span class="post-free">包邮</span>$list.goodsname</p>
@@ -77,17 +66,15 @@
 <script type="text/javascript" src="${path}/plug/jquery/swiper3.1.0.min.js"></script>
 <script type="text/javascript">
 $(function(){
+	Util.zkItemTimeCount();
     var sw = new Swiper('.banner-area',{
         autoplay: 3000,
         loop:true,
         pagination: '.swiper-pager'
     });
-
     Util.sideFixedMenu($('.home-wrapper'));
-
     var couponList = $('#couponList'),loadingText = $('.loading-text');
-    var page = 1,pagesize = 40,load = 1,channel = 30;
-
+    var page = 2,rows = 40,load = 1;
     $(document).on('scroll',function(){
         if(page%4 > 0){
             var _top = $(document).scrollTop(),
@@ -98,7 +85,6 @@ $(function(){
             }
 		}
     });
-
     loadingText.on('click',function(){
         getCouponList();
 	});
@@ -108,28 +94,26 @@ $(function(){
             return;
         }
         $.ajax({
-            url:'/getHomeCouponList',
+            url:'${path}/goods/findHomeGoodsListJson',
             type:'GET',
             dataType:'json',
             data:{
-                'channel':channel,
                 'page':page,
-                'pagesize':pagesize
+                'rows':rows
             },
             beforeSend:function(){
                 load = 0;
                 loadingText.html('努力加载中...');
             },
             success:function(data){
-                if(data.code == 1){
-                    Util.createCouponList(data.data,couponList,channel,'首页');
-                    if(data.data.length >= pagesize){
-                        page ++;
-                        load = 1;
-                        loadingText.html('查看更多优惠券');
-                    }else{
-                        loadingText.html('没有更多了');
-                    }
+            	var obj = data.message;
+                Util.createCouponList(obj.record,couponList,'${viewgoodspath}');
+                if(obj.record.length >= rows){
+                    page ++;
+                    load = 1;
+                    loadingText.html('查看更多优惠券');
+                }else{
+                    loadingText.html('没有更多了');
                 }
             }
         });

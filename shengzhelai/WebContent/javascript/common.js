@@ -122,7 +122,7 @@ Util.sideFixedMenu = function(e, t) {
         l += '<i class="back-to-top"></i>',
         l += "<p>返回顶部</p>",
         l += "</div>",
-        l += '<a target="_blank" href="/history/' + (globalChannel ? "?channel=" + globalChannel : "") + '"><div class="menu-item" id="toHis">',
+        l += '<a target="_blank" href="../goods/history"><div class="menu-item" id="toHis">',
         l += '<i class="history"></i>',
         l += "<p>浏览记录</p>",
         l += "</div></a>",
@@ -156,48 +156,52 @@ Util.zkItemTimeCount = function(e) {
     })
 }
 ,
-Util.createCouponList = function(e, t, n, a) {
-    a = a || "未知";
+Util.createCouponList = function(e, t, path) {
     for (var i = "<div>", l = 0, o = e.length; l < o; l++) {
         var c = e[l]
           , s = ""
           , d = "";
-        switch (1 * c.platform_id) {
+        switch (1 * c.goodssource) {
         case 1:
             s = "淘宝",
-            d = "http://7xlxny.com1.z0.glb.clouddn.com/zhekou/web/platform_taobao.png";
+            d = basePath+"/skins/template/img/platform_taobao.png";
             break;
         case 2:
             s = "天猫",
-            d = "http://7xlxny.com1.z0.glb.clouddn.com/zhekou/web/platform_tmall.png"
+            d = basePath+"/skins/template/img/platform_tmall.png"
+            break;
+        case 3:
+            s = "京东",
+            d = basePath+"/skins/template/img/platform_tmall.png"
+            break;
         }
         i += '<div class="zk-item">',
         i += '<div class="img-area">',
-        i += '<a target="_blank" href="/zk/' + c.coupon_id + "/" + (n && 27 != n ? "?channel=" + n : "") + '">',
-        i += '<div data-ga-event="商品_右上角领券:点击:' + a + '" class="lq">',
+        i += '<a title="'+c.goodsname+'" target="_blank" href="'+path+'/goods/info/'+c.id+'">',
+        i += '<div data-ga-event="" class="lq">',
         i += '<div class="lq-t">',
         i += '<p class="lq-t-d1">领优惠券</p>',
-        i += '<p class="lq-t-d2">省<span>' + c.gap_price + "</span>元</p>",
+        i += '<p class="lq-t-d2">省<span>' + c.couponprice + "</span>元</p>",
         i += "</div>",
         i += '<div class="lq-b"></div>',
         i += "</div>",
         i += '<div class="bottom-info">',
-        i += '<p data-endtime="' + c.coupon_end_time + '" class="time-count"></p>',
+        i += '<p data-endtime="' + c.endtime + '" class="time-count"></p>',
         i += "</div>",
-        i += '<img data-ga-event="商品_图片:点击:' + a + '" class="lazy new" data-original="' + c.thumbnail_pic + '" alt="' + c.title + '">',
+        i += '<img data-ga-event="" class="lazy new" data-original="' + path+"/"+c.goodsimage + '" alt="' + c.goodsname + '">',
         i += "</a>",
         i += "</div>",
         i += '<p class="title-area elli">',
-        1 == c.post_free && (i += '<span class="post-free">包邮</span>'),
-        i += c.title + "</p>",
-        i += '<div class="raw-price-area">现价：&yen;' + c.raw_price + '<p class="sold">' + c.subtitle + "</p></div>",
+        i += '<span class="post-free">包邮</span>',
+        i += c.goodsname + "</p>",
+        i += '<div class="raw-price-area">现价：&yen;' + c.currentprice + '<p class="sold">' + c.tocouponnum + "</p></div>",
         i += '<div class="info">',
         i += '<div class="price-area">',
-        i += '<span class="price">&yen;<em class="number-font">' + c.coupon_price.toString().split(".")[0] + "</em>",
-        i += '<em class="decimal">' + (c.coupon_price.toString().split(".").length > 1 ? "." + c.coupon_price.toString().split(".")[1] : "") + "</em><i></i></span>",
+        i += '<span class="price">&yen;<em class="number-font">' + c.couponafterprice.toString().split(".")[0] + "</em>",
+        i += '<em class="decimal">' + (c.couponafterprice.toString().split(".").length > 1 ? "." + c.couponafterprice.toString().split(".")[1] : "") + "</em><i></i></span>",
         i += "</div>",
         i += '<div class="buy-area">',
-        i += '<a data-ga-event="商品_立即领券:点击:' + a + '" rel="nofollow" target="_blank" href="' + c.url + '">',
+        i += '<a data-ga-event="商品_立即领券:点击:" rel="nofollow" target="_blank" href="' + c.tocouponsurl + '">',
         i += '<span class="coupon-amount">去' + s + "</span>",
         i += '<span class="btn-title">火速领券</span>',
         i += "</a>",
@@ -208,12 +212,6 @@ Util.createCouponList = function(e, t, n, a) {
     }
     i += "</div>",
     i = $(i),
-    i.find("[data-ga-event]").on("click", function() {
-        var e = $(this)
-          , t = e.attr("data-ga-event")
-          , n = t.split(":");
-        "undefined" != typeof ga && n.length >= 3 && ga("send", "event", n[0], n[1], n[2])
-    }),
     t.append(i),
     Util.lazyLoad("lazy.new"),
     $(".lazy.new").removeClass("new"),
@@ -290,13 +288,13 @@ Util.getBottomOperElements = function(e) {
 }
 ,
 $(function() {
-    Util.lazyLoad("lazy"),
-    Util.zkItemTimeCount(),
+    Util.lazyLoad("lazy");
+    /*Util.zkItemTimeCount(),
     Util.getBottomOperElements($(".more-coupon")),
     $("[data-ga-event]").click(function() {
         var e = $(this)
           , t = e.attr("data-ga-event")
           , n = t.split(":");
         "undefined" != typeof ga && n.length >= 3 && ga("send", "event", n[0], n[1], n[2])
-    })
+    })*/
 });

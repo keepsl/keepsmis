@@ -39,8 +39,12 @@ public class IndexPageCntroller extends AbstractController {
 	public ModelAndView index(ModelAndView view,HttpServletRequest request, HttpServletResponse response) {
 		view.setViewName("page/index");
 		view.addObject("goodsclasslist",goodsClassService.getGoodsClassList(0));
-		Page page = goodsService.queryHotList(new SzlGoods());
-		view.addObject("viewpath", Constants.file_view_path+"/"+Constants.GOODS_COVER_IMAGE_PATH);
+		SzlGoods szlGoods = new SzlGoods();
+		szlGoods.setPage(1);
+		szlGoods.setRows(40);
+		Page page = goodsService.queryList(szlGoods);
+		view.addObject("viewgoodspath", Constants.file_view_path+"/"+Constants.GOODS_COVER_IMAGE_PATH);
+		view.addObject("viewadvpath", Constants.file_view_path+"/"+Constants.ADV_FILE_PATH);
 		view.addObject("goodslist", page);
 		return view;
 	}

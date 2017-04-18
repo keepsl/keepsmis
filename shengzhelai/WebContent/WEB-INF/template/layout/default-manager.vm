@@ -8,9 +8,12 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
 	    <title>省着来-花钱我们得省着来，购物我们尽管来。</title>
 		<meta name="keywords" content="省钱,返利,淘宝优惠券,淘宝内部优惠券,天猫优惠券,9块9包邮,聚划算,划算,淘实惠,实惠,优惠券,便宜坊,网购,购物网站"/>
-		<meta name="description" content="省着来-花钱我们得省着来，老司机带你省下一辆小汽车。聚划算的优惠券，网购5折天天省钱。特卖、低价、白菜价、9块9包邮，尽在这里。"/>
+		<meta name="description" content="省着来-花钱我们得省着来。聚划算的优惠券，网购5折天天省钱。特卖、低价、白菜价、9块9包邮，尽在这里。"/>
 	    <link rel="stylesheet" href="${path}/skins/template/css/common.css" media="all">
 		<link rel="stylesheet" href="${path}/skins/template/css/common_h5.css" media="all">
+		<script type="text/javascript">
+			var basePath='${path}';
+		</script>	
 		<script type="text/javascript" src="${path}/plug/jquery/jquery.min.js"></script>
 		<script type="text/javascript" src="${path}/javascript/common.js"></script> 
 	</head>
