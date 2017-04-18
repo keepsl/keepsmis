@@ -8,9 +8,14 @@ E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\controller\Abstr
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\plus\ModelPlusSchool.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\hibernate\AliasToEntityTreeMapResultTransformer.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\SoftEntityModel.java
+E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\AbstractModelPlusAny.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\AbstractSoftModelEntity.java
+E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\AbstractModelInteger.java
+E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\AbstractModelPlusInteger.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\dao\SoftTopDao.java
+E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\AbstractModelPlus.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\dao\AbstractDaoHibernate4.java
+E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\AbstractModelPlusLong.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\plus\ModelPlusCloud.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\listener\RemoveRollback.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\dao\SoftDao.java
@@ -19,6 +24,7 @@ E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\AbstractMo
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\dao\AbstractDaoSupport4.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\dao\DaoMethodTemplate.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\AbstractModel.java
+E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\AbstractModelLong.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\service\SoftTopService.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\dao\base\BasicDaoImpl.java
 E:\keeps\keeps\keepsmis\keeps-core\src\main\java\com\keeps\core\model\plus\ModelPlusCloudAdapter.java
