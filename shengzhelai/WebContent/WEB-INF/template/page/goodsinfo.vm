@@ -8,7 +8,7 @@
 			&nbsp;&nbsp;&gt;&nbsp;&nbsp;$goods.goodsname
 		</p>
 		<div class="zk-content">
-			<div class="img-area"><img src="${viewgoodspath}/$goods.goodsimage" alt="$goods.classname"></div>
+			<div class="img-area"><img src="${viewgoodspath}/$goods.goodsimage" alt="$goods.goodsname"></div>
 			<div class="info-area">
 				<h1 class="title elli"><span>包邮</span>$goods.goodsname</h1>
 				<p class="endtime" id="eventTimeStr"></p>

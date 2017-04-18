@@ -53,21 +53,29 @@ public class GoodsDaoImpl extends AbstractDao implements GoodsDao {
 	}
 	
 	public List<SzlGoods> getTopListByHot(Integer rows){
+		List<Object> values = new ArrayList<Object>();
 		StringBuffer sb = new StringBuffer(" select a.* from szl_goods a ");
-		sb.append("  where a.ishot = ? order by a.updatetime desc ");
-		return super.getByPropertySqlTop(sb.toString(), null, rows ,SzlGoods.class);
+		sb.append("  where isdelete=1 and a.endtime >= ? ");
+		values.add(DateUtils.getNow("yyyy-MM-dd"));
+		sb.append("  and a.ishot = ? order by a.updatetime desc ");
+		return super.getByPropertySqlTop(sb.toString(), values.toArray(), rows ,SzlGoods.class);
 	}
 	
 	public List<SzlGoods> getTopListByRecommend(Integer rows){
+		List<Object> values = new ArrayList<Object>();
 		StringBuffer sb = new StringBuffer(" select a.* from szl_goods a ");
-		sb.append("  where a.isrecommend = ? order by a.updatetime desc ");
-		return super.getByPropertySqlTop(sb.toString(), null, rows ,SzlGoods.class);
+		sb.append("  where isdelete=1 and a.endtime >= ? ");
+		values.add(DateUtils.getNow("yyyy-MM-dd"));
+		sb.append("  and a.isrecommend = ? order by a.updatetime desc ");
+		return super.getByPropertySqlTop(sb.toString(), values.toArray(), rows ,SzlGoods.class);
 	}
 
 	public List<SzlGoods> getTopListByClassid(Long goodsid,Integer classid,Integer rows){
 		List<Object> values = new ArrayList<Object>();
 		StringBuffer sb = new StringBuffer(" select a.* from szl_goods a ");
-		sb.append("  where a.classid = ?  ");
+		sb.append("  where isdelete=1 and a.endtime >= ? ");
+		values.add(DateUtils.getNow("yyyy-MM-dd"));
+		sb.append("  and a.classid = ?  ");
 		values.add(classid);
 		if (goodsid != null) {
 			sb.append("  and a.id <> ? ");
@@ -80,7 +88,9 @@ public class GoodsDaoImpl extends AbstractDao implements GoodsDao {
 	public List<SzlGoods> getTopListByPclassid(Long goodsid,Integer pclassid,Integer classid,Integer rows){
 		List<Object> values = new ArrayList<Object>();
 		StringBuffer sb = new StringBuffer(" select a.* from szl_goods a ");
-		sb.append("  where a.pclassid = ? ");
+		sb.append("  where isdelete=1 and a.endtime >= ? ");
+		values.add(DateUtils.getNow("yyyy-MM-dd"));
+		sb.append("  and a.pclassid = ? ");
 		values.add(pclassid);
 		if (classid != null) {
 			sb.append("  and a.classid <> ?  ");
