@@ -1,0 +1,18 @@
+#set($layout="layout/default-manager.vm")
+<!--专场推荐页-->
+<script type="text/javascript">
+	var ajaxgoodslisturl = '${path}/goods/findClassGoodsListJson';
+</script>
+<div class="wrapper collection-wrapper">
+	<div class="collection-banner lazy" data-original="http://7xiwnz.com2.z0.glb.qiniucdn.com/zhekou_collection/20170411/1709473923.jpg"></div>
+	<div class="collection-top">
+		<p class="head">专场推荐</p>
+		<p class="time-count" data-endtime=""></p>
+	</div>
+	#parse("page/layout_goods_record.vm")
+</div>
+<script type="text/javascript">
+$(function(){
+    Util.sideFixedMenu($('.collection-wrapper'));
+});
+</script>

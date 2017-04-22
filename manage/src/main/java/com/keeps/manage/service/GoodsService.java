@@ -23,7 +23,7 @@ public interface GoodsService extends SoftService{
 
 	public Page queryList(SzlGoods goods);
 	
-	public SzlGoods getById(Integer id,HttpServletRequest request);
+	public SzlGoods getById(Long id,HttpServletRequest request);
 	
 	public String saveOrUpdate(SzlGoods goods,MultipartFile goodsimagefile, MultipartFile qrcodepathfile, HttpServletRequest request);
 	

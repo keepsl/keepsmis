@@ -1,0 +1,59 @@
+<div class="zk-list g-zk-list clearfix" id="couponList">
+	#foreach ($list in $goodslist.record)
+		#parse("page/layout_goods_item.vm")
+	#end
+</div>
+
+<div class="more-coupon">
+	<span id="moreCoupon" class="btn loading-text">查看更多优惠券</span>
+</div>
+<script type="text/javascript">
+$(function(){
+	Util.zkItemTimeCount();
+    var couponList = $('#couponList'),loadingText = $('.loading-text');
+    var page = 2,rows = 40,load = 1;
+    $(document).on('scroll',function(){
+        if(page%4 > 0){
+            var _top = $(document).scrollTop(),
+                scroll_height = Util.pageSize()['scrollHeight'],
+                client_height = Util.pageSize()['clientHeight'];
+            if(_top + client_height >= (scroll_height-800)){
+                getCouponList();
+            }
+		}
+    });
+    loadingText.on('click',function(){
+        getCouponList();
+	});
+
+    function getCouponList(){
+        if(!load){
+            return;
+        }
+        $.ajax({
+            url:ajaxgoodslisturl,
+            type:'GET',
+            dataType:'json',
+            data:{
+                'page':page,
+                'rows':rows
+            },
+            beforeSend:function(){
+                load = 0;
+                loadingText.html('努力加载中...');
+            },
+            success:function(data){
+            	var obj = data.message;
+                Util.createCouponList(obj.record,couponList,'${viewgoodspath}');
+                if(obj.record.length >= rows){
+                    page ++;
+                    load = 1;
+                    loadingText.html('查看更多优惠券');
+                }else{
+                    loadingText.html('没有更多了');
+                }
+            }
+        });
+    }
+});
+</script>

@@ -41,8 +41,9 @@ public class IndexPageCntroller extends AbstractController {
 		view.addObject("goodsclasslist",goodsClassService.getGoodsClassList(0));
 		SzlGoods szlGoods = new SzlGoods();
 		szlGoods.setPage(1);
-		szlGoods.setRows(40);
-		Page page = goodsService.queryList(szlGoods);
+		szlGoods.setRows(Constants.goods_page_rows);
+		//首页商品查询，根据发布时间，销量，热门等各方面查询
+		Page page = goodsService.queryHomeList(szlGoods);
 		view.addObject("viewgoodspath", Constants.file_view_path+"/"+Constants.GOODS_COVER_IMAGE_PATH);
 		view.addObject("viewadvpath", Constants.file_view_path+"/"+Constants.ADV_FILE_PATH);
 		view.addObject("goodslist", page);

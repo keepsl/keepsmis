@@ -3,7 +3,9 @@ package com.keeps.manage.service.impl;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -67,7 +69,7 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 	}
 
 	@Override
-	public SzlGoods getById(Integer id, HttpServletRequest request) {
+	public SzlGoods getById(Long id, HttpServletRequest request) {
 		SzlGoods goods = super.get(SzlGoods.class, id);
 		if (goods!=null) {
 			if (StringUtils.hasText(goods.getGoodsimage())) {
@@ -82,6 +84,7 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 
 	@Override
 	public String saveOrUpdate(SzlGoods goods, MultipartFile goodsimagefile, MultipartFile qrcodepathfile, HttpServletRequest request) {
+		goods.setClicknum(0);
 		if (goods.getIshot()==null) goods.setIshot(2);
 		if (goods.getIsrecommend()==null) goods.setIsrecommend(2);
 		if (goods.getIsrecommend()==null) goods.setIsrecommend(2);
@@ -184,6 +187,7 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 			goods.setCreateperson(newSzlGoods.getCreateperson());
 			goods.setCreateperson(newSzlGoods.getCreateperson());
 			goods.setRealtocouponnum(newSzlGoods.getRealtocouponnum());
+			goods.setClicknum(newSzlGoods.getClicknum());
 			BeanUtils.copyProperties(goods, newSzlGoods);
 			super.update(newSzlGoods,EditType.NULL_UPDATE);
 		}
@@ -210,6 +214,7 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 		if(!CommonUtils.isExistStr(filetype.toLowerCase(), new String[]{"xls","xlsx"}))
 			throw new CapecException("不允许上传" + filetype + "格式的文件!");
 		Workbook wb  = null;
+		Set<String> imagespath = new HashSet<String>();
 		try {
 			//判断execl版本
 			if(file.getOriginalFilename().toLowerCase().endsWith("xls")){//xls 2003包括2003之前的版本
@@ -232,11 +237,12 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 			sheet2bean(sheet,listgoods,listmessage);
 			
 			uplength = 70;
-			upcontent = "正在保存数据...";
+			upcontent = "正在裁剪图片...";
 			for (SzlGoods goods : listgoods) {
 				String path = Constants.file_upload_path+File.separator+Constants.GOODS_COVER_IMAGE_PATH;
 				String imagename = UUID.randomUUID()+".jpg";
 				String goodspath = path+File.separator+imagename;
+				imagespath.add(goodspath);
 				boolean bo = ImageRequest.saveImage(goods.getGoodsimage(), path,imagename);
 				if (bo) {
 					ImageUtils.cut4(goodspath, path + File.separator + "cutmin"+imagename,Constants.GOODS_CUT_IMAGE_WIDTH_HEIGHT1.get(1), Constants.GOODS_CUT_IMAGE_WIDTH_HEIGHT1.get(2));
@@ -246,10 +252,16 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 					goods.setGoodsimage("error");
 				}
 			}
+			upcontent = "正在保存数据...";
 			super.saveOrUpdateAllEntity(listgoods, EditType.NULL_UN_UPDATE);
 			uplength = 100;
 			upcontent = "数据保存完成...";
 		} catch (Exception e) {
+			File file2 = null;
+			for (String image : imagespath) {
+				file2 = new File(image);
+				file2.delete();
+			}
 			log.error("导入商品失败:"+e);
 			e.printStackTrace();
 			throw new CapecException("导入商品失败:"+e.getMessage());
@@ -283,6 +295,7 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 						goods.setIshot(2);
 						goods.setIsdelete(1);
 						goods.setIsrecommend(2);
+						goods.setClicknum(0);
 						//根据大分类找到分类ID
 						SzlGoodsClass goodsClass = goodsClassDao.getByClassname(value);
 						if (goodsClass==null) {

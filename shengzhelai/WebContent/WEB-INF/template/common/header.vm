@@ -25,10 +25,10 @@
 		<div class="tab-area">
 			<div class="wrapper">
 				<div class="cate-area">
-					<a data-ga-event="头部:点击:头部_精选推荐" href="${path}/page/index" class="cate-item jxtj active"><span class="cate-rec"></span></a>
-					<a data-ga-event="头部:点击:头部_9块9包邮"href="/k9/?channel=30" class="cate-item hot">9块9包邮</a>
-					<a data-ga-event="头部:点击:头部_20元封顶"href="/k20/?channel=30" class="cate-item">20元封顶</a>
-					<a data-ga-event="头部:点击:头部_49元精选"href="/k49/?channel=30" class="cate-item">49元精选</a>
+					<a href="${path}/page/index" class="cate-item jxtj active"><span class="cate-rec"></span></a>
+					<a href="${path}/goods/k9" class="cate-item hot">9块9包邮</a>
+					<a href="${path}/goods/k20" class="cate-item">20元封顶</a>
+					<a href="${path}/goods/k49" class="cate-item">49元精选</a>
 				</div>
 				<div class="search-area">
 					<i></i>

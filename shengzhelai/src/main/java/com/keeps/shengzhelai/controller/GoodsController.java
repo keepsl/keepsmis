@@ -19,6 +19,8 @@ import com.keeps.model.SzlGoodsClass;
 import com.keeps.shengzhelai.service.GoodsClassService;
 import com.keeps.shengzhelai.service.GoodsService;
 import com.keeps.shengzhelai.utils.GoodsCookieUtils;
+import com.keeps.tools.utils.CommonUtils;
+import com.keeps.tools.utils.CookieUtils;
 import com.keeps.tools.utils.JsonPost;
 import com.keeps.tools.utils.StringUtils;
 import com.keeps.utils.Constants;
@@ -65,10 +67,18 @@ public class GoodsController extends AbstractController{
 		}
 		view.addObject("historyList",list);
 		view.addObject("viewgoodspath", Constants.file_view_path+"/"+Constants.GOODS_COVER_IMAGE_PATH);
-		view.setViewName("page/goods_history");
+		view.setViewName("page/goods_history_list");
 		return view;
 	}
 
+	/**
+	  * @Title:			goodsinfo 
+	  * @Description:	商品详细信息
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月12日
+	 */
 	@RequestMapping(value="info/{id}")
 	public ModelAndView goodsinfo(ModelAndView view,HttpServletRequest request, HttpServletResponse response,@PathVariable("id")Long id) {
 		view.setViewName("page/goodsinfo");
@@ -89,12 +99,25 @@ public class GoodsController extends AbstractController{
 			String cookievalue = GoodsCookieUtils.getGoodsids(request);
 			if (StringUtils.hasText(cookievalue)) {
 				//获得缓存中的商品信息
-				List<SzlGoods> list = goodsService.getListByIds(cookievalue.trim());
+				List<SzlGoods> list = goodsService.getListByIds(CommonUtils.getSubStr(cookievalue.trim(), 12, ",").trim());
 				view.addObject("historyList",list);
 			}else{
+				//缓存中没有去找12条推荐商品
+				List<SzlGoods> list = goodsService.getTopListByRecommend(12);
+				view.addObject("ishistory","1");
+				view.addObject("historyList",list);
 			}
 			//本次浏览的商品存入缓存
 			GoodsCookieUtils.setGoodsids(request, response, id.toString());
+			
+			String cvalue = CookieUtils.getCookieValue(request, "keeps_goods_clicknum");
+			if (StringUtils.notText(cvalue)) {
+				SzlGoods goodsUpclicknum = new SzlGoods();
+				goodsUpclicknum.setId(goods.getId());
+				goods.setClicknum(goods.getClicknum()+1);
+				goodsService.updateGoodsById(goodsUpclicknum);
+			}
+			CookieUtils.setCookie(response, "keeps_goods_clicknum", "1", 60);
 		}else{
 			goodsService.getGoodsByGuessLike(null,null,null);
 			view.setViewName("common/error");
@@ -103,14 +126,22 @@ public class GoodsController extends AbstractController{
 	}
 	
 
-	@RequestMapping(value="list/{classid}")
-	public ModelAndView goodslistByClassid(ModelAndView view,HttpServletRequest request, HttpServletResponse response,@PathVariable("classid")Integer classid) {
-		if (classid==null) {
+	/**
+	  * @Title:			goodsinfo 
+	  * @Description:	根据分类查找商品分页列表
+	  * @param:	
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月12日
+	 */
+	@RequestMapping(value="list/{typeid}")
+	public ModelAndView goodslistByClassid(ModelAndView view,HttpServletRequest request, HttpServletResponse response,@PathVariable("typeid")Integer typeid) {
+		if (typeid==null) {
 			view.setViewName("page/index");
 		}else{
-			view.setViewName("page/goodslist");
+			view.setViewName("page/goods_classid_list");
 			SzlGoods goods = new SzlGoods();
-			SzlGoodsClass szlGoodsClass = goodsClassService.getById(classid);
+			SzlGoodsClass szlGoodsClass = goodsClassService.getById(typeid);
 			if (szlGoodsClass.getPid()==0) {//当前选中节点是父分类
 				goods.setPclassid(szlGoodsClass.getId());
 				view.addObject("pclassid",szlGoodsClass.getId());
@@ -127,12 +158,39 @@ public class GoodsController extends AbstractController{
 			//查询父分类列表
 			view.addObject("pclasslist", goodsClassService.getGoodsClassList(0));
 			//商品列表
+			goods.setPage(1);
+			goods.setRows(Constants.goods_page_rows);
 			view.addObject("goodslist", goodsService.queryListByClassid(goods));
 			view.addObject("viewgoodspath", Constants.file_view_path+"/"+Constants.GOODS_COVER_IMAGE_PATH);
 		}
 		return view;
 	}
-	
+	/**
+	  * @Title:			findClassGoodsListJson 
+	  * @Description:	根据分类查找商品分页列表  ajax请求
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月19日
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping(value="findClassGoodsListJson")
+	public @ResponseBody Map findClassGoodsListJson(ModelAndView view,Integer page,Integer rows,Integer pclassid,String classid){
+		return super.doJsonPost(new JsonPost() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void doInstancePost(Map map) {
+				SzlGoods goods = new SzlGoods();
+				goods.setPage(page);
+				goods.setRows(rows);
+				goods.setPclassid(pclassid);
+				if (StringUtils.hasText(classid)) {
+					goods.setClassid(Integer.parseInt(classid));
+				}
+				map.put("message", goodsService.queryListByClassid(goods));
+			}
+		});
+	}
 
 	/**
 	  * @Title:			homeGoodsList 
@@ -152,9 +210,51 @@ public class GoodsController extends AbstractController{
 				SzlGoods goods = new SzlGoods();
 				goods.setPage(page);
 				goods.setRows(rows);
-				map.put("message", goodsService.queryList(goods));
+				map.put("message", goodsService.queryHomeList(goods));
 			}
 		});
+	}
 	
+	/**
+	  * @Title:			goodslistByClassid 
+	  * @Description:	根据商品加个查找
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月22日
+	 */
+	@RequestMapping(value="{type}")
+	public ModelAndView goodslistByPrice(ModelAndView view,HttpServletRequest request, HttpServletResponse response,@PathVariable("type")String type) {
+		if (type==null) {
+			view.setViewName("page/index");
+		}else{
+			view.setViewName("page/goods_list");
+			SzlGoods goods = new SzlGoods();
+			switch (type) {
+				case "k9" :
+					//查询9.9以下的商品
+					goods.setSearchStartPrice(0F);
+					goods.setSearchEndPrice(9.9F);
+					break;
+				case "k20" :
+					//查询9.9到20之间的商品(不包含9.9)
+					goods.setSearchStartPrice(9.9F);
+					goods.setSearchEndPrice(20F);
+					break;
+				case "k49" :
+					//查询20-49之间的商品(不包含20)
+					goods.setSearchStartPrice(20F);
+					goods.setSearchEndPrice(49F);
+					break;
+				default:
+					break;
+			}
+			//商品列表
+			goods.setPage(1);
+			goods.setRows(Constants.goods_page_rows);
+			view.addObject("goodslist", goodsService.queryListByPrice(goods));
+			view.addObject("viewgoodspath", Constants.file_view_path+"/"+Constants.GOODS_COVER_IMAGE_PATH);
+		}
+		return view;
 	}
 }

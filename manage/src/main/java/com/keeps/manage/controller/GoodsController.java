@@ -97,7 +97,7 @@ public class GoodsController extends AbstractController{
 	}
 	
 	@RequestMapping("edit")
-	public ModelAndView edit(ModelAndView view,HttpServletRequest request, HttpServletResponse response,Integer id) {
+	public ModelAndView edit(ModelAndView view,HttpServletRequest request, HttpServletResponse response,Long id) {
 		view.setViewName("manager/goods/edit");
 		view.addObject("goods",goodsService.getById(id,request));
 		view.addObject("goodsclasslist", goodsClassService.queryListAll(-1));

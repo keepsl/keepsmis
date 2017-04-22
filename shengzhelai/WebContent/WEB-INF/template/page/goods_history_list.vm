@@ -1,0 +1,17 @@
+#set($layout="layout/default-manager.vm")
+<!--浏览记录页-->
+<div class="wrapper collection-wrapper">
+	<div class="rel-zk-area">
+		<p class="head"><span>最近浏览</span></p>
+		<div class="rel-zk-list clearfix" style="min-height: 500px;">
+			#foreach ($list in $historyList)
+				#parse("page/layout_goods_item.vm")
+			#end
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+$(function(){
+    Util.zkItemTimeCount(2);
+});
+</script>

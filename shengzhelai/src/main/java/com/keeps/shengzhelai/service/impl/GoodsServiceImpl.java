@@ -9,6 +9,7 @@ import com.keeps.core.service.AbstractService;
 import com.keeps.model.SzlGoods;
 import com.keeps.shengzhelai.dao.GoodsDao;
 import com.keeps.shengzhelai.service.GoodsService;
+import com.keeps.tools.utils.EditType;
 import com.keeps.tools.utils.page.Page;
 
 /** 
@@ -27,14 +28,43 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 	
 	@Autowired
 	private GoodsDao goodsDao;
+	
+	public Page queryListByPrice(SzlGoods goods){
+		//TODO 后续业务处理
+		return goodsDao.queryList(goods);
+	}
+
+	
 	public Page queryListByClassid(SzlGoods goods){
-		//TODO 业务处理
+		//TODO 后续业务处理
 		Page page = goodsDao.queryList(goods);
 		return page;
 	}
 	
+	public Page queryHomeList(SzlGoods goods){
+		//TODO 后续业务处理
+		return goodsDao.queryList(goods);
+	}
+
 	public List<SzlGoods> getListByIds(String ids){
 		return goodsDao.getListByIds(ids);
+	}
+
+	/**
+	  * @Title:			getTopListByRecommend 
+	  * @Description:
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月19日
+	 */
+	public List<SzlGoods> getTopListByRecommend(Integer rows){
+		return goodsDao.getTopListByRecommend(rows);
+	}
+	
+	public String updateGoodsById(SzlGoods goods){
+		super.update(goods, EditType.NULL_UN_UPDATE);
+		return null;
 	}
 
 	/**
@@ -62,11 +92,6 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 			}
 		}
 		return goodslist;
-	}
-
-	
-	public Page queryList(SzlGoods goods){
-		return goodsDao.queryList(goods);
 	}
 
 	public SzlGoods getById(Long id){

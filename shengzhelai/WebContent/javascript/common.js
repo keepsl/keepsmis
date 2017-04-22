@@ -10,6 +10,10 @@ Util.pageSize = function() {
     n
 }
 ,
+
+Util.loadGoodsListAjax = function(url){
+	
+},
 Util.lazyLoad = function(e) {
     var t = $("." + e);
     t.each(function() {
@@ -122,7 +126,7 @@ Util.sideFixedMenu = function(e, t) {
         l += '<i class="back-to-top"></i>',
         l += "<p>返回顶部</p>",
         l += "</div>",
-        l += '<a target="_blank" href="../goods/history"><div class="menu-item" id="toHis">',
+        l += '<a target="_blank" href="'+basePath+'/goods/history"><div class="menu-item" id="toHis">',
         l += '<i class="history"></i>',
         l += "<p>浏览记录</p>",
         l += "</div></a>",
@@ -177,7 +181,7 @@ Util.createCouponList = function(e, t, path) {
         }
         i += '<div class="zk-item">',
         i += '<div class="img-area">',
-        i += '<a title="'+c.goodsname+'" target="_blank" href="'+path+'/goods/info/'+c.id+'">',
+        i += '<a title="'+c.goodsname+'" target="_blank" href="'+basePath+'/goods/info/'+c.id+'">',
         i += '<div data-ga-event="" class="lq">',
         i += '<div class="lq-t">',
         i += '<p class="lq-t-d1">领优惠券</p>',

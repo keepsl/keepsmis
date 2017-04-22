@@ -19,9 +19,65 @@ import com.keeps.tools.utils.page.Page;
  */
 public interface GoodsService extends SoftService{
 
+	/**
+	  * @Title:			queryListByPrice 
+	  * @Description:	根据价格查询商品
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月22日
+	 */
+	public Page queryListByPrice(SzlGoods goods);
+
+	/**
+	  * @Title:			queryListByClassid 
+	  * @Description:	根据分类查询商品
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月22日
+	 */
 	public Page queryListByClassid(SzlGoods goods);
 	
+	/**
+	  * @Title:			queryHomeList 
+	  * @Description:	首页查询商品
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月22日
+	 */
+	public Page queryHomeList(SzlGoods goods);
+	
+	/**
+	  * @Title:			getListByIds 
+	  * @Description:	根据多个商品ID查询商品列表
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月22日
+	 */
 	public List<SzlGoods> getListByIds(String ids);
+
+	/**
+	  * @Title:			getTopListByRecommend 
+	  * @Description:	 推荐商品
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月19日
+	 */
+	public List<SzlGoods> getTopListByRecommend(Integer rows);
+	
+	/**
+	  * @Title:			updateGoodsById 
+	  * @Description:	更新商品
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月22日
+	 */
+	public String updateGoodsById(SzlGoods goods);
 
 	/**
 	  * @Title:			queryGuessLike 
@@ -33,7 +89,13 @@ public interface GoodsService extends SoftService{
 	 */
 	public List<SzlGoods> getGoodsByGuessLike(Long goodsid,Integer pclassid,Integer classid);
 	
-	public Page queryList(SzlGoods goods);
-	
+	/**
+	  * @Title:			getById 
+	  * @Description:	根据商品id获得商品信息
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月22日
+	 */
 	public SzlGoods getById(Long id);
 }

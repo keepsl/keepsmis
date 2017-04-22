@@ -105,7 +105,7 @@
 				<prop key="output.encoding">UTF-8</prop>
 				<prop key="contentType">text/html;charset=UTF-8</prop>
 				<prop key="velocimacro.library.autoreload">false</prop>
-				<prop key="velocimacro.library">macro/macro.vm</prop>
+				<!-- <prop key="velocimacro.library">macro/macro.vm</prop> -->
 				<prop key="resource.loader">file</prop>
 				<prop key="file.resource.loader.class">org.apache.velocity.runtime.resource.loader.FileResourceLoader
 				</prop>

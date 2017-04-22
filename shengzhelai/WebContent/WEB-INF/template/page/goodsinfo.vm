@@ -40,15 +40,15 @@
 	</div>
 	<div class="wrapper-r">
 		<div class="rel-zk-area" style="margin-top: 60px;">
-			<p class="head"><span>最近浏览</span><a data-ga-event="折扣详情页:点击:最近浏览_查看更多" href="${path}/goods/history" class="more-his">查看更多</a></p>
+			<p class="head"><span>#if($!ishistory)为您推荐#else最近浏览#end</span><a href="${path}/goods/history" class="more-his">查看更多</a></p>
 			<div class="hot-zk-list clearfix swiper-container">
 				<div class="swiper-wrapper">
 					#foreach ($list in $historyList)
 						#if($velocityCount % 4 == 1)
 							<div class="swiper-slide">
 						#end
-						<a data-ga-event="折扣详情页:点击:最近浏览_卡片" class="zk-img-item" title="$list.classname" href="${path}/goods/info/$list.id">
-							<img class="lazy" data-original="${viewgoodspath}/$list.goodsimage" alt="$list.classname">
+						<a class="zk-img-item" title="$!list.goodsname" href="${path}/goods/info/$list.id">
+							<img class="lazy" data-original="${viewgoodspath}/$list.goodsimage" alt="$!list.goodsname">
 						</a>
 						#if($velocityCount % 4 == 0 || $!{historyList.size()}==$velocityCount)
 							</div>
@@ -62,48 +62,18 @@
 </div>
 
 <div class="wrapper">
-	
 	<div class="rel-zk-area" style="margin-bottom: 30px;">
 		<p class="head"><span>猜你喜欢</span></p>
 		<div class="rel-zk-list clearfix">
 			#foreach ($list in $guessLikelist)
-				<div class="zk-item">
-					<div class="img-area">
-						<a title="$list.goodsname" target="_blank" href="${path}/goods/info/$list.id">
-							<div data-ga-event="商品_右上角领券:点击:品类页" class="lq">
-								<div class="lq-t">
-									<p class="lq-t-d1">领优惠券</p>
-									<p class="lq-t-d2">省<span>$list.couponprice</span>元</p>
-								</div>
-								<div class="lq-b"></div>
-							</div>
-							<div class="bottom-info">
-								<p data-endtime="$list.endtime" class="time-count"></p>
-							</div>
-							<img data-ga-event="商品_图片:点击:品类页" class="lazy" data-original="${viewgoodspath}/$list.goodsimage" alt="$list.goodsname">
-						</a>
-					</div>
-					<p class="title-area elli"><span class="post-free">包邮</span>$list.goodsname</p>
-					<div class="raw-price-area">现价：&yen;$list.currentprice<p class="sold">已领 $list.tocouponnum 张券</p></div>
-					<div class="info">
-						<div class="price-area">
-							<span class="price">&yen;<em class="number-font">$NumericTool.format("#0",$list.couponafterprice)</em><em class="decimal">.$NumericTool.getTheDecimal($list.couponafterprice)</em><i></i></span>
-						</div>
-						<div class="buy-area">
-							<a data-ga-event="商品_立即领券:点击:品类页" rel="nofollow" target="_blank" href="$list.tocouponsurl">
-								<span class="coupon-amount">去#dictk2vtag('dic_goods_source',$!{list.goodssource})</span>
-								<span class="btn-title">火速领券</span>
-							</a>
-						</div>
-						<div class="platform-area"><img src="${path}/skins/template/img/#if($list.goodssource==1)platform_taobao.png#elseif($list.goodssource==2)platform_tmall.png#end">#dictk2vtag('dic_goods_source',$!{list.goodssource})</div>
-					</div>
-				</div>
+				#parse("page/layout_goods_item.vm")
 			#end
 		</div>
 	</div>
 </div>
 <script type="text/javascript" src="${path}/plug/jquery/swiper3.1.0.min.js"></script>
 <script type="text/javascript">
+	Util.zkItemTimeCount();
 	var sw = new Swiper('.swiper-container',{
         autoplay: 3000,
         loop:false
