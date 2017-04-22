@@ -23,6 +23,10 @@ public class Constants {
 	public static String file_upload_path="";
 	//文件访问服务器路径
 	public static String file_view_path="";
+	
+	//省着来商品分页数量
+	public static int goods_page_rows=40;
+
 
 	//广告生成文件路径
 	public static String ADV_FILE_PATH = "file/adv/cache";

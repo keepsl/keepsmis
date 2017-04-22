@@ -47,6 +47,7 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 	private Integer ishot;
 	private Integer isrecommend;
 	private Integer isdelete;
+	private Integer clicknum;
 	private String description;
 	private Date createtime;
 	private Date updatetime;
@@ -56,7 +57,9 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 	private String viewqrcodepath;
 	private String classname;
 	private Integer searchtype;//查询类型，1正常出售商品，2到期商品
-
+	private Float searchStartPrice;//查询价格，最低价格
+	private Float searchEndPrice;//查询价格，最高价格
+	
 	public SzlGoods() {
 	}
 
@@ -354,6 +357,15 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 		this.isdelete = isdelete;
 	}
 
+	@Column(name = "clicknum" , nullable = false)
+	public Integer getClicknum() {
+		return clicknum;
+	}
+
+	public void setClicknum(Integer clicknum) {
+		this.clicknum = clicknum;
+	}
+	
 	@Column(name = "description", nullable = false)
 	public String getDescription() {
 		return description;
@@ -425,5 +437,24 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 	public void setSearchtype(Integer searchtype) {
 		this.searchtype = searchtype;
 	}
+
+	@Transient
+	public Float getSearchStartPrice() {
+		return searchStartPrice;
+	}
+
+	public void setSearchStartPrice(Float searchStartPrice) {
+		this.searchStartPrice = searchStartPrice;
+	}
+
+	@Transient
+	public Float getSearchEndPrice() {
+		return searchEndPrice;
+	}
+
+	public void setSearchEndPrice(Float searchEndPrice) {
+		this.searchEndPrice = searchEndPrice;
+	}
+
 
 }
