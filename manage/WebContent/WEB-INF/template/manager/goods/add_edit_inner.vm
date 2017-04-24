@@ -16,8 +16,8 @@
 					<form class="form-horizontal" role="form" id="form1" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="id" value="$!{goods.id}"/>
 						<input type="hidden" name="pclassid"  value="$!{goods.pclassid}"/>
-						<input type="hidden" name="goodsimage"  value="$!{goods.goodsimage}"/>
-						<input type="hidden" name="qrcodepath"  value="$!{goods.qrcodepath}"/>
+						<!--<input type="hidden" name="goodsimage"  value="$!{goods.goodsimage}"/>
+						<input type="hidden" name="qrcodepath"  value="$!{goods.qrcodepath}"/>-->
 						<div class="form-group">
 							<label for="goodsname" class="col-xs-2 control-label"><em class="text-red">*</em>商品名称：</label>
 							<div class="col-xs-9">
@@ -40,7 +40,7 @@
 							      <p class="help-block">该商品所属分类</p>
 						    </div>
 						</div>
-						<div class="form-group">
+						<!--<div class="form-group">
 				  			<label class="col-xs-2 control-label"><em class="text-red">*</em>商品图片：</label>
 					  		<div class="col-xs-3">
 				  				<div class="g-file-box">
@@ -57,7 +57,7 @@
 									<p class="help-block"><a class="gbn gbn-s gbn-gray" href="javascript:;" onclick="resetFile(this,'img2');document.getElementsByName('qrcodepath')[0].value='';">删除所选</a>&nbsp;&nbsp;&nbsp;推荐300*300.</p>
 								</div>
 							</div>
-						</div>
+						</div>-->
 						
 						<div class="form-group">
 							<label for="goodssource" class="col-xs-2 control-label"><em class="text-red">*</em>商品来源：</label>
@@ -138,6 +138,13 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="tolongurl" class="col-xs-2 control-label"><em class="text-red">*</em>商品图片：</label>
+							<div class="col-xs-9">
+								<textarea class="form-control" rows="6" style="height:100px;" id="goodsimageurl" name="goodsimageurl">$!{goods.goodsimageurl}</textarea>
+								<p class="help-block">商品图片连接，务必填写正确。</p>
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="tolongurl" class="col-xs-2 control-label"><em class="text-red">*</em>推广长连接：</label>
 							<div class="col-xs-9">
 								<textarea class="form-control" rows="6" style="height:100px;" id="tolongurl" name="tolongurl">$!{goods.tolongurl}</textarea>
@@ -145,7 +152,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="tocouponsurl" class="col-xs-2 control-label">优惠券连接：</label>
+							<label for="tocouponsurl" class="col-xs-2 control-label"><em class="text-red">*</em>优惠券连接：</label>
 							<div class="col-xs-9">
 								<textarea class="form-control" rows="6" style="height:100px;" id="tocouponsurl" name="tocouponsurl">$!{goods.tocouponsurl}</textarea>
 								<p class="help-block">优惠券连接，务必填写正确。</p>
