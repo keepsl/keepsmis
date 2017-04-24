@@ -8,15 +8,15 @@
 			&nbsp;&nbsp;&gt;&nbsp;&nbsp;$goods.goodsname
 		</p>
 		<div class="zk-content">
-			<div class="img-area"><img src="${viewgoodspath}/$goods.goodsimage" alt="$goods.goodsname"></div>
+			<div class="img-area"><img src="$goods.goodsimageurl" alt="$goods.goodsname"></div>
 			<div class="info-area">
 				<h1 class="title elli"><span>包邮</span>$goods.goodsname</h1>
 				<p class="endtime" id="eventTimeStr"></p>
 				<div class="platform"><i style="background-image: url(${path}/skins/template/img/#if($goods.goodssource==1)platform_taobao.png#elseif($goods.goodssource==2)platform_tmall.png#end);"></i>#dictk2vtag('dic_goods_source',${goods.goodssource})</div>
 				<div class="stat">
 					<p class="price-area">
-						<span class="ori-price">现价：&yen;819.0</span>
-						<span class="price">&yen;<em class="int">$NumericTool.format("#0",$goods.couponafterprice)</em><em class="decimal">.$NumericTool.getTheDecimal($goods.couponafterprice)</em><i>券后价</i></span>
+						<span class="ori-price">现价：&yen;$goods.currentprice</span>
+						<span class="price">&yen;<em class="int">$NumericTool.getTheDecimalBefore($goods.couponafterprice)</em><em class="decimal">.$NumericTool.getTheDecimalAfter($goods.couponafterprice)</em><i>券后价</i></span>
 					</p>
 					<div class="buy-area">
 						<p class="desc">有效期内领券下单，享受立减优惠！</p>
