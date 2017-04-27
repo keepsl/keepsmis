@@ -7,14 +7,14 @@
     <artifactId>keepsmis</artifactId>
     <version>1.0</version>
   </parent>
-  <artifactId>shengzhelai</artifactId>
-  <name>shengzhelai</name>
+  <artifactId>shengzhelai</artifactId> 
+  <name>shengzhelai</name> 
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+  </properties> 
   <dependencies>
-<dependency>
+<dependency> 
       	<groupId>com.keeps</groupId>
       	<artifactId>keeps-tools</artifactId>
 		<version>${keeps.tools-version}</version>

@@ -29,9 +29,9 @@
 				</div>
 				<div class="tags">
 					<div class="tag-list">
+						<!--<a data-ga-event="折扣详情页:点击:标签" class="tag-item" href="/g/yundongxie/">运动鞋</a>
 						<a data-ga-event="折扣详情页:点击:标签" class="tag-item" href="/g/yundongxie/">运动鞋</a>
-						<a data-ga-event="折扣详情页:点击:标签" class="tag-item" href="/g/yundongxie/">运动鞋</a>
-						<a data-ga-event="折扣详情页:点击:标签" class="tag-item" href="/g/xiezi/">鞋子</a>
+						<a data-ga-event="折扣详情页:点击:标签" class="tag-item" href="/g/xiezi/">鞋子</a>-->
 					</div>
 					<p class="coll"><i></i>按<em>Ctrl&nbsp;+&nbsp;D</em>加入收藏</p>
 				</div>

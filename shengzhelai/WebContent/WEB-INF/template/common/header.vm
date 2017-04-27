@@ -1,7 +1,7 @@
 <div id="header" class="header">
 	<div class="header-top">
 		<div class="wrapper">
-			<a class="logo-area" href="/?channel=30">
+			<a class="logo-area" href="${path}/page/index">
 				<img src="${path}/skins/template/images/logo.png" alt="省着来" class="logo"/>
 				<img src="${path}/skins/template/images/logoicon.png" alt="省着来" class="slogan">
 			</a>
@@ -98,12 +98,13 @@ $(function(){
         var q = $(si[0]).val();
         if(q.trim() && q.trim() != '输入关键词或淘宝链接'){
             goSearch(q.trim());
+        }else{
+        	window.location.href = '${path}/page/index';
         }
     });
 
     function goSearch(q){
-        ga('send','event','搜索','搜索','搜索');
-		window.location.href = '/s/?q='+q+'&channel=30';
+		window.location.href = '${path}/goods/search/?keywords='+q;
 	}
 });
 </script>
