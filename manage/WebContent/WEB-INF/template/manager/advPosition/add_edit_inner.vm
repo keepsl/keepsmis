@@ -49,7 +49,7 @@
 						  		<div class="col-xs-9">
 					  				<div class="g-file-box">
 					  					<input type="file" name="defaultcontentfile" id="defaultcontentfile" onchange="previewImage({file:this,imgId:'image1',divId:'image1',regex:'.jpg.bmp.gif.png',width:'330',height:'180'});" style="width: 330px; height: 180px; font-size: 20px; filter: alpha(opacity=0); position: absolute; opacity: 0;cursor: pointer;" >
-										<img style="width:330px;height:180px" src="#if(!$!{advPosition.defaultContent}) ${path}/skins/template/img/02.png #else ${viewpath}/cut$!{advPosition.defaultContent} #end" id="image1"/>
+										<img style="width:330px;height:180px" src="#if(!$!{advPosition.defaultContent}) ${path}/skins/template/img/02.png #else ${viewpath}/$!{advPosition.defaultContent} #end" id="image1"/>
 										<p class="help-block"><a class="gbn gbn-s gbn-gray" href="javascript:;" onclick="resetFile(this,'image1','02.png');document.getElementsByName('defaultContent')[0].value='';">删除所选</a><!--&nbsp;&nbsp;&nbsp;封面图片推荐尺寸为660*360.--></p>
 									</div>
 								</div>
@@ -76,7 +76,7 @@
 							<div class="form-group">
 								<label for="defaultContentWord" class="col-xs-2 control-label"><em class="text-red">*</em>默认文字：</label>
 								<div class="col-xs-9">
-									<input type="number" class="form-control" id="defaultContentWord" name="defaultContentWord" value="$!{advPosition.defaultContent}" min="0" max="99999999999" maxlength="100">
+									<input class="form-control" id="defaultContentWord" name="defaultContentWord" value="$!{advPosition.defaultContent}" maxlength="100">
 									<p class="help-block">当没有广告可供展示时使用的默认文字</p>
 								</div>
 							</div>

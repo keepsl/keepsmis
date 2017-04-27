@@ -61,7 +61,7 @@
 						  		<div class="col-xs-9">
 					  				<div class="g-file-box">
 					  					<input type="file" name="advcontentfile" id="advcontentfile" onchange="previewImage({file:this,imgId:'image1',divId:'image1',regex:'.jpg.bmp.gif.png',width:'330',height:'180'});" style="width: 330px; height: 180px; font-size: 20px; filter: alpha(opacity=0); position: absolute; opacity: 0;cursor: pointer;" >
-										<img style="width:330px;height:180px" src="#if(!$!{adv.advContent}) ${path}/skins/template/img/02.png #else ${viewpath}/cut$!{adv.advContent} #end" id="image1"/>
+										<img style="width:330px;height:180px" src="#if(!$!{adv.advContent}) ${path}/skins/template/img/02.png #else ${viewpath}/$!{adv.advContent} #end" id="image1"/>
 										<p class="help-block"><a class="gbn gbn-s gbn-gray" href="javascript:;" onclick="resetFile(this,'image1','02.png');document.getElementsByName('advContentpath')[0].value='';">删除所选</a>&nbsp;&nbsp;&nbsp;<lable id="tipMHmsg"><!--封面图片推荐尺寸为660*360.--></lable></p>
 									</div>
 								</div>
