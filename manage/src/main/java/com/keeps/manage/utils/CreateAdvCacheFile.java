@@ -20,6 +20,9 @@ import com.keeps.utils.Constants;
  */
 public class CreateAdvCacheFile {
 	
+	public static String ossProcessResize(Integer w,Integer h){
+		return "?x-oss-process=image/resize,m_fixed,w_"+w+",h_"+h+"";
+	}
 	/**
 	  * @Title:			createSlideshowAdvPosition 
 	  * @Description:	多图片广告位
@@ -33,20 +36,20 @@ public class CreateAdvCacheFile {
 		sb.append(" document.write(\" ");
 		sb.append("<div href='javascript:;' class='small-banner-item'>");
 		sb.append("<a target='_blank' href='javascript:;'>");
-		sb.append("<img src='"+Constants.file_view_path+"/"+Constants.ADV_POSITION_IMAGE_PATH+"/"+advPosition.getDefaultContent()+"'>");
+		sb.append("<img src='"+Constants.file_view_path+"/"+Constants.ADV_POSITION_IMAGE_PATH+"/"+advPosition.getDefaultContent()+ossProcessResize(advPosition.getApWidth(),advPosition.getApHeight())+"'>");
 		sb.append("</a>");
 		sb.append("</div>");
 		sb.append(" \");");
 		AliyunOSSClientUtil.uploadObject2OSS(sb.toString().getBytes(),Constants.ADV_FILE_PATH,filename);
 		//FileUtils.createFile(filepath, filename, sb.toString());
 	}
-	public static void createManyImageAdv(String filename,List<TAdv> list){
+	public static void createManyImageAdv(String filename,List<TAdv> list,Integer h,Integer w){
 		StringBuilder sb = new StringBuilder();
 		sb.append(" document.write(\" ");
 		for (TAdv tAdv : list) {
 			sb.append("<div href='javascript:;' class='small-banner-item'>");
 			sb.append("<a target='_blank' href='"+tAdv.getAdvLink()+"'>");
-			sb.append("<img src='"+Constants.file_view_path+"/"+Constants.ADV_IMAGE_PATH+"/"+tAdv.getAdvContent()+"'>");
+			sb.append("<img src='"+Constants.file_view_path+"/"+Constants.ADV_IMAGE_PATH+"/"+tAdv.getAdvContent()+ossProcessResize(w,h)+"'>");
 			sb.append("</a>");
 			sb.append("</div>");
 		}
@@ -66,18 +69,18 @@ public class CreateAdvCacheFile {
 		StringBuilder sb = new StringBuilder();
 		sb.append(" document.write(\" ");
 		sb.append(" <a class='swiper-slide' href='javascript:;' >  ");
-		sb.append(" 	<img src='"+Constants.file_view_path+"/"+Constants.ADV_POSITION_IMAGE_PATH+"/"+advPosition.getDefaultContent()+"'>");
+		sb.append(" 	<img src='"+Constants.file_view_path+"/"+Constants.ADV_POSITION_IMAGE_PATH+"/"+advPosition.getDefaultContent()+ossProcessResize(advPosition.getApWidth(),advPosition.getApHeight())+"'>");
 		sb.append(" </a>  ");
 		sb.append(" \");");
 		AliyunOSSClientUtil.uploadObject2OSS(sb.toString().getBytes(),Constants.ADV_FILE_PATH,filename);
 		//FileUtils.createFile(filepath, filename, sb.toString());
 	}
-	public static void createSlideshowAdv(String filename,List<TAdv> list){
+	public static void createSlideshowAdv(String filename,List<TAdv> list,Integer h,Integer w){
 		StringBuilder sb = new StringBuilder();
 		sb.append(" document.write(\" ");
 		for (TAdv tAdv : list) {
 			sb.append("<a class='swiper-slide' target='_blank' href='"+tAdv.getAdvLink()+"'>");
-			sb.append("<img src='"+Constants.file_view_path+"/"+Constants.ADV_IMAGE_PATH+"/"+tAdv.getAdvContent()+"'>");
+			sb.append("<img src='"+Constants.file_view_path+"/"+Constants.ADV_IMAGE_PATH+"/"+tAdv.getAdvContent()+ossProcessResize(w,h)+"'>");
 			sb.append("</a>");
 		}
 		sb.append(" \");");

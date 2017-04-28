@@ -48,11 +48,11 @@
 						<div class="form-group">
 							<label for="starttime" class="col-xs-2 control-label"><em class="text-red">*</em>开始时间</label>
 							<div class="col-xs-3">
-								<input type="text" class="form-control Wdate g-Wate-left" id="starttime" name="starttime" value="$!date.format('yyyy-MM-dd',$!{adv.starttime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+								<input type="text" class="form-control Wdate g-Wate-left" id="starttime" name="starttime" value="$DatesTool.format('yyyy-MM-dd',$!{adv.starttime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
 							</div>
 							<label for="endtime" class="col-xs-2 control-label">结束时间</label>
 							<div class="col-xs-3">
-								<input type="text" class="form-control Wdate g-Wate-left" id="endtime" name="endtime" value="$!date.format('yyyy-MM-dd',$!{adv.endtime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+								<input type="text" class="form-control Wdate g-Wate-left" id="endtime" name="endtime" value="$DatesTool.format('yyyy-MM-dd',$!{adv.endtime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
 							</div>
 						</div>
 						<div id="opClass1">
@@ -104,9 +104,9 @@
 </div>
 <script>
 	$(function(){
-		//编辑初始化
 		var apClass = $("input[name='apClass']").val();
-		if(apClass!=''){
+		if(apClass!=''){//编辑初始化
+			$("#tipMHmsg").html("封面图片推荐尺寸为"+'$!{advPosition.apWidth}'+"*"+'$!{advPosition.apHeight}'+".");
 			if(apClass == 2){
 				$("#opClass1").hide();
 				$("#opClass2").show();

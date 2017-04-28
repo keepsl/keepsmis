@@ -189,12 +189,12 @@ public class AdvPositionServiceImpl extends AbstractService implements AdvPositi
 				filename += iid+".js";
 				switch (advPosition.getApClass()) {
 				case 1://广告位类别是图片
-					CreateAdvCacheFile.createManyImageAdv(filename, listadv);
+					CreateAdvCacheFile.createManyImageAdv(filename, listadv,advPosition.getApWidth(),advPosition.getApHeight());
 					break;
 				case 2://广告位类别是文字
 					break;
 				case 3://广告位类别是幻灯
-					CreateAdvCacheFile.createSlideshowAdv(filename,listadv);
+					CreateAdvCacheFile.createSlideshowAdv(filename,listadv,advPosition.getApWidth(),advPosition.getApHeight());
 					break;
 				case 4://广告位类别是Flash
 					break;

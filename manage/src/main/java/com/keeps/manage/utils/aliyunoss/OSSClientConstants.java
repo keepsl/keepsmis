@@ -12,13 +12,11 @@ package com.keeps.manage.utils.aliyunoss;
  */
 public class OSSClientConstants {
 	//阿里云API的外网域名  
-    public static final String ENDPOINT = "oss-cn-shanghai.aliyuncs.com";  
+    public static final String ENDPOINT = "oss-cn-shanghai.aliyuncs.com";
     //阿里云API的密钥Access Key ID  
     public static final String ACCESS_KEY_ID = "LTAICMgEyrQKscag";  
     //阿里云API的密钥Access Key Secret  
     public static final String ACCESS_KEY_SECRET = "ROGST3eBKNdouluyoGmnHWtGB13GiK";  
     //阿里云API的bucket名称  
     public static final String BACKET_NAME = "keepsl";  
-    //阿里云API的文件夹名称  
-    public static final String FOLDER="keeps-shengzhelai/";
 }

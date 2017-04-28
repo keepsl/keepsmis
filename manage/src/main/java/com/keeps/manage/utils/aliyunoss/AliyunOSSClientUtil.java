@@ -12,6 +12,7 @@ import com.aliyun.oss.model.GetObjectRequest;
 import com.aliyun.oss.model.OSSObject;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectResult;
+import com.keeps.utils.Constants;
 
 /**
  * <p>
@@ -47,7 +48,7 @@ public class AliyunOSSClientUtil {
 		ACCESS_KEY_ID = OSSClientConstants.ACCESS_KEY_ID;
 		ACCESS_KEY_SECRET = OSSClientConstants.ACCESS_KEY_SECRET;
 		BACKET_NAME = OSSClientConstants.BACKET_NAME;
-		FOLDER = OSSClientConstants.FOLDER;
+		FOLDER = Constants.file_folder+"/";
 	}
 
 	/**
