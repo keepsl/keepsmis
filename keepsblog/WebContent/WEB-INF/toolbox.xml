@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <toolbox>
-   
+<tool>
+    <key>DatesTool</key>
+    <scope>application</scope>
+    <class>com.keeps.tools.utils.velocity.DatesTool</class>  
+</tool>
 <tool>
     <key>date</key>
     <scope>application</scope>

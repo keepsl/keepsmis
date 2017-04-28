@@ -88,7 +88,7 @@
 		              <span class="muted">
 		                <i class="icon-user icon12"></i> $list.publishnickname</span>
 		              <span class="muted">
-		                <i class="ico icon-time icon12"></i> $!date.format('yyyy-MM-dd HH:mm:ss',$list.publishtime)</span>
+		                <i class="ico icon-time icon12"></i> $DatesTool.format('yyyy-MM-dd HH:mm:ss',$list.publishtime)</span>
 		              <span class="muted">
 		                <i class="ico icon-eye-open icon12"></i> $list.clicknum次浏览</span>
 		            </p>
@@ -118,7 +118,7 @@
 			                	<img src="$list.coverimage" alt="$list.title" title="$list.title"/>
 			               	</span>
 			                <span class="text">#subcut($list.title,20)</span>
-			                <span class="muted">$!date.format('yyyy-MM-dd',$list.publishtime)</span>
+			                <span class="muted">$DatesTool.format('yyyy-MM-dd',$list.publishtime)</span>
 			                <span class="muted">
 			                	<span class="ds-thread-count" data-replace="1">$list.clicknum次阅读</span>
 			                </span>
