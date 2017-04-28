@@ -19,7 +19,7 @@ import org.apache.velocity.tools.generic.NumberTool;
  */
 public class NumericTool extends NumberTool {
 
-	public String getTheDecimal(Object o) {
+	public String getTheDecimalAfter(Object o) {
 		if (o == null) {
 			return "0";
 		}
@@ -27,6 +27,14 @@ public class NumericTool extends NumberTool {
 		return ((str.indexOf(".")) != -1) ? str.substring(str.indexOf(".") + 1) : "0";
 	}
 
+	public String getTheDecimalBefore(Object o) {
+		if (o == null) {
+			return "0";
+		}
+		String str = String.valueOf(o);
+		return ((str.indexOf(".")) != -1) ? str.substring(0,str.indexOf(".")) : "0";
+	}
+	
 	public static String subZeroAndDot(Object o) {
 		if (o == null) {
 			return "0";

@@ -38,8 +38,28 @@ public class CommonUtils {
 		File diskPartition = new File(path.substring(0,path.indexOf(":")+1));
         float usablePatitionSpace = diskPartition.getUsableSpace();
 		System.out.println (CommonUtils.subZeroAndDot(fnum.format(usablePatitionSpace / (1024*1024*1024))));
+		
+		getSubStr("1,2", 5, ",");
 	}
 
+	public static String getSubStr(String str, int num, String regex) {
+		String result = "";
+		int i = 0;
+		if (CommonUtils.isNull(str)) {
+			return "";
+		}
+		if (str.split(regex).length<=num) {
+			return str;
+		}
+		while (i < num) {
+			int lastFirst = str.lastIndexOf(regex);
+			result = str.substring(lastFirst) + result;
+			str = str.substring(0, lastFirst);
+			i++;
+		}
+		System.out.println(result.substring(1));
+		return result.substring(1);
+	}
 	/**
 	  * @Title:			isWinterm 
 	  * @Description:	判断是否冬令时
