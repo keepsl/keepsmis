@@ -3,6 +3,7 @@ package com.keeps.tools.utils.velocity;
 import org.apache.velocity.tools.generic.DateTool;
 
 import com.keeps.tools.utils.DateUtils;
+import com.keeps.tools.utils.StringUtils;
 
 /** 
  * <p>Title: DateTool.java</p>  
@@ -18,6 +19,9 @@ import com.keeps.tools.utils.DateUtils;
 public class DatesTool extends DateTool{
 
 	public String format(String pattern, String date) {
+		if (StringUtils.notText(date)) {
+			return "";
+		}
 		return DateUtils.format(date, pattern);
 	}
 
