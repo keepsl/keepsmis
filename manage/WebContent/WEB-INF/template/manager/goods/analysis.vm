@@ -13,7 +13,7 @@
 		<div class="row" >
 	    	<div class="col-xs-12">
 	        	<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" id="formid">
-	        		<input type="hidden" name="pclassid"  value="$classid"/>
+	        		<input type="hidden" name="pclassid"  value="$!{pclassid}"/>
 	        		<div class="form-group">
 					    <label for="classid" class="col-xs-2 control-label"><em class="text-red">*</em>所属分类：</label>
 					    <div class="col-xs-9">

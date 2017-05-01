@@ -11,6 +11,7 @@
 			    </div>
 	  			<form class="form-inline clearfix" role="form" id="form1" onsubmit="return false;">
 	  				<input type="hidden" name="classid"/>
+	  				<input type="hidden" name="pclassid"/>
                     <span class="group">
                         <label>名称:</label>
                         <input type="text" class="form-control" name="goodsname" style="width:220px">

@@ -18,7 +18,7 @@ $(function(){
 		{"hidden":true,"align":"left","sortable":false,"width":10,"name":"id","resizable":false,"label":"id"},
 		{"hidden":false,"align":"left","sortable":true,"width":80,"name":"classname","resizable":true,"label":"所属分类"},
 		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"goodsname","resizable":true,"label":"商品名称",formatter:function(cellvalue, options, rowObject){
-			return '<a style="color:#5cb85c" href="javascript:;" onclick="window.open(\'/shengzhelai/goods/info/'+rowObject.id+'\')" target="main">'+cellvalue+'</a>';
+			return '<a style="color:#5cb85c" href="javascript:;" onclick="window.open(\''+websiteUrl+'/goods/info/'+rowObject.id+'\')" target="main">'+cellvalue+'</a>';
 		}},
 		{"hidden":false,"align":"left","sortable":true,"width":70,"name":"goodssource","resizable":true,"label":"商品来源",formatter:function(cellvalue, options, rowObject){
 			if(cellvalue==1){
@@ -89,6 +89,7 @@ function initTree(){
         },
         callback: {
         	onClick: function(e,treeId, treeNode){
+        		$("input[name='pclassid']").val(treeNode.pId);
         		$("input[name='classid']").val(treeNode.id);
         		if($("#myTab li").eq(0).hasClass('active')){
         			query();
@@ -139,7 +140,7 @@ function analysis_obj(){
         	callback(success);
         });
     }
-	openWin('../goods/analysis?classid='+$("input[name='classid']").val(),'解析商品文案',650,450,'',onSuccess);
+	openWin('../goods/analysis?classid='+$("input[name='classid']").val()+'&pclassid='+$("input[name='pclassid']").val(),'解析商品文案',650,450,'',onSuccess);
 }
 function imp_obj(){
 	var onSuccess = function (iframe,callback) {
@@ -174,7 +175,7 @@ function add_obj(){
         	callback(success);
         });
     }
-	openWin('../goods/add?classid='+$("input[name='classid']").val(),'新增商品',980,600,'',onSuccess);
+	openWin('../goods/add?classid='+$("input[name='classid']").val()+'&pclassid='+$("input[name='pclassid']").val(),'新增商品',980,600,'',onSuccess);
 }
 
 function edit_obj(){

@@ -43,7 +43,7 @@ public class CreateAdvCacheFile {
 		AliyunOSSClientUtil.uploadObject2OSS(sb.toString().getBytes(),Constants.ADV_FILE_PATH,filename);
 		//FileUtils.createFile(filepath, filename, sb.toString());
 	}
-	public static void createManyImageAdv(String filename,List<TAdv> list,Integer h,Integer w){
+	public static void createManyImageAdv(String filename,List<TAdv> list,Integer w,Integer h){
 		StringBuilder sb = new StringBuilder();
 		sb.append(" document.write(\" ");
 		for (TAdv tAdv : list) {
@@ -75,14 +75,29 @@ public class CreateAdvCacheFile {
 		AliyunOSSClientUtil.uploadObject2OSS(sb.toString().getBytes(),Constants.ADV_FILE_PATH,filename);
 		//FileUtils.createFile(filepath, filename, sb.toString());
 	}
-	public static void createSlideshowAdv(String filename,List<TAdv> list,Integer h,Integer w){
+	public static void createSlideshowAdv(String filename,List<TAdv> list,Integer w,Integer h){
 		StringBuilder sb = new StringBuilder();
 		sb.append(" document.write(\" ");
-		for (TAdv tAdv : list) {
+		sb.append("<ol>");
+    	for (int i = 1; i <= list.size(); i++) {
+    		if (i==1) {
+    			sb.append("<li class='active'>"+i+"</li>");
+			} else {
+				sb.append("<li>"+i+"</li>");
+			}
+		}
+    	sb.append("</ol>");
+    	
+    	sb.append("<ul>");
+    	for (TAdv adv : list) {
+    		sb.append("<li><a href='"+adv.getAdvLink()+"' target='_blank' style='cursor:pointer'><img src='"+Constants.file_view_path+"/"+Constants.ADV_IMAGE_PATH+"/"+adv.getAdvContent()+ossProcessResize(w,h)+"' width='"+w+"' height='"+h+"'></a></li>");
+		}
+    	sb.append("</ul>");
+		/*for (TAdv tAdv : list) {
 			sb.append("<a class='swiper-slide' target='_blank' href='"+tAdv.getAdvLink()+"'>");
 			sb.append("<img src='"+Constants.file_view_path+"/"+Constants.ADV_IMAGE_PATH+"/"+tAdv.getAdvContent()+ossProcessResize(w,h)+"'>");
 			sb.append("</a>");
-		}
+		}*/
 		sb.append(" \");");
 		AliyunOSSClientUtil.uploadObject2OSS(sb.toString().getBytes(),Constants.ADV_FILE_PATH,filename);
 		//FileUtils.createFile(filepath, filename, sb.toString());

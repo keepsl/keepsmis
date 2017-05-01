@@ -5,7 +5,9 @@
         height: 100%;
     }
 </style>
-
+<script type="text/javascript">
+	var websiteUrl = '$!{websiteUrl}';
+</script>
 <div class="container-fluid">
     <div class="row" >
     

@@ -63,6 +63,9 @@ public class AdvServiceImpl extends AbstractService implements AdvService {
 	public String saveOrUpdate(TAdv adv, MultipartFile advcontentfile, HttpServletRequest request) {
 		Assert.isTrue(StringUtils.hasText(adv.getAdvTitle()), "广告名称不能为空!");
 		Assert.isTrue(StringUtils.hasText(adv.getAdvLink()), "广告连接不能为空!");
+		if (!adv.getAdvLink().contains("http://") && !adv.getAdvLink().contains("https://")) {
+			adv.setAdvLink("http://"+adv.getAdvLink());
+		}
 		Assert.isTrue(adv.getApId()!=null && adv.getApId() !=0, "所属广告位不能为空!");
 		if (adv.getId()==null) {
 			if (adv.getApDisplay()==3) {

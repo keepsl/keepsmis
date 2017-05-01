@@ -25,6 +25,7 @@ import com.keeps.model.SzlGoods;
 import com.keeps.model.TTag;
 import com.keeps.tools.utils.DateUtils;
 import com.keeps.tools.utils.JsonPost;
+import com.keeps.utils.Constants;
 import com.keeps.utils.FileUtil;
 
 /** 
@@ -64,6 +65,7 @@ public class GoodsController extends AbstractController{
 	@RequestMapping("index")
 	public ModelAndView index(ModelAndView view,HttpServletRequest request, HttpServletResponse response) {
 		view.setViewName("manager/goods/list");
+		view.addObject("websiteUrl", Constants.websiteUrl);
 		return view;
 	}
 	
@@ -80,9 +82,10 @@ public class GoodsController extends AbstractController{
 	}
 	
 	@RequestMapping("analysis")
-	public ModelAndView analysis(ModelAndView view,Integer classid){
+	public ModelAndView analysis(ModelAndView view,Integer classid,Integer pclassid){
 		view.setViewName("manager/goods/analysis");
 		view.addObject("classid", classid);
+		view.addObject("pclassid", pclassid);
 		view.addObject("goodsclasslist", goodsClassService.queryListAll(-1));
 		return view;
 	}
@@ -92,9 +95,10 @@ public class GoodsController extends AbstractController{
 		return view;
 	}
 	@RequestMapping("add")
-	public ModelAndView add(ModelAndView view,HttpServletRequest request, HttpServletResponse response,Integer classid) {
+	public ModelAndView add(ModelAndView view,HttpServletRequest request, HttpServletResponse response,Integer classid,Integer pclassid) {
 		view.setViewName("manager/goods/add");
 		view.addObject("classid", classid);
+		view.addObject("pclassid",pclassid);
 		SzlGoods goods = new SzlGoods();
 		goods.setStarttime(DateUtils.format(DateUtils.getNow(), "yyyy-MM-dd HH:mm:ss"));
 		view.addObject("goods", goods);
@@ -138,7 +142,7 @@ public class GoodsController extends AbstractController{
 	 */
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("saveAnalysisToCopywriter")
-	public @ResponseBody Map saveAnalysisToCopywriter(HttpServletRequest request,final Integer classid,final Integer goodssource,final Integer pclassid,final String copywriter){
+	public @ResponseBody Map saveAnalysisToCopywriter(HttpServletRequest request,final Integer classid,final Integer pclassid,final Integer goodssource,final String copywriter){
 		return super.doJsonPost(new JsonPost() {
 			@SuppressWarnings("unchecked")
 			@Override
