@@ -244,7 +244,7 @@ public class GoodsController extends AbstractController{
 	
 	/**
 	  * @Title:			goodslistByClassid 
-	  * @Description:	根据商品加个查找
+	  * @Description:	根据商品价格查找
 	  * @param:
 	  * @return: 
 	  * @author:		keeps

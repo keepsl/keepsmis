@@ -1986,3 +1986,53 @@ body {
 .footer-element-area .footer-element-item img {
     width: 100%
 }
+
+/*轮播*/
+#mainslid {
+	width: 660px;
+	height: 360px;
+	overflow: hidden;
+	position: relative;
+	z-index: 1;
+	margin-bottom: 14px;
+}
+#mainslid ol {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	z-index: 2;
+}
+#mainslid ol li {
+	float: left;
+	margin-right: 3px;
+	display: inline;
+	cursor: pointer;
+	background: #593325;
+	padding: 2px 5px;
+	color: #fff;
+	font-family: arial;
+	font-size: 12px;
+}
+#mainslid .on {
+	padding: 2px 5px;
+	font-weight: bold;
+	color: #ffffff;
+	background: #e64d5e;
+	position: relative;
+}
+#mainslid ul {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+#mainslid ul li {
+	width: 660px;
+	height: 360px;
+	float: left;
+}
+#mainslid ul img {
+	float: left;
+	width: 660px;
+	height: 360px;
+}

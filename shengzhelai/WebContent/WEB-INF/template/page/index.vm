@@ -1,4 +1,6 @@
 #set($layout="layout/default-manager.vm")
+<script type="text/javascript" src="${path}/plug/jquery/jquery.flexslider-min.js"></script>
+<script type="text/javascript" src="${path}/plug/jquery/jquery.SuperSlide.2.1.1.js"></script>
 <script type="text/javascript">
 	var globalChannel = '';
 	var ajaxgoodslisturl = '${path}/goods/findHomeGoodsListJson';
@@ -12,29 +14,21 @@
 			#end
 	</div>
 	<div class="banner-area swiper-container">
-		<div class="swiper-wrapper">
-			<script src='${viewadvpath}/layout_adv_27.js'></script>
-		</div>
-		<div class="swiper-bottom">
-			<div class="swiper-pager"></div>
+		<div class="mainslid" id="mainslid">
+			<script src='${viewadvpath}/layout_adv_27.js?rmd=new Date()'></script>
 		</div>
 	</div>
 	<div class="small-banner-area">
-		<script src='${viewadvpath}/layout_adv_29.js'></script>
+		<script src='${viewadvpath}/layout_adv_29.js?rmd=new Date()'></script>
 	</div>
 </div>
 <div class="wrapper home-wrapper">
 	#parse("page/layout_goods_record.vm")
 </div>
 
-<script type="text/javascript" src="${path}/plug/jquery/swiper3.1.0.min.js"></script>
 <script type="text/javascript">
 	$(function(){
-	    var sw = new Swiper('.banner-area',{
-	        autoplay: 3000,
-	        loop:true,
-	        pagination: '.swiper-pager'
-	    });
+		$('.mainslid').slide({titCell:'ol',mainCell:'ul',autoPage:true,effect:'top',autoPlay:true});
 	});
 	Util.sideFixedMenu($('.home-wrapper'));
 </script>

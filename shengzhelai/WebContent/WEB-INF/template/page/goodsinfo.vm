@@ -48,7 +48,7 @@
 							<div class="swiper-slide">
 						#end
 						<a class="zk-img-item" title="$!list.goodsname" href="${path}/goods/info/$list.id">
-							<img class="lazy" data-original="${viewgoodspath}/$list.goodsimage" alt="$!list.goodsname">
+							<img class="lazy" data-original="$!list.goodsimageurl" alt="$!list.goodsname">
 						</a>
 						#if($velocityCount % 4 == 0 || $!{historyList.size()}==$velocityCount)
 							</div>
