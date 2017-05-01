@@ -3,6 +3,7 @@
 		<div class="col-xs-12">
 	  		<div class="col-container clearfix">
 	  			<div class="button-inline">
+	  				<a class="gbn" href="javascript:;" onclick="analysis_obj()"><i></i>解析</a>
 	  				<a class="gbn" href="javascript:;" onclick="imp_obj()"><i></i>导入</a>
 			  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="add_obj();"><i></i>新增</a>
                     <a class="gbn gbn-edit" id="btn_modify" href="javascript:;" onclick="edit_obj();"><i></i>编辑</a>

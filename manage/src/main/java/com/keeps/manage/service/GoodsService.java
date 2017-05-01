@@ -27,6 +27,8 @@ public interface GoodsService extends SoftService{
 	
 	public String saveOrUpdate(SzlGoods goods,MultipartFile goodsimagefile, MultipartFile qrcodepathfile, HttpServletRequest request);
 	
+	public String saveAnalysisToCopywriter(Integer classid,Integer pclassid,Integer goodssource,String copywriter);
+
 	public String updateFieidById(String fieid,Integer value,String ids);
 
 	public String saveGoodsfileData(MultipartFile file, HttpServletRequest request);

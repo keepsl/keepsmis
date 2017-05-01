@@ -78,10 +78,18 @@ public class GoodsController extends AbstractController{
 			}
 		});
 	}
+	
+	@RequestMapping("analysis")
+	public ModelAndView analysis(ModelAndView view,Integer classid){
+		view.setViewName("manager/goods/analysis");
+		view.addObject("classid", classid);
+		view.addObject("goodsclasslist", goodsClassService.queryListAll(-1));
+		return view;
+	}
 	@RequestMapping("imp")
-	public ModelAndView imp(ModelAndView model){
-		model.setViewName("manager/goods/imp");
-		return model;
+	public ModelAndView imp(ModelAndView view){
+		view.setViewName("manager/goods/imp");
+		return view;
 	}
 	@RequestMapping("add")
 	public ModelAndView add(ModelAndView view,HttpServletRequest request, HttpServletResponse response,Integer classid) {
@@ -116,6 +124,26 @@ public class GoodsController extends AbstractController{
 			@Override
 			public void doInstancePost(Map arg0) {
 				arg0.put("message", goodsService.saveOrUpdate(goods,goodsimagefile,qrcodepathfile,request));
+			}
+		});
+	}
+	
+	/**
+	  * @Title:			saveAnalysisToCopywriter 
+	  * @Description:	保存解析商品文案
+	  * @param:
+	  * @return: 
+	  * @author:		keeps
+	  * @data:			2017年4月30日
+	 */
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("saveAnalysisToCopywriter")
+	public @ResponseBody Map saveAnalysisToCopywriter(HttpServletRequest request,final Integer classid,final Integer goodssource,final Integer pclassid,final String copywriter){
+		return super.doJsonPost(new JsonPost() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void doInstancePost(Map arg0) {
+				arg0.put("message", goodsService.saveAnalysisToCopywriter(classid,pclassid,goodssource,copywriter));
 			}
 		});
 	}

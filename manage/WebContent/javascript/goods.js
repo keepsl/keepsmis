@@ -130,12 +130,22 @@ function query2(){
 		myGrid2.query(param);
 	}
 }
+function analysis_obj(){
+	var onSuccess = function (iframe,callback) {
+        iframe.onAnalysis(function (success) {
+        	if(success){
+        		query();
+        	}
+        	callback(success);
+        });
+    }
+	openWin('../goods/analysis?classid='+$("input[name='classid']").val(),'解析商品文案',650,450,'',onSuccess);
+}
 function imp_obj(){
 	var onSuccess = function (iframe,callback) {
         iframe.saveFile(function (success) {
         	if(success){
         		query();
-            	initTree();
         	}
         	callback(success);
         });
@@ -145,14 +155,12 @@ function imp_obj(){
 function delete_obj(){
 	var ids = myGrid.bindGridDelEvent('../goods/delete',function (success) {
 		if(success){
-			initTree();
 		}
 	});
 }
 function delete_obj2(){
 	var ids = myGrid2.bindGridDelEvent('../goods/delete',function (success) {
 		if(success){
-			initTree();
 		}
 	});
 }

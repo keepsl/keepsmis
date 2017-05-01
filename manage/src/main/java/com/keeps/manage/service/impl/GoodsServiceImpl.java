@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.locks.ReentrantLock;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -23,9 +23,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.keeps.core.service.AbstractService;
+import com.keeps.manage.Processor.CouponPageProcessor;
 import com.keeps.manage.dao.GoodsClassDao;
 import com.keeps.manage.dao.GoodsDao;
 import com.keeps.manage.service.GoodsService;
+import com.keeps.manage.utils.RegexUtils;
 import com.keeps.manage.utils.pojo.MessagePojo;
 import com.keeps.model.SzlGoods;
 import com.keeps.model.SzlGoodsClass;
@@ -35,12 +37,12 @@ import com.keeps.tools.utils.CommonUtils;
 import com.keeps.tools.utils.DateUtils;
 import com.keeps.tools.utils.EditType;
 import com.keeps.tools.utils.ExcelUtil;
-import com.keeps.tools.utils.ImageRequest;
-import com.keeps.tools.utils.ImageUtils;
 import com.keeps.tools.utils.StringUtils;
 import com.keeps.tools.utils.page.Page;
 import com.keeps.utils.Constants;
 import com.keeps.utils.ValidateUtil;
+
+import us.codecraft.webmagic.Spider;
 
 /** 
  * <p>Title: GoodsServiceImpl.java</p>  
@@ -88,7 +90,6 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 		goods.setClicknum(0);
 		if (goods.getIshot()==null) goods.setIshot(2);
 		if (goods.getIsrecommend()==null) goods.setIsrecommend(2);
-		if (goods.getIsrecommend()==null) goods.setIsrecommend(2);
 		if (goods.getTocouponnum()==null) goods.setTocouponnum(0);
 		goods.setIsdelete(1);
 		goods.setRealtocouponnum(0);
@@ -120,8 +121,9 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 		
 		Assert.isTrue(ValidateUtil.islength(goods.getDescription(), 2500), "描述不能超过2500个字符!");
 		if (StringUtils.hasText(goods.getDescription())) goods.setDescription(goods.getDescription().trim());
-		
-
+		if(!goodsDao.isUnique(goods, new String[]{"goodsname","isdelete"})){
+			throw new CapecException("["+goods.getGoodsname()+"]商品名称已经存在,不允许重复添加!");
+		}
 		SzlGoods newSzlGoods = new SzlGoods();
 		if (goods.getId()!=null) {
 			newSzlGoods = super.get(SzlGoods.class, goods.getId());
@@ -190,6 +192,7 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 			goods.setGoodsimage(filename);
 		}*/
 		if (goods.getId()==null) {
+			goods.setDataflag(1);
 			super.save(goods);
 		}else{
 			goods.setCreatetime(newSzlGoods.getCreatetime());
@@ -197,10 +200,83 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 			goods.setCreateperson(newSzlGoods.getCreateperson());
 			goods.setRealtocouponnum(newSzlGoods.getRealtocouponnum());
 			goods.setClicknum(newSzlGoods.getClicknum());
+			goods.setDataflag(newSzlGoods.getDataflag());
 			BeanUtils.copyProperties(goods, newSzlGoods);
 			super.update(newSzlGoods,EditType.NULL_UPDATE);
 		}
 		return null;
+	}
+	
+	public String saveAnalysisToCopywriter(Integer classid,Integer pclassid,Integer goodssource,String copywriter){
+		Assert.isTrue(classid!=null && classid!=0, "商品分类不能为空!");
+		Assert.isTrue(pclassid!=null && pclassid!=0, "商品分类不能为空并且不是一级分类!");
+		Assert.isTrue(goodssource!=null && goodssource!=0, "商品来源不能为空!");
+		Assert.isTrue(StringUtils.hasText(copywriter), "商品文案或连接不能为空!");
+		copywriter = copywriter.trim();
+/*		Assert.isTrue(StringUtils.hasText(copywriter), "商品文案不能为空!");
+		Assert.isTrue(copywriter.indexOf("在售价")!=-1, "没有解析出在售价!");
+		Assert.isTrue(copywriter.indexOf("券后价")!=-1, "没有解析出券后价!");
+		Assert.isTrue(copywriter.indexOf("下单链接")!=-1, "没有解析出下单连接!");
+		//解析 出在售价、券后价
+		List<String> values = RegexUtils.getValues(copywriter, "】", "元");
+		Assert.isTrue(CollectionUtils.isNotEmpty(values), "没有解析出在售价、券后价!");
+		if (values.size()!=2) {
+			throw new CapecException("在售价、券后价有一项为空、或有多余项!");
+		}*/
+		//下单链接
+		List<String> tocouponsurl = RegexUtils.getValues(copywriter, "】", "\r\n-");
+		//Assert.isTrue(CollectionUtils.isNotEmpty(tocouponsurl), "没有解析出下单链接!");
+
+		List<String> taokouling = RegexUtils.getValues(copywriter, "￥", "￥");
+		//Assert.isTrue(CollectionUtils.isNotEmpty(taokouling), "没有解析出淘口令!");
+		
+		//SzlGoods goods = new SzlGoods();
+		
+		String url = "";
+		if (CollectionUtils.isNotEmpty(tocouponsurl)) {//说明是文案
+			SzlGoods newgoods = new SzlGoods();
+			newgoods.setIsdelete(1);
+			newgoods.setGoodsname(copywriter.substring(0, copywriter.indexOf("【包邮】")).trim());
+			if(!goodsDao.isUnique(newgoods, new String[]{"goodsname","isdelete"})){
+				throw new CapecException("["+newgoods.getGoodsname()+"]商品名称已经存在,不允许重复添加!");
+			}
+			url = tocouponsurl.get(0);
+		}else{
+			url = copywriter;
+		}
+		
+		//解析出图片连接
+		Spider.create(new CouponPageProcessor()).addUrl(url)
+        .thread(1)
+        .run();
+		SzlGoods goods = CouponPageProcessor.goods;
+		Assert.isTrue(goods!=null, "解析失败商品文案或连接不正确!");
+		goods.setIsdelete(1);
+		if (CollectionUtils.isEmpty(tocouponsurl)) {//说明是文案
+			if(!goodsDao.isUnique(goods, new String[]{"goodsname","isdelete"})){
+				throw new CapecException("["+goods.getGoodsname()+"]商品名称已经存在,不允许重复添加!");
+			}
+		}
+		goods.setClassid(classid);
+		goods.setPclassid(pclassid);
+		goods.setGoodssource(goodssource);
+/*		goods.setGoodsname(copywriter.substring(0, copywriter.indexOf("【包邮】")).trim());
+		goods.setCurrentprice(Float.valueOf(values.get(0)));
+		goods.setCouponafterprice(Float.valueOf(values.get(1)));
+		goods.setCouponprice(goods.getCurrentprice()-goods.getCouponafterprice());
+		goods.setTocouponsurl(tocouponsurl.get(0));*/
+		if (CollectionUtils.isNotEmpty(taokouling)) {
+			goods.setTaokouling("￥"+taokouling.get(0)+"￥");
+		}
+		goods.setDataflag(2);
+		goods.setClicknum(0);
+		goods.setIsdelete(1);
+		goods.setRealtocouponnum(0);
+		goods.setIshot(2);
+		goods.setIsrecommend(2);
+		goods.setTocouponnum(0);
+		super.save(goods);
+		return "解析成功!";
 	}
 
 	@Override
@@ -217,7 +293,7 @@ public class GoodsServiceImpl extends AbstractService implements GoodsService {
 		uplength = 0;
 		upcontent = "正在校验文件格式...";
 		Assert.isTrue(file!=null, "请选择文件!");
-		Assert.isTrue(!file.isEmpty(), "上传的文件为空！");
+		Assert.isTrue(!file.isEmpty(), "上传的文件为空!");
 		String filename = file.getOriginalFilename();
 		String filetype = filename.substring(file.getOriginalFilename().lastIndexOf(".")+1);
 		if(!CommonUtils.isExistStr(filetype.toLowerCase(), new String[]{"xls","xlsx"}))
