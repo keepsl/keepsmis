@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,8 +41,25 @@ public class CommonUtils {
 		System.out.println (CommonUtils.subZeroAndDot(fnum.format(usablePatitionSpace / (1024*1024*1024))));
 		
 		getSubStr("1,2", 5, ",");
+		
+		System.out.println(isDecimal("12",2));
+		System.out.println(isDecimal("12.12",2));
+		System.out.println(isDecimal("12.10",2));
+		System.out.println(isDecimal("2.101",2));
+		System.out.println(isDecimal("2.100",3));
+		
+		System.out.println(getStrMatchergroup("(1111)","(",")"));
 	}
 
+	public static String getStrMatchergroup(String str,String ben,String end){
+		Pattern pattern = Pattern.compile("\\"+ben+"(.*?)\\"+end);
+        Matcher matcher = pattern.matcher(str);
+        while(matcher.find()){
+            return matcher.group(1);
+        }
+		return "";
+	}
+	
 	public static String getSubStr(String str, int num, String regex) {
 		String result = "";
 		int i = 0;
@@ -278,6 +296,13 @@ public class CommonUtils {
 		return hm;
 	}
 	
+	public static boolean isDecimal(String str,int d){
+		return Pattern.matches("([1-9]\\d*|0)(\\.\\d{1,"+d+"})?", str);
+	}
+	
+	public static boolean isDecimal(String str){
+		return Pattern.matches("([1-9]\\d*|0)(\\.\\d{1,2})?", str);
+	}
 	/**
 	  * @Title:			isNumeric 
 	  * @Description:	验证是否为数字

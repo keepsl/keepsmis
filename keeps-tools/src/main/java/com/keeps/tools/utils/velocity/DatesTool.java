@@ -20,7 +20,7 @@ public class DatesTool extends DateTool{
 
 	public String format(String pattern, String date) {
 		if (StringUtils.notText(date)) {
-			return "";
+			return null;
 		}
 		return DateUtils.format(date, pattern);
 	}
