@@ -11,6 +11,8 @@ public abstract class AbstractSoftModelEntity<T> implements SoftEntityModel<T> {
 	private Integer page;
 	private Integer rows;
 	private String querynum;
+	private String sidx;
+	private String sord;
 	private Boolean get = Boolean.valueOf(false);
 
 	public Boolean isGet() {
@@ -90,4 +92,22 @@ public abstract class AbstractSoftModelEntity<T> implements SoftEntityModel<T> {
 	public void setQuerynum(String querynum) {
 		this.querynum = querynum;
 	}
+
+	public String getSidx() {
+		return sidx;
+	}
+
+	public void setSidx(String sidx) {
+		this.sidx = sidx;
+	}
+
+	public String getSord() {
+		return sord;
+	}
+
+	public void setSord(String sord) {
+		this.sord = sord;
+	}
+	
+	
 }
