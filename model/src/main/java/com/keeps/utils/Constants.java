@@ -15,6 +15,14 @@ import java.util.Map;
  * 复审人：
  */
 public class Constants {
+	//排除的拦截菜单
+	public static String[] NOT_INTERCEP_METHOD =  new String[]{"page/index","page/main","page/logout"};
+	
+	//字典类型code
+	public static String[] DICT_CODE =  new String[]{"client_type","product_category","client_stars","news_type","receive_type"};
+
+	//网站URL
+	public static String websiteUrl = "";
 	//项目路径  系统初始化设置
 	public static String realPath = "";
 	//文件上传路径
@@ -23,7 +31,9 @@ public class Constants {
 	public static String file_upload_path="";
 	//文件访问服务器路径
 	public static String file_view_path="";
-	
+	//上传和预览服务器上的文件夹
+	public static String file_folder="";
+
 	//省着来商品分页数量
 	public static int goods_page_rows=40;
 
@@ -32,9 +42,9 @@ public class Constants {
 	public static String ADV_FILE_PATH = "file/adv/cache";
 
 	//文章封面上传路径
-	public static String ARTICLE_COVER_IMAGE_PATH = "article/cover/image";
+	public static String ARTICLE_COVER_IMAGE_PATH = "article/image";
 	//商品图片路径
-	public static String GOODS_COVER_IMAGE_PATH = "goods/cover/image";
+	public static String GOODS_COVER_IMAGE_PATH = "goods/image";
 	public static final Map<Integer, Integer> GOODS_CUT_IMAGE_WIDTH_HEIGHT1 = new HashMap<Integer, Integer>();
 	static{
 		GOODS_CUT_IMAGE_WIDTH_HEIGHT1.put(1, 400);
@@ -47,7 +57,7 @@ public class Constants {
 	}
 	
 	//广告位默认图片路径
-	public static String ADV_POSITION_IMAGE_PATH = "advPosition/cover/image";
+	public static String ADV_POSITION_IMAGE_PATH = "advPosition/image";
 	//宽高组
 	public static final Map<Integer, Integer> ADV_POSITION_CUT_IMAGE_WIDTH_HEIGHT = new HashMap<Integer, Integer>();
 	static{
@@ -56,7 +66,7 @@ public class Constants {
 	}
 	
 	//广告默认图片路径
-	public static String ADV_IMAGE_PATH = "adv/cover/image";
+	public static String ADV_IMAGE_PATH = "adv/image";
 	public static final Map<Integer, Integer> ADV_CUT_IMAGE_WIDTH_HEIGHT = new HashMap<Integer, Integer>();
 	static{
 		ADV_CUT_IMAGE_WIDTH_HEIGHT.put(1, 660);
@@ -116,7 +126,22 @@ public class Constants {
 		ADV_POSITION_DISPLAY.put(2, "多广告展示");
 		ADV_POSITION_DISPLAY.put(3, "单广告展示");
 	}
-		//通用
+	
+	//角色类型，1管理角色，2业务角色
+	public static final Map<Integer, String> ORLE_TYPE = new HashMap<Integer, String>();
+	static{
+		ORLE_TYPE.put(1, "管理角色");
+		ORLE_TYPE.put(2, "业务角色");
+	}
+	
+	//1正常，2冻结，3离职
+	public static final Map<Integer, String> EMP_STATUS = new HashMap<Integer, String>();
+	static{
+		EMP_STATUS.put(1, "正常");
+		EMP_STATUS.put(2, "冻结");
+		EMP_STATUS.put(3, "离职");
+	}
+	//通用
 	public static final Map<String, Map<Integer, String>> DICT_ITEM_LIST = new HashMap<String, Map<Integer, String>>();
 	static{
 		DICT_ITEM_LIST.put("dic_open_close", SYSTEM_OPEN_CLOSE);
@@ -125,7 +150,8 @@ public class Constants {
 		DICT_ITEM_LIST.put("dic_goods_source", GOODS_SOURCE);
 		DICT_ITEM_LIST.put("dic_adv_position_class", ADV_POSITION_CLASS);
 		DICT_ITEM_LIST.put("dic_adv_position_display", ADV_POSITION_DISPLAY);
-
+		DICT_ITEM_LIST.put("dic_orletype", ORLE_TYPE);
+		DICT_ITEM_LIST.put("dic_emp_status", EMP_STATUS);
 	}
 
 }

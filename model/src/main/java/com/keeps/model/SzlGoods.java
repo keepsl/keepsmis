@@ -23,9 +23,11 @@ import com.keeps.core.model.plus.ModelPlusSchool;
 public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 
 	private Long id;
+	private Long itemid;
 	private Integer pclassid;
 	private Integer classid;
 	private String goodsname;
+	private String goodsimageurl;
 	private String origurl;
 	private String toshorturl;
 	private String  tolongurl;
@@ -47,6 +49,7 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 	private Integer ishot;
 	private Integer isrecommend;
 	private Integer isdelete;
+	private Integer dataflag;
 	private Integer clicknum;
 	private String description;
 	private Date createtime;
@@ -59,7 +62,7 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 	private Integer searchtype;//查询类型，1正常出售商品，2到期商品
 	private Float searchStartPrice;//查询价格，最低价格
 	private Float searchEndPrice;//查询价格，最高价格
-	
+	private String keywords;//首页头部关键字搜索
 	public SzlGoods() {
 	}
 
@@ -140,6 +143,15 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 		this.id = id;
 	}
 	
+	@Column(name = "itemid")
+	public Long getItemid() {
+		return itemid;
+	}
+
+	public void setItemid(Long itemid) {
+		this.itemid = itemid;
+	}
+
 	@Column(name = "pclassid", nullable = false)
 	public Integer getPclassid() {
 		return pclassid;
@@ -165,6 +177,15 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 
 	public void setGoodsname(String goodsname) {
 		this.goodsname = goodsname;
+	}
+
+	@Column(name = "goodsimageurl")
+	public String getGoodsimageurl() {
+		return goodsimageurl;
+	}
+
+	public void setGoodsimageurl(String goodsimageurl) {
+		this.goodsimageurl = goodsimageurl;
 	}
 
 	@Column(name = "origurl")
@@ -221,7 +242,7 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 		this.tocouponsurl = tocouponsurl;
 	}
 
-	@Column(name = "goodsimage", nullable = false, length = 40)
+	@Column(name = "goodsimage", length = 40)
 	public String getGoodsimage() {
 		return this.goodsimage;
 	}
@@ -357,6 +378,15 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 		this.isdelete = isdelete;
 	}
 
+	@Column(name = "dataflag")
+	public Integer getDataflag() {
+		return dataflag;
+	}
+
+	public void setDataflag(Integer dataflag) {
+		this.dataflag = dataflag;
+	}
+
 	@Column(name = "clicknum" , nullable = false)
 	public Integer getClicknum() {
 		return clicknum;
@@ -366,7 +396,7 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 		this.clicknum = clicknum;
 	}
 	
-	@Column(name = "description", nullable = false)
+	@Column(name = "description")
 	public String getDescription() {
 		return description;
 	}
@@ -454,6 +484,15 @@ public class SzlGoods extends AbstractModelLong implements ModelPlusSchool{
 
 	public void setSearchEndPrice(Float searchEndPrice) {
 		this.searchEndPrice = searchEndPrice;
+	}
+
+	@Transient
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
 	}
 
 

@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import com.keeps.core.model.AbstractModelInteger;
 import com.keeps.core.model.plus.ModelPlusSchool;
@@ -38,6 +39,9 @@ public class TManagerMenu extends AbstractModelInteger implements ModelPlusSchoo
 	private Date createtime;
 	private Date updatetime;
 	private Integer createperson;
+	
+	private String operates;//菜单功能操作
+	
 
 	public TManagerMenu() {
 	}
@@ -178,6 +182,15 @@ public class TManagerMenu extends AbstractModelInteger implements ModelPlusSchoo
 
 	public void setCreateperson(Integer createperson) {
 		this.createperson = createperson;
+	}
+
+	@Transient
+	public String getOperates() {
+		return operates;
+	}
+
+	public void setOperates(String operates) {
+		this.operates = operates;
 	}
 
 }

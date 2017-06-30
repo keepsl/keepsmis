@@ -30,7 +30,12 @@ public class ValidateUtil {
      * 正则表达式：验证手机号
      */
     public static final String REGEX_MOBILE = "^((13[0-9])|(15[^4,\\D])|(18[0-1,5-9]))\\d{8}$";
- 
+    
+    /**
+     * 简单手机号码校验，校验手机号码的长度和1开头 
+     */
+    public static final String REGEX_SIMPLE_PHONE = "^(?:\\+86)?1\\d{10}$";
+     
     /**
      * 正则表达式：验证邮箱
      */
@@ -95,7 +100,7 @@ public class ValidateUtil {
      * @return 校验通过返回true，否则返回false
      */
     public static boolean isMobile(String mobile) {
-        return Pattern.matches(REGEX_MOBILE, mobile);
+        return Pattern.matches(REGEX_SIMPLE_PHONE, mobile);
     }
  
     /**

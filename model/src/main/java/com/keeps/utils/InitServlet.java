@@ -1,6 +1,5 @@
 package com.keeps.utils;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -72,11 +71,15 @@ public class InitServlet extends HttpServlet implements ServletContextListener {
 			//项目路径
 			Constants.realPath = arg0.getServletContext().getRealPath("/");
 			Properties p = PropertiesLoaderUtils.loadAllProperties("system.properties");
-			String path = arg0.getServletContext().getRealPath("/").replace("\\", "/");
+			//String path = arg0.getServletContext().getRealPath("/").replace("\\", "/");
 			//文件上传路径
-			Constants.uploadPath = Constants.realPath+File.separator+p.getProperty("keeps_upload_path");
+			/*Constants.uploadPath = Constants.realPath+File.separator+p.getProperty("keeps_upload_path");
+			Constants.file_upload_path = Constants.uploadPath;
+			Constants.file_view_path = SysConfigUtil.getConfig("keeps_upload_path");*/
+			Constants.file_folder = p.getProperty("file.folder");
 			Constants.file_upload_path = p.getProperty("file.upload.path");
-			Constants.file_view_path = p.getProperty("file.view.path");
+			Constants.file_view_path = p.getProperty("file.view.path")+"/"+Constants.file_folder;
+			Constants.websiteUrl = p.getProperty("websiteUrl");
 		} catch (Exception e) {
 			logger.error(e);
 		}finally{

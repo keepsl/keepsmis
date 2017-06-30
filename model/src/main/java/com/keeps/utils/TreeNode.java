@@ -11,8 +11,8 @@ package com.keeps.utils;
  * 复审人：
  */
 public class TreeNode {
-	private Integer id;
-	private Integer pId;
+	private String id;
+	private String pId;
 	private String name;
 	private String iconSkin;
 	private String icon;
@@ -20,20 +20,23 @@ public class TreeNode {
 	private Integer open;
 	private Integer checked;
 	private boolean nocheck;
+	private boolean setChkDisabled;
 	private Integer sortid;
 	private String desc;
 	private String funcIcon;
 	private Integer leaf;
-	public Integer getId() {
+	private String obj;
+	private Integer type;//自定义属性type；用来业务处理区分不同菜单
+	public String getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	public Integer getpId() {
+	public String getpId() {
 		return pId;
 	}
-	public void setpId(Integer pId) {
+	public void setpId(String pId) {
 		this.pId = pId;
 	}
 	public String getName() {
@@ -102,6 +105,24 @@ public class TreeNode {
 	}
 	public void setLeaf(Integer leaf) {
 		this.leaf = leaf;
+	}
+	public Integer getType() {
+		return type;
+	}
+	public void setType(Integer type) {
+		this.type = type;
+	}
+	public String getObj() {
+		return obj;
+	}
+	public void setObj(String obj) {
+		this.obj = obj;
+	}
+	public boolean isSetChkDisabled() {
+		return setChkDisabled;
+	}
+	public void setSetChkDisabled(boolean setChkDisabled) {
+		this.setChkDisabled = setChkDisabled;
 	}
 	
 	

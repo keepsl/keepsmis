@@ -33,21 +33,32 @@ public class DictSelectDirective extends Directive{
 			key = (Integer) ((SimpleNode) node.jjtGetChild(2)).value(internalContext);
 			key = key==null?0:key;
 		}
-		
-		Map<Integer, String> mapdata  = Constants.DICT_ITEM_LIST.get(dicItem);
+		String insertitem = "0";//是否增加全部标签
+		if(node.jjtGetNumChildren()>3){
+			insertitem = (String) ((SimpleNode) node.jjtGetChild(3)).value(internalContext);
+			insertitem = insertitem==null?"0":insertitem;
+		}
+		Map<Integer, String> mapdata = Constants.DICT_ITEM_LIST.get(dicItem);
 		StringBuffer sb = new StringBuffer();
 		sb.append("<select class='form-control' name=\""+name+"\" >"); 
 		Iterator<Map.Entry<Integer, String>> entries = mapdata.entrySet().iterator();
-		if (key==0) {
+		if ("1".equals(insertitem)) {
 			sb.append("<option value = ''>全部</option>");
 		}
 		while (entries.hasNext()) {
 			Map.Entry<Integer, String> entry = entries.next();
-			if (key.equals(entry.getKey())) {
-				sb.append("<option value = '"+entry.getKey()+"' selected>"+entry.getValue()+"</option>");
+			if("2".equals(insertitem)){
+				if (key.equals(entry.getKey())) {
+					writer.write(entry.getValue());
+			        return true;
+				}
 			}else{
-				sb.append("<option value = '"+entry.getKey()+"'>"+entry.getValue()+"</option>");
-			}	
+				if (key.equals(entry.getKey())) {
+					sb.append("<option value = '"+entry.getKey()+"' selected>"+entry.getValue()+"</option>");
+				}else{
+					sb.append("<option value = '"+entry.getKey()+"'>"+entry.getValue()+"</option>");
+				}
+			}
 		}
 		sb.append("</select>");
 		writer.write(sb.toString());
