@@ -12,10 +12,10 @@ public class UserSchoolThread {
 	public static void set(UserSchool school) {
 		if ((THREAD.get() != null) && (school != null)) {
 			if ((THREAD.get() instanceof UserSchool)) {
-				log.error("UserSchoolThread中set时出错，发现存在" + ((UserSchool) THREAD.get()).getUserid() + ":"
+				log.info("UserSchoolThread中set时出错，发现存在" + ((UserSchool) THREAD.get()).getUserid() + ":"
 						+ ((UserSchool) THREAD.get()).getNickname());
 			} else {
-				log.error("UserSchoolThread中set时出错,但所放的值属于未知类型");
+				log.error("UserSchoolThread中set时出错,所放的值属于未知类型");
 			}
 			THREAD.set(null);
 			THREAD.remove();

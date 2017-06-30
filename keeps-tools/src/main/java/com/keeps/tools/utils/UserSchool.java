@@ -10,7 +10,8 @@ public class UserSchool implements Serializable {
 	private String nickname;
 	private String email;
 	private Integer phone;
-	private boolean isadmin;
+	private Integer isadmin;
+	private boolean isSuperAdmin;
 
 	public UserSchool() {
 	}
@@ -50,11 +51,17 @@ public class UserSchool implements Serializable {
 	public void setLoginid(String loginid) {
 		this.loginid = loginid;
 	}
-	public boolean isIsadmin() {
+	public Integer getIsadmin() {
 		return isadmin;
 	}
-	public void setIsadmin(boolean isadmin) {
+	public void setIsadmin(Integer isadmin) {
 		this.isadmin = isadmin;
+	}
+	public boolean isSuperAdmin() {
+		return isSuperAdmin;
+	}
+	public void setSuperAdmin(boolean isSuperAdmin) {
+		this.isSuperAdmin = isSuperAdmin;
 	}
 
 }
