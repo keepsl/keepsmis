@@ -1,0 +1,82 @@
+#parse("manager/page_header.vm")
+<script type="text/javascript" src="${path}/javascript/selectTree.js?date=2017040600009"></script>
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="formid" method="post">
+						<input type="hidden" name="clientid" id="clientid" value="$!{clientid}"/>
+						<input type="hidden" name="operType" id="operType" value="$!{operType}"/>
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>联系时间：</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control Wdate g-Wate-left" id="updatetimestr" name="updatetimestr" value="$!{updatetimestr}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});">
+								<p class="help-block">您与客户的本次联系时间,默认为当前操作时间.</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="tocouponsurl" class="col-xs-2 control-label"><em class="text-red">*</em>沟通内容：</label>
+							<div class="col-xs-9">
+								<textarea class="form-control" rows="6" style="height:100px;" id="remark" name="remark"></textarea>
+								<p class="help-block">请用一句话简短的描述您与客户的沟通内容.</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="tocouponsurl" class="col-xs-2 control-label">下次联系时间：</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control Wdate g-Wate-left" id="nexttime" name="nexttime" value="" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});">
+								<p class="help-block">您与客户下次的联系时间,选择性填写.</p>
+							</div>
+						</div>
+						<!--<div class="form-group">
+							<label for="attention" class="col-xs-2 control-label">客户星级：</label>
+							<div class="col-xs-3">
+								<select class="form-control" name="attention" id="attention">
+									<option value="0">请选择...</option>
+									#foreach ($list in $clientstarslist)
+									<option value="$list.id" #if ($list.id==$client.attention) selected #end>$list.name</option>
+									#end
+								</select>
+							</div>
+							<label for="type" class="col-xs-2 control-label">客户类型：</label>
+							<div class="col-xs-4">
+								<select class="form-control" name="type" id="type">
+									<option value="0">请选择...</option>
+									#foreach ($list in $clienttypelist)
+									<option value="$list.id" #if ($list.id==$client.type) selected #end>$list.name</option>
+									#end
+								</select>
+							</div>
+							<div class="col-xs-2">
+							</div>
+							<div class="col-xs-9">
+								<p class="help-block">您可以根据本次的谈话内容,进行标记客户的标签哦.</p>
+							</div>
+							
+						</div>-->
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+	function saveOrUpdate(callback){
+		$.post('../save/'+$('#operType').val(), $("#formid").serialize(), function(json){
+			if(json&&json.success==true){
+				callback(true);
+			}else{
+				Log.e(json.message);
+				callback(false);
+			}
+		},'json');
+	}
+</script>

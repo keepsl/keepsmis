@@ -1,0 +1,40 @@
+#parse("manager/page_header.vm")
+#parse("manager/goodsCLass/add_edit_inner.vm")
+<input type="hidden" id="ishot" value="$!{goodsClass.ishot}"/>
+<input type="hidden" id="isrecommend" value="$!{goodsClass.isrecommend}"/>
+<script type="text/javascript">
+$(function () {
+	setValues();
+});
+function setValues(){
+	var eqishot = $('#ishot').val()*1-1;
+	var eqisrecommend = $('#isrecommend').val()*1-1;
+	$("input[name='ishot']").eq(eqishot).parent(".radio-inline").addClass('on');
+	$("input[name='ishot']").eq(eqishot).attr("checked",true);
+	$("input[name='isrecommend']").eq(eqisrecommend).parent(".radio-inline").addClass('on');
+	$("input[name='isrecommend']").eq(eqisrecommend).attr("checked",true);
+	
+	var taglist = $('#taglist').val();
+	$(".tag-link").each(function(i,n){
+		var obj = $(n);
+		var strs = taglist.split(",");
+		for (i=0;i<strs.length ;i++ ){
+			if(obj.html()==strs[i]){
+				obj.removeClass('gbn-gray');
+				return true;
+			}
+		}
+	});
+	
+}
+function update(callback){
+	$.post('../goodsClass/update', $("#formid").serialize(), function(json){
+		if(json&&json.success==true){
+			callback(true);
+		}else{
+			Log.e(json.message);
+			callback(false);
+		}
+	},'json');
+}
+</script>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>CRM-客户关系管理系统</title>
+    <!-- reset-->
+    <link rel="stylesheet" href="${path}/plug/bootstrap-3.3.5/css/bootstrap.min.css" />   
+    <link rel="stylesheet" href="${path}/skins/template/css/common.css" />   
+   	<link rel="stylesheet" href="${path}/skins/template/css/home.css" />   
+    <!--[if IE]>
+    <script type="text/javascript" src="${path}/plug/PIE.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="${path}/plug/jquery/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="${path}/plug/layer/layer.js"></script>
+    <script type="text/javascript" src="${path}/plug/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <!--滚动条美化-->
+    <script type="text/javascript" src="${path}/plug/jquery/jquery.nicescroll.js"></script>
+    <script type="text/javascript" src="${path}/plug/jquery/jquery.slimscroll.min.js"></script>
+    <!--tab选项卡-->
+    <script type="text/javascript" src="${path}/plug/contabs.min-one.js"></script>
+    <!--jquery ui js/css-->
+    <script type="text/javascript" src="${path}/plug/jqueryui/jquery-ui.min.js"></script>
+    
+    <link rel="stylesheet" href="${path}/plug/jqueryui/css/jquery-ui.css" />
+    <script type="text/javascript" src="${path}/javascript/utils.js"></script> 
+ 	<script type="text/javascript" src="${path}/plug/echarts/echarts.common.min.js"></script>
+    <script type="text/javascript" src="${path}/javascript/MyEChart.js"></script>
+    <style>
+		html,body{
+	    	overflow:auto;
+	        height: 100%;
+	    }
+	    .J_conWarp{
+			  background-color: #eee;
+			  margin:10px 0 0;
+		}
+	</style>
+    
+</head>
+<body>
+	<div class="J_conWarp">
+		<div class="container-fluid">
+			<!-- col-md-* 先左右后水平堆叠-->
+			<div class="row" >
+				<div class="col-xs-6">
+					<div class="g-panel">
+						<div class="g-blueline-title">员工客户数量</div>
+						<div class="chat-box" id="echartId">
+					    </div>
+					</div>						
+				</div>
+				<div class="col-xs-6">
+					<div class="g-panel">
+						<div class="g-blueline-title">电话量统计</div>
+						<div class="chat-box" id="echartId2">
+					    </div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row g-t-mg" >
+				<div class="col-xs-6">
+					<div class="g-panel">
+						<div class="g-blueline-title">任务办理分析</div>
+						<div class="chat-box">
+							图表
+					    </div>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="g-panel">
+						<div class="g-blueline-title">任务办理分析</div>
+						<div class="chat-box">
+							图表
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+    <script type="text/javascript">
+    	var myEChart = null;
+    	var	param = {url:'../statistics/empClient',echartId:'echartId',titletext:'当前阶段拥有最多客户的员工(前15名)',labname:'客户人数'};
+    	myEChart = new MyEChart(param);
+		myEChart.loadMyEChart();
+		
+		var myEChart2 = null;
+    	var	param2 = {url:'../statistics/empClient',echartId:'echartId2',titletext:'本周内电话量最多的员工 (前15名)',titlesubtext:'2017-06-19 ~ 2017-06-25',labname:'电话次数'};
+    	myEChart2 = new MyEChart(param2);
+		myEChart2.loadMyEChart();
+    </script>

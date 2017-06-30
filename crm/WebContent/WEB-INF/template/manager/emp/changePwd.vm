@@ -1,0 +1,53 @@
+#parse("manager/page_header.vm")
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+
+<div>
+	<div  class="container-fluid g-t-mg">
+		<div class="row" >
+	    	<div class="col-xs-12">
+	        	<form class="form-horizontal" role="form" id="formid">
+        			<div class="form-group">
+						<br/>
+					    <label class="col-xs-3 control-label"><em class="text-red">*</em>原密码：</label>
+					    <div class="col-xs-8">
+					    	<input class="form-control" type="password" id="oldPwd" name="oldPwd" value="" maxlength="15"/>
+							<p class="help-block">原始密码</p>
+						</div>
+						
+					    <label class="col-xs-3 control-label"><em class="text-red">*</em>新密码：</label>
+					    <div class="col-xs-8">
+					    	<input class="form-control" type="password" id="newPwd" name="newPwd" value="" maxlength="15"/>
+							<p class="help-block">由6-15位字母、数字组成</p>
+						</div>
+						
+					    <label class="col-xs-3 control-label"><em class="text-red">*</em>确认密码：</label>
+					    <div class="col-xs-8">
+					    	<input class="form-control" type="password" id="checkNewPwd" name="checkNewPwd" value="" maxlength="15"/>
+							<p class="help-block">请再次输入新密码</p>
+						</div>
+				  	</div>
+
+			  	</form>
+		  	<div>
+        </div><!-- row结束 -->
+    </div>
+</div>
+<script>
+function updatePwd(callback){
+	$.post('../emp/updatePwd', $("#formid").serialize(), function(json){
+		if(json&&json.success==true){
+			parent.location.href='${path}/page/logout';
+			callback(true);
+		}else{
+			Log.e(json.message);
+			callback(false);
+		}
+	},'json');
+}
+</script>

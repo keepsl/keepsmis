@@ -1,0 +1,86 @@
+#parse("manager/page_header.vm")
+<style>
+    html,body{
+        overflow-y: hidden;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="formid">
+						<input type="hidden" name="id" value="$!{articletype.id}"/>
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>栏目名称</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="name" name="name" value="$!{articletype.name}" maxlength="100">
+							</div>
+						</div>
+						<div class="form-group">
+						    <label for="pid" class="col-xs-2 control-label"><em class="text-red">*</em>上级栏目</label>
+						    <div class="col-xs-9">
+							      <select class="form-control" name="pid" id="pid">
+							        <option value="0">一级栏目</option>
+							        #foreach ($list in $articletypelist)
+							        	#if($articletype.id!=$list.id)
+								    		<option value="$list.id" #if ($list.id==$articletype.pid) selected #end>$list.name</option>
+								    	#end
+							        #end
+							      </select>
+							      <p class="help-block">该栏目所属的上级栏目</p>
+						    </div>
+						</div>
+						<div class="form-group">
+							<label for="templatetype" class="col-xs-2 control-label"><em class="text-red">*</em>栏目类型</label>
+							<div class="col-xs-9">
+								#dictselecttag('templatetype','dic_template_type',$!{menu.status})
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="listtemplateurl" class="col-xs-2 control-label"><em class="text-red">*</em>列表页模版</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="listtemplateurl" name="listtemplateurl" value="$!{articletype.listtemplateurl}" maxlength="100">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="articletemplateurl" class="col-xs-2 control-label"><em class="text-red">*</em>内容页模版</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="articletemplateurl" name="articletemplateurl" value="$!{articletype.articletemplateurl}" maxlength="100">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="sort" class="col-xs-2 control-label"><em class="text-red">*</em>顺序</label>
+							<div class="col-xs-9">
+								<input type="number" class="form-control" id="sort" name="sort" value="$!{articletype.sort}" maxlength="10">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 control-label check-label"><em class="text-red">*</em>是否展示</label>
+							<div class="col-xs-9">
+								<div class="J_radioBox ">
+									<label class="radio-inline">
+									  <input type="radio" name="isshow" value="1"> 是
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="isshow" value="2"> 否
+									</label>
+							    </div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+	 $(":radio").click(function(){
+	 	$(".radio-inline").removeClass("on");
+	 	if($(this).is(':checked')){
+	 		$(this).closest("label").addClass("on");
+	 	}
+	});
+</script>

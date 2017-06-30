@@ -1,0 +1,87 @@
+#parse("manager/page_header.vm")
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="formid" method="post">
+						<input type="hidden" name="id" id="id" value="$!{dict.id}"/>
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>字典名称：</label>
+							<div class="col-xs-9 #if($!{dict.fixed}==1)form-control-static#end">
+								#if($!{dict.fixed}==1)
+									$!{dict.name}
+								#else
+									<input type="text" class="form-control" id="name" name="name" value="$!{dict.name}" maxlength="50">
+								#end
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>字典值：</label>
+							<div class="col-xs-9  #if($!{dict.fixed}==1)form-control-static#end">
+								#if($!{dict.fixed}==1)
+									$!{dict.value}
+								#else
+									<input type="text" class="form-control" id="value" name="value" value="$!{dict.value}" maxlength="50">
+								#end
+								<p class="help-block">$!{dicttype.description}</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="pid" class="col-xs-2 control-label"><em class="text-red">*</em>所属分类：</label>
+						    <div class="col-xs-9 form-control-static">
+						    	<input type="hidden" name="typeid" id="typeid" value="#if($dicttype.id)$!{dicttype.id}#else$!{dict.typeid}#end"/>
+						    	<input type="hidden" name="typecode" id="typecode" value="#if($dicttype.code)$!{dicttype.code}#else$!{dict.typecode}#end"/>
+						    	#if($dicttype.name)$!{dicttype.name}#else$!{dict.typename}#end
+						    </div>
+						</div>
+						<div class="form-group">
+							<label for="pid" class="col-xs-2 control-label">排序：</label>
+						    <div class="col-xs-9">
+							   	  <input type="number" class="form-control" id="sort" name="sort" value="$!{dict.sort}" min="0" max="99999999999" maxlength="11">
+						    </div>
+						</div>
+						<div class="form-group">
+							<label for="status" class="col-xs-2 control-label">状态：</label>
+								<div class="col-xs-9  #if($!{dict.fixed}==1)form-control-static#end">
+								#if($!{dict.fixed}==1)
+									#dictselecttag('status','dic_status',$!{dict.status},'2')
+								#else
+									#dictselecttag('status','dic_status',$!{dict.status})
+								#end
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="status" class="col-xs-2 control-label">是否内置参数：</label>
+							<div class="col-xs-9 form-control-static">
+								<input type="hidden" name="fixed" id="fixed" value="$!{dict.fixed}"/>
+								#if($!{dict.fixed}==1) 是 #else 否 #end
+								<p class="help-block">当是内置参数时,某些参数值不允许修改.</p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+	function saveOrUpdate(callback){
+		var url = $("#id").val()==''?'../dict/saveDict':'../dict/updateDict';
+		$.post(url, $("#formid").serialize(), function(json){
+			if(json&&json.success==true){
+				callback(true);
+			}else{
+				Log.e(json.message);
+				callback(false);
+			}
+		},'json');
+	}
+</script>

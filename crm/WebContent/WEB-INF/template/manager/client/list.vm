@@ -1,0 +1,141 @@
+#parse("manager/page_header.vm")
+<style>
+    html,body{
+        overflow-y: hidden;
+        height: 100%;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row" >
+    	<div class="col-xs-12">
+            <div class="J_conWarp g-warning-box">
+            	<h4 class="g-title">#if($!{operType}==1)全部客户管理#elseif($!{operType}==2)公共客户列表#elseif($!{operType}==3)我的客户列表#end<span class="intro J_arrowAction" style="cursor:pointer;">功能介绍<i class="gi-down"></i></span></h4>
+            	<p class="bg-warning J_tipBox g-t-mg">功能介绍：客户信息管理与维护。</p>
+            	<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
+            		<div class="row">
+                		<div class="col-xs-12">
+					  		<div class="col-container">
+					  			<form class="form-inline clearfix" role="form" id="form1" onsubmit="return false;">
+					  				<input type="hidden" id="operType" value="$!{operType}"/>
+			                        <span class="group">
+			                            <label for="name" >客户电话:</label>
+			                            <input type="text" class="form-control" id="phone" name="phone">
+			                        </span>
+			                        <span class="group">
+			                            <label for="name" >负责人:</label>
+			                            <select class="form-control" name="fzempid" id="fzempid">
+											<option value="">请选择...</option>
+											#foreach ($list in $emplist)
+											<option value="$list.id">$list.name</option>
+											#end
+										</select>
+			                        </span>
+			                        <!--<span class="group">
+			                            <label for="name" >姓名/拼音码:</label>
+			                            <input type="text" class="form-control" id="name" name="name">
+			                        </span>-->
+									<span class="group">
+			                            <label for="attention" >关注度：</label>
+			                            <select class="form-control" name="attention" id="attention">
+											<option value="">请选择...</option>
+											#foreach ($list in $clientstarslist)
+											<option value="$list.id" #if ($list.id==$client.attention) selected #end>$list.name</option>
+											#end
+										</select>
+			                        </span>
+			                        <span class="group">
+			                            <label for="type" >客户类型：</label>
+			                            <select class="form-control" name="type" id="type">
+											<option value="">请选择...</option>
+											#foreach ($list in $clienttypelist)
+											<option value="$list.id" #if ($list.id==$client.type) selected #end>$list.name</option>
+											#end
+										</select>
+			                        </span>
+			                        <span class="group">
+			                        	<a class="gbn gbn-search" id="btn_reset" href="javascript:;" onclick="query();"><i></i>查询</a>
+			                        	<a class="gbn gbn-gray" id="btn_query" href="javascript:;" onclick="query(1);"><i></i>重置</a>
+			                        	
+						  				<a class="gbn" id="btn_imp" href="javascript:;" onclick="imp_obj()" right-attr='client/saveClientfile/$!{operType}'><i></i>导入</a>
+								  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="add_obj();" right-attr='client/save/$!{operType}'><i></i>新增</a>
+				                        <a class="gbn gbn-edit" id="btn_batch_modify" href="javascript:;" onclick="batch_edit_obj();" right-attr='client/batchEditUpdate/$!{operType}'><i></i>批量修改</a>
+				                        <a class="gbn gbn-del" id="btn_del" href="javascript:;" onclick="delete_obj();" right-attr='client/delete/$!{operType}'><i></i>删除</a>
+				                        <a class="gbn gbn-gray J_downBtn" href="javascript:;">更多</a>
+									 	<a class="gbn gbn-gray J_upBtn hide" href="javascript:;">收起</a>
+			                        </span>
+				                    <div class="row">
+				                		<div class="col-xs-12">
+									  		<div class="J_moreFilter g-hide">
+						                        <span class="group">
+						                            <label for="name" >客户姓名:</label>
+						                            <input type="text" class="form-control" id="name" name="name">
+						                        </span>
+						                        <span class="group">
+						                            <label for="name" >邀约方式:</label>
+						                            <select class="form-control" name="receivetype" id="receivetype">
+														<option value="">请选择...</option>
+														#foreach ($list in $clientreceivelist)
+														<option style="background:$list.value" value="$list.id" #if ($list.id==$client.receivetype) selected #end>$list.name</option>
+														#end
+													</select>
+						                        </span>
+						                        <span class="group">
+						                            <label for="name" >邀约人:</label>
+						                            <select class="form-control" name="receiveid" id="receiveid">
+														<option value="">请选择...</option>
+														#foreach ($list in $emplist)
+														<option value="$list.id">$list.name</option>
+														#end
+													</select>
+						                        </span>
+												<span class="group">
+						                        	<label>下次联系时间:</label>
+												 	<div class="input-group input-daterange">
+						                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="开始时间" readonly="readonly"
+						                                	id="nextcontacttimesta" name="nextcontacttimesta" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+						                                <span class="input-group-addon">到</span>
+						                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="结束时间" readonly="readonly" 
+						                        			id="nextcontacttimeend" name="nextcontacttimeend" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+						                            </div>
+						                        </span>
+						                        <span class="group">
+						                        	<label>最近联系时间:</label>
+												 	<div class="input-group input-daterange">
+						                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="开始时间" readonly="readonly"
+						                                	id="contacttimesta" name="contacttimesta" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+						                                <span class="input-group-addon">到</span>
+						                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="结束时间" readonly="readonly" 
+						                        			id="contacttimeend" name="contacttimeend" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+						                            </div>
+						                        </span>
+						                        <span class="group">
+						                        	<label>创建时间:</label>
+												 	<div class="input-group input-daterange">
+						                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="开始时间" readonly="readonly"
+						                                	id="createtimesta" name="createtimesta" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+						                                <span class="input-group-addon">到</span>
+						                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="结束时间" readonly="readonly" 
+						                        			id="createtimeend" name="createtimeend" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+						                            </div>
+						                        </span>
+					                    	</div>
+					                    </div>
+				                    </div>
+								</form>
+	                    	</div>
+	                    </div>
+                    </div>
+               		<div class="row" >
+						<div class="col-xs-12">
+					  		<div>
+					  			<table id="jqGridId"></table><div id="jqGridPagerId"></div>
+					  		</div>
+						</div>
+					</div><!-- 列表区域 -->
+            	</div>
+            </div>
+         </div>
+	</div>
+</div>
+<script type="text/javascript" src="${path}/javascript/client.js?date=201701220001"></script>

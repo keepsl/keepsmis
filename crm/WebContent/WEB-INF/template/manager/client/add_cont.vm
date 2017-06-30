@@ -1,0 +1,126 @@
+<form class="form-horizontal" role="form" id="formid" method="post">
+	<input type="hidden" name="id" id="id" value="$!{client.id}"/>
+	<input type="hidden" name="fzempid" id="fzempid" value="$!{client.fzempid}"/>
+	<input type="hidden" name="receiveid" id="receiveid" value="$!{client.receiveid}"/>
+	<input type="hidden" name="operType" id="operType" value="$!{operType}"/>
+	<div class="form-group">
+		<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>姓名：</label>
+		<div class="col-xs-3">
+			<input type="text" class="form-control" id="name" name="name" value="$!{client.name}" maxlength="50"/>
+		</div>
+		<label for="sex" class="col-xs-2 control-label">性别：</label>
+		<div class="col-xs-4">
+			<div class="J_radioBox" style="padding-top:7px">
+				<label class="radio-inline">
+				  <input type="radio" name="sex" value="1"> 男
+				</label>
+				<label class="radio-inline">
+				  <input type="radio" name="sex" value="2"> 女
+				</label>
+		    </div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="phone" class="col-xs-2 control-label"><em class="text-red">*</em>手机号：</label>
+		<div class="col-xs-3 #if(${operType}!=1 && $!{client.id})form-control-static#end">
+			#if(${operType}!=1 && $!{client.id})
+				$!{client.phone}
+			#else
+				<input type="text" class="form-control" id="phone" name="phone" value="$!{client.phone}" maxlength="11"/>
+			#end
+		</div>
+		<label for="email" class="col-xs-2 control-label">邮箱：</label>
+		<div class="col-xs-4">
+			<input type="text" class="form-control" id="email" name="email" value="$!{client.email}"  maxlength="25"/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="landline" class="col-xs-2 control-label">其它电话：</label>
+		<div class="col-xs-3">
+			<input type="text" class="form-control" id="landline" name="landline" value="$!{client.landline}" maxlength="25" />
+		</div>
+		<label for="fzempname" class="col-xs-2 control-label">负责人：</label>
+		<div class="col-xs-4">
+			#if(${operType}==1)
+				<div class="input-group">
+					<input type="text" class="form-control" id="fzempname" name="fzempname" value="$!{client.fzempname}" readonly/>
+					<span class="input-group-btn">
+						<button class="gbn btn btn-default" id="add_service_ok_btn" type="button" onclick="clientGrantEmp('',1)">选择</button>
+					</span>
+				</div>
+			#else
+				<input type="text" class="form-control" id="fzempname" name="fzempname" value="$!{client.fzempname}" readonly/>
+			#end
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="receivetype" class="col-xs-2 control-label">邀约方式：</label>
+		<div class="col-xs-3">
+			<select class="form-control" name="receivetype" id="receivetype">
+				<option value="0">请选择...</option>
+				#foreach ($list in $clientreceivelist)
+				<option style="background:$list.value" value="$list.id" #if ($list.id==$client.receivetype) selected #end>$list.name</option>
+				#end
+			</select>
+		</div>
+		<label for="receiveid" class="col-xs-2 control-label">邀约人：</label>
+		<div class="col-xs-4">
+			<div class="input-group">
+				<input type="text" class="form-control" id="receivename" name="receivename" value="$!{client.receivename}" readonly/>
+				<span class="input-group-btn">
+					<button class="gbn btn btn-default" id="add_service_ok_btn" type="button" onclick="clientGrantEmp('',2)">选择</button>
+				</span>
+			</div>
+		</div>
+	</div>
+		
+	<div class="form-group">
+		<label for="attention" class="col-xs-2 control-label">关注度：</label>
+		<div class="col-xs-3">
+			<select class="form-control" name="attention" id="attention">
+				<option value="0">请选择...</option>
+				#foreach ($list in $clientstarslist)
+				<option style="background:$list.value" value="$list.id" #if ($list.id==$client.attention) selected #end>$list.name</option>
+				#end
+			</select>
+		</div>
+		<label for="type" class="col-xs-2 control-label">客户类型：</label>
+		<div class="col-xs-4">
+			<select class="form-control" name="type" id="type">
+				<option value="0">请选择...</option>
+				#foreach ($list in $clienttypelist)
+				<option value="$list.id" #if ($list.id==$client.type) selected #end>$list.name</option>
+				#end
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="birthdate" class="col-xs-2 control-label">出生日期：</label>
+		<div class="col-xs-3">
+			<input type="text" class="form-control Wdate g-Wate-left" id="birthdate" name="birthdate" value="$!DatesTool.format('yyyy-MM-dd',$!{client.birthdate})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+		</div>
+		<label for="islunar" class="col-xs-2 control-label">是否农历：</label>
+		<div class="col-xs-2">
+			<div class="J_radioBox" style="padding-top:7px">
+				<label class="radio-inline">
+				  <input type="radio" name="islunar" value="1"> 是
+				</label>
+				<label class="radio-inline">
+				  <input type="radio" name="islunar" value="2"> 否
+				</label>
+		    </div>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="remark" class="col-xs-2 control-label">备注：</label>
+		<div class="col-xs-9">
+			<textarea class="form-control" rows="6" style="height:100px;" id="remark" name="remark">$!{client.remark}</textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="address" class="col-xs-2 control-label">所在地：</label>
+		<div class="col-xs-9">
+			<input type="text" class="form-control" id="address" name="address" value="$!{client.address}" maxlength="50"/>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,64 @@
+#parse("manager/page_header.vm")
+<style>
+    html,body{
+        overflow-y: hidden;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="formid">
+						<input type="hidden" name="id" value="$!{tag.id}"/>
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>标签名</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="name" name="name" value="$!{tag.name}" maxlength="10">
+							</div>
+						</div>
+						<div class="form-group">
+						    <label for="typeid" class="col-xs-2 control-label"><em class="text-red">*</em>绑定栏目</label>
+						    <div class="col-xs-9">
+							      <select class="form-control" name="typeid" id="typeid">
+							      		<option value="" >请选择栏目。。。</option>
+							        #foreach ($list in $articletypelist)
+							        	#if($typeid)
+								       		<option value="$list.id" #if ($list.id==$typeid) selected #end>$list.name</option>
+								        #else
+									    	<option value="$list.id" #if ($list.id==$tag.typeid) selected #end>$list.name</option>
+								        #end
+							        #end
+							      </select>
+							      <p class="help-block">该标签所绑定的栏目</p>
+						    </div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-2 control-label check-label">是否热门</label>
+							<div class="col-xs-9">
+								<div class="J_radioBox ">
+									<label class="radio-inline">
+									  <input type="radio" name="ishot" value="1"> 是
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="ishot" value="2"> 否
+									</label>
+							    </div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+	 $(":radio").click(function(){
+	 	$(".radio-inline").removeClass("on");
+	 	if($(this).is(':checked')){
+	 		$(this).closest("label").addClass("on");
+	 	}
+	});
+</script>

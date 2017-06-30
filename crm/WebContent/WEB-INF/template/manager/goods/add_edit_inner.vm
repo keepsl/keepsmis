@@ -1,0 +1,277 @@
+#parse("manager/page_header.vm")
+<script type="text/javascript" charset="utf-8" src="${path}/javascript/imageRead.js"></script>
+<script type="text/javascript" src="${path}/javascript/selectTree.js?date=2017040600009"></script>
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="form1" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="id" value="$!{goods.id}"/>
+						<input type="hidden" name="pclassid"  value="#if($pclassid)$!{pclassid}#else$!{goods.pclassid}#end"/>
+						<!--<input type="hidden" name="goodsimage"  value="$!{goods.goodsimage}"/>
+						<input type="hidden" name="qrcodepath"  value="$!{goods.qrcodepath}"/>-->
+						<div class="form-group">
+							<label for="goodsname" class="col-xs-2 control-label"><em class="text-red">*</em>商品名称：</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="goodsname" name="goodsname" value="$!{goods.goodsname}" maxlength="500">
+							</div>
+						</div>
+						<div class="form-group">
+						    <label for="classid" class="col-xs-2 control-label"><em class="text-red">*</em>所属分类：</label>
+						    <div class="col-xs-9">
+							      <select class="form-control" name="classid" id="classid" >
+							      	<option value="0" >请选择所属分类。。。</option>
+							        #foreach ($list in $goodsclasslist)
+								        #if($classid)
+								       		<option value="$list.id" attrpid="$list.pid" #if ($list.id==$classid) selected #end parent="$list.pid">$list.classname</option>
+								        #else
+									    	<option value="$list.id" attrpid="$list.pid" #if ($list.id==$goods.classid) selected #end parent="$list.pid">$list.classname</option>
+								        #end
+							        #end
+							      </select>
+							      <p class="help-block">该商品所属分类</p>
+						    </div>
+						</div>
+						<!--<div class="form-group">
+				  			<label class="col-xs-2 control-label"><em class="text-red">*</em>商品图片：</label>
+					  		<div class="col-xs-3">
+				  				<div class="g-file-box">
+				  					<input type="file" name="goodsimagefile" id="goodsimagefile" onchange="previewImage({file:this,imgId:'img1',divId:'image1',regex:'.jpg.bmp.gif.png',width:'800',height:'800'});" style="width: 200px; height:200px; font-size: 20px; filter: alpha(opacity=0); position: absolute; opacity: 0;cursor: pointer;" >
+									<img style="width:200px;height:200px" src="#if(!$!{goods.viewgoodsimage}) ${path}/skins/template/img/01.png #else $!{goods.viewgoodsimage} #end" id="img1"/>
+									<p class="help-block"><a class="gbn gbn-s gbn-gray" href="javascript:;" onclick="resetFile(this,'img1');document.getElementsByName('goodsimage')[0].value='';">删除所选</a>&nbsp;&nbsp;&nbsp;推荐800*800.</p>
+								</div>
+							</div>
+							<label class="col-xs-2 control-label">推广二维码：</label>
+					  		<div class="col-xs-3">
+				  				<div class="g-file-box">
+				  					<input type="file" name="qrcodepathfile" id="qrcodepathfile" onchange="previewImage({file:this,imgId:'img2',divId:'image2',regex:'.jpg.bmp.gif.png',width:'300',height:'300'});" style="width: 200px; height: 200px; font-size: 20px; filter: alpha(opacity=0); position: absolute; opacity: 0;cursor: pointer;" >
+									<img style="width:200px;height:200px" src="#if(!$!{goods.viewqrcodepath}) ${path}/skins/template/img/01.png #else $!{goods.viewqrcodepath} #end" id="img2"/>
+									<p class="help-block"><a class="gbn gbn-s gbn-gray" href="javascript:;" onclick="resetFile(this,'img2');document.getElementsByName('qrcodepath')[0].value='';">删除所选</a>&nbsp;&nbsp;&nbsp;推荐300*300.</p>
+								</div>
+							</div>
+						</div>-->
+						
+						<div class="form-group">
+							<label for="goodssource" class="col-xs-2 control-label"><em class="text-red">*</em>商品来源：</label>
+							<div class="col-xs-9">
+								#dictselecttag('goodssource','dic_goods_source',$!{goods.goodssource})
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="taglist" class="col-xs-2 control-label">TAG标签：</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="taglist" name="taglist" value="$!{goods.taglist}" maxlength="500">
+								<p class="help-block">多个关键字请使用,分隔</p>
+							</div>
+						</div>
+						<!--<div class="form-group">
+							<label for="tag" class="col-xs-2 control-label">TAG标签：</label>
+							<div class="col-xs-9">
+								<div class="form-inline clearfix">
+									<span class="group" style="padding-bottom: 0;">
+									#foreach ($list in $taglist)
+										<a class="gbn gbn-xs gbn-gray tag-link" href="javascript:;">$list.name</a>
+							        #end
+							        </span>
+						        </div>
+							</div>
+						</div>-->
+						<div class="form-group">
+							<label for="starttime" class="col-xs-2 control-label"><em class="text-red">*</em>开始时间：</label>
+							<div class="col-xs-3">
+								<input type="text" class="form-control Wdate g-Wate-left" id="starttime" name="starttime" value="$!DatesTool.format('yyyy-MM-dd',$!{goods.starttime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+							</div>
+							<label for="endtime" class="col-xs-2 control-label">结束时间：</label>
+							<div class="col-xs-3">
+								<input type="text" class="form-control Wdate g-Wate-left" id="endtime" name="endtime" value="$!DatesTool.format('yyyy-MM-dd',$!{goods.endtime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="currentprice" class="col-xs-2 control-label"><em class="text-red">*</em>现价：</label>
+							<div class="col-xs-2">
+								<input type="number" class="form-control" id="currentprice" name="currentprice" value="$!{goods.currentprice}" min="0" max="99999999999" maxlength="11">
+							</div>
+							<label for="couponprice" class="col-xs-1 control-label">优惠券：</label>
+							<div class="col-xs-2">
+								<input type="number" class="form-control" id="couponprice" name="couponprice" value="$!{goods.couponprice}" min="0" max="99999999999" maxlength="11">
+							</div>
+							<label for="couponafterprice" class="col-xs-1 control-label">用券后：</label>
+							<div class="col-xs-2">
+								<input type="number" class="form-control" readonly id="couponafterprice" name="couponafterprice" value="$!{goods.couponafterprice}" min="0" max="99999999999" maxlength="11">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="tocouponnum" class="col-xs-2 control-label">虚拟领取数量：</label>
+							<div class="col-xs-2">
+								<input type="number" class="form-control" id="tocouponnum" name="tocouponnum" value="$!{goods.tocouponnum}" min="0" max="99999999999" maxlength="11">
+							</div>
+							<label for="ishot" class="col-xs-1 control-label">热门：</label>
+							<div class="col-xs-2">
+								<div class="J_radioBox" style="padding-top:7px">
+									<label class="radio-inline">
+									  <input type="radio" name="ishot" value="1"> 是
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="ishot" value="2"> 否
+									</label>
+							    </div>
+							</div>
+							<label for="isrecommend" class="col-xs-1 control-label">推荐：</label>
+							<div class="col-xs-2">
+								<div class="J_radioBox" style="padding-top:7px">
+									<label class="radio-inline">
+									  <input type="radio" name="isrecommend" value="1"> 是
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="isrecommend" value="2"> 否
+									</label>
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="tolongurl" class="col-xs-2 control-label"><em class="text-red">*</em>商品图片：</label>
+							<div class="col-xs-9">
+								<textarea class="form-control" rows="6" style="height:100px;" id="goodsimageurl" name="goodsimageurl">$!{goods.goodsimageurl}</textarea>
+								<p class="help-block">商品图片连接，务必填写正确。</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="tolongurl" class="col-xs-2 control-label"><em class="text-red">*</em>推广长连接：</label>
+							<div class="col-xs-9">
+								<textarea class="form-control" rows="6" style="height:100px;" id="tolongurl" name="tolongurl">$!{goods.tolongurl}</textarea>
+								<p class="help-block">推广连接，务必填写正确。</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="tocouponsurl" class="col-xs-2 control-label"><em class="text-red">*</em>优惠券连接：</label>
+							<div class="col-xs-9">
+								<textarea class="form-control" rows="6" style="height:100px;" id="tocouponsurl" name="tocouponsurl">$!{goods.tocouponsurl}</textarea>
+								<p class="help-block">优惠券连接，务必填写正确。</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="origurl" class="col-xs-2 control-label">商品路径：</label>
+							<div class="col-xs-9">
+								<textarea class="form-control" rows="6" style="height:100px;" id="origurl" name="origurl">$!{goods.origurl}</textarea>
+								<p class="help-block">该商品在淘宝/天猫/京东上的原始连接，可为空</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="description" class="col-xs-2 control-label">商品描述：</label>
+							<div class="col-xs-9">
+								<textarea class="form-control" rows="6" style="height:100px;" id="description" name="description">$!{goods.description}</textarea>
+								<!--<p class="help-block"></p>-->
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+	$(function(){
+		$("#classid").selectTotree({
+		ispselect: false,
+		isshrink: false});
+	
+		$("input[name='ishot']").click(function(){
+		 	$(this).closest("label").siblings("label").removeClass("on");
+		 	if($(this).is(':checked')){
+		 		$(this).closest("label").addClass("on");
+		 	}
+		});
+		$("input[name='isrecommend']").click(function(){
+		 	$(this).closest("label").siblings("label").removeClass("on");
+		 	if($(this).is(':checked')){
+		 		$(this).closest("label").addClass("on");
+		 	}
+		});
+		
+		$("input[name='currentprice']").blur(function(){
+			displaynum($("input[name='currentprice']").val(),$("input[name='couponprice']").val());
+		});
+		$("input[name='couponprice']").blur(function(){
+			displaynum($("input[name='currentprice']").val(),$("input[name='couponprice']").val());
+		});
+		
+		$("select[name='classid']").change(function(){
+			$("input[name='pclassid']").val($("#classid").find("option:selected").attr("attrpid"));
+		});
+		$(".tag-link").click(function(){
+			var keyword = $("#keyword").val();
+			if($(this).hasClass('gbn-gray')){
+				if(keyword==''){
+					$("#keyword").val($(this).html());
+				}else{
+					$("#keyword").val(keyword+","+$(this).html());
+				}
+				$(this).removeClass('gbn-gray');
+			}else{
+				keyword = keyword.replace($(this).html(), '');
+				var strs = keyword.split(",");
+				keyword = '';
+				for (i=0;i<strs.length ;i++ ){
+					if(strs[i]!=''){
+						keyword += strs[i]+",";
+					}
+				}
+				$("#keyword").val(keyword.substring(0,keyword.length-1));
+				$(this).addClass('gbn-gray');
+			}
+		});
+	});
+	
+function displaynum(num1,num2){
+	if(typeof(num1)!='undefined' && typeof(num2)!='undefined'){
+		$("input[name='couponafterprice']").val((num1*1)-(num2*1));
+	}else{
+		$("input[name='couponafterprice']").val('');
+	}
+}
+function saveOrUpdate(callback){
+	post(function (success) {
+    	callback(success);
+    });
+}
+function post(callback){
+	var taglist = '';
+	/*$(".tag-link").each(function(i,n){
+		var obj = $(n);
+		if(!obj.hasClass('gbn-gray')){
+			taglist += obj.html()+",";
+		}
+	});
+	taglist = taglist.substring(0,taglist.length-1);
+	$("input[name='taglist']").val(taglist);*/
+	var options = {
+		url: "../goods/saveOrUpdate", 
+		dataType: 'json', 
+		data:$("#form1").serialize(),
+		type: "POST",
+		success: function(json) {
+			callback(json.success);
+			if(json&&json.success==true){
+				//var strs = json.message.split("|")
+				//$("input[name='id']").val(strs[0]);
+				//$("input[name='coverimage']").val(strs[1]);
+			}else{
+				Log.e(json.message);
+			}
+		},error:function(){
+			Log.e('请求错误!');
+			callback(false);
+	   	}
+	};
+	$('#form1').ajaxSubmit(options);
+}
+</script>

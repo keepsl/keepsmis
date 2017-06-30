@@ -1,0 +1,73 @@
+#parse("manager/page_header.vm")
+<script type="text/javascript" src="${path}/javascript/selectTree.js?date=2017040600009"></script>
+<style>
+	html,body{
+        overflow-y: hidden;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div>
+	<p class="bg-warning J_tipBox">功能介绍：根据淘宝联盟生成手机客户端的推广文案，解析成系统中所需要的商品信息。</p>
+	<div  class="container-fluid g-t-mg">
+		<div class="row" >
+	    	<div class="col-xs-12">
+	        	<form class="form-horizontal" role="form" method="post" enctype="multipart/form-data" id="formid">
+	        		<input type="hidden" name="pclassid"  value="$!{pclassid}"/>
+	        		<div class="form-group">
+					    <label for="classid" class="col-xs-2 control-label"><em class="text-red">*</em>所属分类：</label>
+					    <div class="col-xs-9">
+						      <select class="form-control" name="classid" id="classid" >
+						      	<option value="0" >请选择所属分类。。。</option>
+						        #foreach ($list in $goodsclasslist)
+							        #if($classid)
+							       		<option value="$list.id" attrpid="$list.pid" #if ($list.id==$classid) selected #end parent="$list.pid">$list.classname</option>
+							        #else
+								    	<option value="$list.id" attrpid="$list.pid" #if ($list.id==$goods.classid) selected #end parent="$list.pid">$list.classname</option>
+							        #end
+						        #end
+						      </select>
+						      <p class="help-block">该商品所属分类</p>
+					    </div>
+					</div>
+					<div class="form-group">
+						<label for="goodssource" class="col-xs-2 control-label"><em class="text-red">*</em>商品来源：</label>
+						<div class="col-xs-9">
+							#dictselecttag('goodssource','dic_goods_source',$!{goods.goodssource})
+						</div>
+					</div>
+			  		<div class="form-group">
+						<label for="description" class="col-xs-2 control-label"><em class="text-red">*</em>文案或连接：</label>
+						<div class="col-xs-9">
+							<textarea class="form-control" rows="10" style="height:200px;" id="copywriter" name="copywriter">$!{goods.description}</textarea>
+							<!--<p class="help-block"></p>-->
+						</div>
+					</div>
+			  	</form>
+		  	<div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+$(function(){
+	$("#classid").selectTotree({
+	ispselect: false,
+	isshrink: false});
+	
+	$("select[name='classid']").change(function(){
+		$("input[name='pclassid']").val($("#classid").find("option:selected").attr("attrpid"));
+	});
+})
+function onAnalysis(callback){
+	$.post('../goods/saveAnalysisToCopywriter', $("#formid").serialize(), function(json){
+		if(json&&json.success==true){
+			callback(true);
+		}else{
+			Log.e(json.message);
+			callback(false);
+		}
+	},'json');
+}
+</script>

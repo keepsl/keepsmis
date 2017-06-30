@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+			http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+	<bean id="handlerAdapter"
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.StringHttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/plain;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+					<property name="supportedMediaTypes">
+						<list>
+							<value>text/html;charset=UTF-8</value>
+						</list>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<property name="messageConverters">
+			<list>
+				<bean
+					class="org.springframework.http.converter.StringHttpMessageConverter" />
+				<bean class="org.springframework.http.converter.FormHttpMessageConverter" />
+				<bean
+					class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"></bean>
+			</list>
+		</property>
+	</bean>
+	<mvc:annotation-driven />
+	<context:annotation-config />
+	<aop:aspectj-autoproxy expose-proxy="true" />
+	<!-- spring扫描注解的配置  有了下面的就不需要这句话全面扫描了 <context:annotation-config />  -->
+	<context:component-scan base-package="com.keeps"></context:component-scan>
+
+	<mvc:default-servlet-handler />
+
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+	        <mvc:mapping path="/**"/>
+	        <mvc:exclude-mapping path="/skins/**"/>
+	        <mvc:exclude-mapping path="/images/**"/>
+	        <mvc:exclude-mapping path="/javascript/**"/>
+	        <mvc:exclude-mapping path="/plug/**"/>
+	        <bean class="com.keeps.tools.interceptor.VelocityInterceptor" />
+    	</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/skins/**" />
+			<mvc:exclude-mapping path="/javascript/**" />
+			<mvc:exclude-mapping path="/plug/**" />
+			<mvc:exclude-mapping path="/plug/**" />
+			<bean class="com.keeps.login.interceptor.AuthInterceptor">
+				<property name="loginUrl" value="/nas/login"></property>
+				<property name="noauthUrl" value="/nas/noauth"></property>
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/save**"/>
+			<mvc:mapping path="/**/update**"/>
+			<mvc:mapping path="/**/delete**"/>
+	    	<bean class="com.keeps.crm.listener.AuthInterceptorLog"/>
+	    </mvc:interceptor>
+
+	</mvc:interceptors>
+
+	<!-- velocity视图解析器 -->
+	<bean id="velocityViewResolver"
+		class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+		<property name="cache" value="false"></property>
+		<property name="prefix" value=""></property>
+		<property name="suffix" value=".vm" />
+		<property name="toolboxConfigLocation" value="WEB-INF/toolbox.xml"></property>
+		<property name="contentType" value="text/html;charset=utf-8" />
+		<property name="dateToolAttribute" value="dateTool"></property>
+		<property name="requestContextAttribute" value="request"></property>
+		<property name="exposeSessionAttributes" value="true"></property>
+		<property name="exposeSpringMacroHelpers" value="true"></property>
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.velocity.VelocityLayoutView"></property>
+		<property name="allowSessionOverride" value="true" />
+		<property name="allowRequestOverride" value="true" />
+		<property name="layoutUrl" value="layout/layout.vm" />
+	</bean>
+
+	<bean id="velocityConfig"
+		class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath">
+			<value>WEB-INF/template</value>
+		</property>
+		<property name="velocityProperties">
+			<props>
+				<prop key="input.encoding">UTF-8</prop>
+				<prop key="output.encoding">UTF-8</prop>
+				<prop key="contentType">text/html;charset=UTF-8</prop>
+				<prop key="velocimacro.library.autoreload">false</prop>
+				<prop key="velocimacro.library">macro/macro.vm</prop>
+				<prop key="resource.loader">file</prop>
+				<prop key="file.resource.loader.class">org.apache.velocity.runtime.resource.loader.FileResourceLoader
+				</prop>
+				<prop key="userdirective">com.keeps.utils.PageDirective,com.keeps.utils.Dictkey2valueDirective,com.keeps.utils.DictSelectDirective</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

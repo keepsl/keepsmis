@@ -1,0 +1,28 @@
+#parse("manager/page_header.vm")
+#parse("manager/articletype/add_edit_inner.vm")
+<input type="hidden" id="isshow" value="$!{articletype.isshow}"/>
+<script type="text/javascript">
+$(function () {
+	setValues();
+});
+function setValues(){
+	var isshow = $("#isshow").val();
+	if(isshow==1){
+		$(".radio-inline").eq(0).addClass('on');
+		$(":radio").eq(0).attr("checked",true);
+	}else{
+		$(".radio-inline").eq(1).addClass('on');
+		$(":radio").eq(1).attr("checked",true);
+	}
+}
+function update(callback){
+	$.post('../articletype/update', $("#formid").serialize(), function(json){
+		if(json&&json.success==true){
+			callback(true);
+		}else{
+			Log.e(json.message);
+			callback(false);
+		}
+	},'json');
+}
+</script>

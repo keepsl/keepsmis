@@ -1,0 +1,70 @@
+#parse("manager/page_header.vm")
+
+<script type="text/javascript" src="${path}/javascript/selectTree.js?date=2017040600009"></script>
+<style>
+    html,body{
+    	overflow-y: hidden;
+        height: 100%;
+        background-color:#fff;
+    }
+   .tabs-box .tab-content #clientinfo{
+	    height: 360px;
+	    overflow-y: scroll;
+	}
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="container-fluid">
+		<div class="row" >
+			<div class="col-xs-12" >
+			
+				<div class="g-panel tabs-box">
+					<ul class="nav nav-tabs g-nav-tab2" role="tablist" id="myTab">
+					  <li role="presentation" class="active"><a href="#clientinfo" role="tab" data-toggle="tab">基本信息</a></li>
+					  #if($!{client.id})
+						  <li role="presentation" id=""><a href="#contactrecord" role="tab" data-toggle="tab">联系记录（添加）</a></li>
+						  <li role="presentation" id=""><a href="#buyrecord" role="tab" data-toggle="tab">购买记录（添加）</a></li>
+					  #end
+					</ul>
+					
+					<div class="tab-content">
+						<div role="tabpanel" class="container-fluid g-t-mg2 tab-pane active" id="clientinfo">
+							<div class="col-xs-12">
+								#parse("manager/client/add_cont.vm")
+							</div>
+						</div>
+						#if($!{client.id})
+							<div role="tabpanel" class="tab-pane" id="contactrecord">
+								<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
+									#parse("manager/contactRecord/listrecord.vm")
+								</div>
+							</div>
+							
+							<div role="tabpanel" class="tab-pane" id="buyrecord">
+								<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
+									#parse("manager/buyRecord/listrecord.vm")
+								</div>
+							</div>
+						#end
+					</div>
+				</div>
+			
+			</div>
+		</div>
+		
+	</div>
+	
+</div>
+<script type="text/javascript" src="${path}/javascript/client_add.js?date=201701220001"></script>
+<script>
+	function saveOrUpdate(callback){
+		var url = $("#id").val()==''?'../save':'../update';
+		$.post(url+'/'+$('#operType').val(), $("#formid").serialize(), function(json){
+			if(json&&json.success==true){
+				callback(true);
+			}else{
+				Log.e(json.message);
+				callback(false);
+			}
+		},'json');
+	}
+</script>

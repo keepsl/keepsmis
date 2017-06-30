@@ -1,0 +1,33 @@
+#parse("manager/page_header.vm")
+#parse("manager/article/add_edit_inner.vm")
+<input type="hidden" id="isshow" value="$!{article.isshow}"/>
+<input type="hidden" id="ishot" value="$!{article.ishot}"/>
+<input type="hidden" id="isrecommend" value="$!{article.isrecommend}"/>
+<script type="text/javascript">
+$(function () {
+	setValues();
+});
+function setValues(){
+	var eqisshow = $('#isshow').val()*1-1;
+	var eqishot = $('#ishot').val()*1-1;
+	var eqisrecommend = $('#isrecommend').val()*1-1;
+	$("input[name='isshow']").eq(eqisshow).parent(".radio-inline").addClass('on');
+	$("input[name='isshow']").eq(eqisshow).attr("checked",true);
+	$("input[name='ishot']").eq(eqishot).parent(".radio-inline").addClass('on');
+	$("input[name='ishot']").eq(eqishot).attr("checked",true);
+	$("input[name='isrecommend']").eq(eqisrecommend).parent(".radio-inline").addClass('on');
+	$("input[name='isrecommend']").eq(eqisrecommend).attr("checked",true);
+	
+	var taglist = $('#taglist').val();
+	$(".tag-link").each(function(i,n){
+		var obj = $(n);
+		var strs = taglist.split(",");
+		for (i=0;i<strs.length ;i++ ){
+			if(obj.html()==strs[i]){
+				obj.removeClass('gbn-gray');
+				return true;
+			}
+		}
+	});
+}
+</script>

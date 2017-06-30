@@ -1,0 +1,4 @@
+#parse("manager/dict/add_edit_type_inner.vm")
+<script>
+
+</script>

@@ -1,0 +1,153 @@
+#parse("manager/page_header.vm")
+<script type="text/javascript" src="${path}/javascript/selectTree.js?date=2017040600009"></script>
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<div class="g-panel">
+						<div class="g-blueline-title">批量修改客户项</div>
+						<form class="form-horizontal" role="form" id="formid" method="post">
+							<input type="hidden" name="clientids" id="clientids" value="$!{clientids}"/>
+							<input type="hidden" name="fzempid" id="fzempid" value=""/>
+							<input type="hidden" name="receiveid" id="receiveid" value=""/>
+							<input type="hidden" name="operType" id="operType" value="$!{operType}"/>
+							<div class="form-group">
+								<label for="fzempname" class="col-xs-2 control-label">负责人：</label>
+								<div class="col-xs-9">
+									#if(${operType}==1)
+										<div class="input-group">
+											<input type="text" class="form-control" id="fzempname" name="fzempname" value="" readonly/>
+											<span class="input-group-btn">
+												<button class="gbn btn btn-default" id="add_service_ok_btn" type="button" onclick="clientGrantEmp('',1)">选择</button>
+											</span>
+										</div>
+									#else
+										<input type="text" class="form-control" id="fzempname" name="fzempname" value="$!{client.fzempname}" readonly/>
+									#end
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="receivetype" class="col-xs-2 control-label">邀约方式：</label>
+								<div class="col-xs-3">
+									<select class="form-control" name="receivetype" id="receivetype">
+										<option value="0">请选择...</option>
+										#foreach ($list in $clientreceivelist)
+										<option value="$list.id" #if ($list.id==$client.receivetype) selected #end>$list.name</option>
+										#end
+									</select>
+								</div>
+								<label for="receiveid" class="col-xs-2 control-label">邀约人：</label>
+								<div class="col-xs-4">
+									<div class="input-group">
+										<input type="text" class="form-control" id="receivename" name="receivename" value="$!{client.receivename}" readonly/>
+										<span class="input-group-btn">
+											<button class="gbn btn btn-default" id="add_service_ok_btn" type="button" onclick="clientGrantEmp('',2)">选择</button>
+										</span>
+									</div>
+								</div>
+							</div>
+								
+							<div class="form-group">
+								<label for="attention" class="col-xs-2 control-label">客户星级：</label>
+								<div class="col-xs-3">
+									<select class="form-control" name="attention" id="attention">
+										<option value="0">请选择...</option>
+										#foreach ($list in $clientstarslist)
+										<option style="background:$list.value" value="$list.id" #if ($list.id==$client.attention) selected #end>$list.name</option>
+										#end
+									</select>
+								</div>
+								<label for="type" class="col-xs-2 control-label">客户类型：</label>
+								<div class="col-xs-4">
+									<select class="form-control" name="type" id="type">
+										<option value="0">请选择...</option>
+										#foreach ($list in $clienttypelist)
+										<option value="$list.id" #if ($list.id==$client.type) selected #end>$list.name</option>
+										#end
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="remark" class="col-xs-2 control-label">备注：</label>
+								<div class="col-xs-9">
+									<textarea class="form-control" rows="6" style="height:100px;" id="remark" name="remark">$!{client.remark}</textarea>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="row g-t-mg" >
+				<div class="col-xs-12">
+					<div class="g-panel">
+						<div class="g-blueline-title">本次批量修改客户的信息如下：</div>
+						<div class="table-box tabs-box">
+						    <table cellpadding="0" cellspacing="0" class="g-table">
+						        <colgroup>
+						            <col width="10%">
+						            <col width="12%">
+						            <col width="12%">
+						            <col width="12%">
+						            <col width="12%">
+						            <col width="10%">
+						            <col width="15%">
+						            <col>
+						        </colgroup>
+						        <thead>
+						            <tr>
+						                <th>姓名</th>
+						                <th>电话</th>
+						                <th>负责人</th>
+						                <th>邀约方式</th>
+						                <th>邀约人</th>
+						                <th>客户星级</th>
+						                <th>客户类型</th>
+						                <th>备注</th>
+						            </tr>
+						        </thead>
+						        <tbody>
+						        	#foreach ($list in $clientlist)
+						            <tr>
+						                <td sytle="word-wrap:break-word;word-break:break-all;text-align:left">$!{list.name}</td>
+						                <td sytle="word-wrap:break-word;word-break:break-all;text-align:left">$!{list.phone}</td>
+						                <td sytle="word-wrap:break-word;word-break:break-all;text-align:left">$!{list.fzempname}</td>
+						                <td sytle="word-wrap:break-word;word-break:break-all;text-align:left">$!{list.receivetypename}</td>
+						                <td sytle="word-wrap:break-word;word-break:break-all;text-align:left">$!{list.receivename}</td>
+						                <td sytle="word-wrap:break-word;word-break:break-all;text-align:left">$!{list.attentionname}</td>
+						                <td sytle="word-wrap:break-word;word-break:break-all;text-align:left">$!{list.typename}</td>
+						                <td sytle="word-wrap:break-word;word-break:break-all;text-align:left">$!{list.remark}</td>
+						            </tr>
+						            #end
+						         </tbody>
+					  	    </table>
+				  		</div>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+
+<script type="text/javascript" src="${path}/javascript/client.js?date=201701220001"></script>
+<script>
+	function batchEditUpdate(callback){
+		$.post('../batchEditUpdate/'+$('#operType').val(), $("#formid").serialize(), function(json){
+			if(json&&json.success==true){
+				callback(true);
+			}else{
+				Log.e(json.message);
+				callback(false);
+			}
+		},'json');
+	}
+</script>

@@ -1,0 +1,20 @@
+#parse("manager/page_header.vm")
+#parse("manager/szl/tag/add_edit_inner.vm")
+<input type="hidden" id="ishot" value="$!{tag.ishot}"/>
+<script type="text/javascript">
+$(function () {
+	var eqishot = $('#ishot').val()*1-1;
+	$("input[name='ishot']").eq(eqishot).parent(".radio-inline").addClass('on');
+	$("input[name='ishot']").eq(eqishot).attr("checked",true);
+});
+function update(callback){
+	$.post('../szltag/saveOrUpdate', $("#formid").serialize(), function(json){
+		if(json&&json.success==true){
+			callback(true);
+		}else{
+			Log.e(json.message);
+			callback(false);
+		}
+	},'json');
+}
+</script>

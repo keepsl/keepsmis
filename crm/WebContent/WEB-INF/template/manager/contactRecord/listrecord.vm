@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="col-xs-12">
+  		<div class="col-container clearfix">
+  			<form class="form-inline g-fl" role="form" id="form1" onsubmit="return false;">
+  				<input type="hidden" name="clientid" id="clientid" value="$!{client.id}"/>
+                <span class="group">
+                    <label>联系人姓名/拼音码/工号:</label>
+                    <input type="text" class="form-control" id="empname" name="empname">
+                </span>
+                <span class="group">
+                    <label>联系日期:</label>
+                    <input type="text" class="form-control Wdate g-Wate-left" readonly="readonly" id="updatetimestr" name="updatetimestr" value="$!DatesTool.format('yyyy-MM-dd',$!{updatetimestr})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+                </span>
+                <span class="group">
+                	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
+                	<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="addContactRecord();"><i></i>新增</a>
+                </span>
+            </form>
+    	</div>
+    </div>
+</div><!-- 查询表单域 -->
+
+<div class="row" >
+	<div class="col-xs-12">
+  		<div>
+  			<table id="jqGridId"></table><div id="jqGridPagerId"></div>
+  		</div>
+	</div>
+</div><!-- 列表区域 -->
+
+<script type="text/javascript" src="${path}/javascript/contactRecord.js?date=201701220001"></script>

@@ -1,0 +1,21 @@
+#parse("manager/page_header.vm")
+<style>
+    html,body{
+        overflow-y: hidden;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row" >
+    	<div class="col-xs-12">
+            <div class="J_conWarp g-warning-box">
+            	<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
+            		#parse("manager/contactRecord/listrecord.vm")
+            	</div>
+            </div>
+         </div>
+	</div>
+</div>
+<script type="text/javascript" src="${path}/javascript/contactRecord.js?date=201701220001"></script>
