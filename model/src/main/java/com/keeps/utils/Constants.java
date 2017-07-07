@@ -19,7 +19,7 @@ public class Constants {
 	public static String[] NOT_INTERCEP_METHOD =  new String[]{"page/index","page/main","page/logout"};
 	
 	//字典类型code
-	public static String[] DICT_CODE =  new String[]{"client_type","product_category","client_stars","news_type","receive_type"};
+	public static String[] DICT_CODE =  new String[]{"client_type","product_category","client_stars","news_type","receive_type","news_type"};
 
 	//网站URL
 	public static String websiteUrl = "";
@@ -141,6 +141,14 @@ public class Constants {
 		EMP_STATUS.put(2, "冻结");
 		EMP_STATUS.put(3, "离职");
 	}
+	
+	//1未执行，2执行中，3结束。
+	public static final Map<Integer, String> SCHEDULE_STATUS = new HashMap<Integer, String>();
+	static{
+		SCHEDULE_STATUS.put(1, "未执行");
+		SCHEDULE_STATUS.put(2, "执行中");
+		SCHEDULE_STATUS.put(3, "结束");
+	}
 	//通用
 	public static final Map<String, Map<Integer, String>> DICT_ITEM_LIST = new HashMap<String, Map<Integer, String>>();
 	static{
@@ -152,6 +160,7 @@ public class Constants {
 		DICT_ITEM_LIST.put("dic_adv_position_display", ADV_POSITION_DISPLAY);
 		DICT_ITEM_LIST.put("dic_orletype", ORLE_TYPE);
 		DICT_ITEM_LIST.put("dic_emp_status", EMP_STATUS);
+		DICT_ITEM_LIST.put("dic_schedule_status", SCHEDULE_STATUS);
 	}
 
 }

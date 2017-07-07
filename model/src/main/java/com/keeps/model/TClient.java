@@ -54,6 +54,7 @@ public class TClient extends AbstractModelInteger implements ModelPlusSchool{
 	private String content;
 	private String nexttime;
 	private String contacttime;
+	private String visittime;
 	private String attentionname;
 	private String attentionvalue;
 	private String typename;
@@ -68,10 +69,18 @@ public class TClient extends AbstractModelInteger implements ModelPlusSchool{
 	private String createtimeend;
 	private String contacttimesta;
 	private String contacttimeend;
+	private String visittimesta;
+	private String visittimeend;
 	private String buytimesta;
 	private String buytimeend;
 	private String nextcontacttimesta;
 	private String nextcontacttimeend;
+	private String tracktimesta;
+	private String tracktimeend;
+	
+	private Integer visitttimetype;//按来访时间类型查询，1今天来访，2，明日来访，3后天来访，4.三天后要来访客户，5，本周所有来访客户，6，本月所有来访客户
+	private Integer tracktime;//按跟踪时间查询，7，15，30，60，100
+	private Integer hodgepodgetype;//大杂烩 按照分类查询，1今日已联系，2本周已联系，3本月已联系 4，今日需要联系，5本周需联系，6本月需联系，7今日新等级，8本周新登记，9本月新等级
 	public TClient() {
 	}
 
@@ -524,6 +533,76 @@ public class TClient extends AbstractModelInteger implements ModelPlusSchool{
 		this.nextcontacttimeend = nextcontacttimeend;
 	}
 
-	
+	@Transient
+	public Integer getTracktime() {
+		return tracktime;
+	}
+
+	public void setTracktime(Integer tracktime) {
+		this.tracktime = tracktime;
+	}
+
+	@Transient
+	public Integer getHodgepodgetype() {
+		return hodgepodgetype;
+	}
+
+	public void setHodgepodgetype(Integer hodgepodgetype) {
+		this.hodgepodgetype = hodgepodgetype;
+	}
+
+	@Transient
+	public String getTracktimesta() {
+		return tracktimesta;
+	}
+
+	public void setTracktimesta(String tracktimesta) {
+		this.tracktimesta = tracktimesta;
+	}
+
+	@Transient
+	public String getTracktimeend() {
+		return tracktimeend;
+	}
+
+	public void setTracktimeend(String tracktimeend) {
+		this.tracktimeend = tracktimeend;
+	}
+
+	@Transient
+	public String getVisittime() {
+		return visittime;
+	}
+
+	public void setVisittime(String visittime) {
+		this.visittime = visittime;
+	}
+
+	@Transient
+	public String getVisittimesta() {
+		return visittimesta;
+	}
+
+	public void setVisittimesta(String visittimesta) {
+		this.visittimesta = visittimesta;
+	}
+
+	@Transient
+	public String getVisittimeend() {
+		return visittimeend;
+	}
+
+	public void setVisittimeend(String visittimeend) {
+		this.visittimeend = visittimeend;
+	}
+
+	@Transient
+	public Integer getVisitttimetype() {
+		return visitttimetype;
+	}
+
+	public void setVisitttimetype(Integer visitttimetype) {
+		this.visitttimetype = visitttimetype;
+	}
 
 }

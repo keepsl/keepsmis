@@ -2,10 +2,5 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
-	<table-filter match-catalog="keeps_crm" match-name="t_client"/>
-	<table-filter match-catalog="keeps_crm" match-name="t_empclient"/>
-	<table-filter match-catalog="keeps_crm" match-name="t_dict_type"/>
-	<table-filter match-catalog="keeps_crm" match-name="t_dict"/>
-	<table-filter match-catalog="keeps_crm" match-name="t_contact_record"/>
-	<table-filter match-catalog="keeps_crm" match-name="t_buy_record"/>
+	<table-filter match-catalog="keeps_crm" match-name="t_schedule"/>
 </hibernate-reverse-engineering>

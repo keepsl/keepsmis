@@ -25,6 +25,7 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 	private Integer id;
 	private Integer empid;
 	private Integer clientid;
+	private Integer dicttypeid;
 	private Integer dictid;
 	private String productname;
 	private Float price;
@@ -38,9 +39,12 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 	private String updatetimestr;
 	private String clientphone;
 
+	private String buynum;
+	private String fzempid;
+	private String fzempname;
+	
 	private String buytimesta;
 	private String buytimeend;
-
 	
 	public TBuyRecord() {
 	}
@@ -49,8 +53,9 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 		this.empid = empid;
 	}
 
-	public TBuyRecord(Integer empid, Integer dictid, String productname, Float price, String remark,Date createtime, Date updatetime, Integer createperson) {
+	public TBuyRecord(Integer empid, Integer dicttypeid, Integer dictid, String productname, Float price, String remark,Date createtime, Date updatetime, Integer createperson) {
 		this.empid = empid;
+		this.dicttypeid = dicttypeid;
 		this.dictid = dictid;
 		this.productname = productname;
 		this.price = price;
@@ -62,7 +67,6 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-
 	@Column(name = "id", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;
@@ -124,6 +128,15 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 
 	public void setCreateperson(Integer createperson) {
 		this.createperson = createperson;
+	}
+
+	@Column(name = "dicttypeid")
+	public Integer getDicttypeid() {
+		return dicttypeid;
+	}
+
+	public void setDicttypeid(Integer dicttypeid) {
+		this.dicttypeid = dicttypeid;
 	}
 
 	@Column(name = "dictid")
@@ -207,6 +220,32 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 		this.buytimeend = buytimeend;
 	}
 
-	
+	@Transient
+	public String getBuynum() {
+		return buynum;
+	}
+
+	public void setBuynum(String buynum) {
+		this.buynum = buynum;
+	}
+
+	@Transient
+	public String getFzempid() {
+		return fzempid;
+	}
+
+	public void setFzempid(String fzempid) {
+		this.fzempid = fzempid;
+	}
+
+	@Transient
+	public String getFzempname() {
+		return fzempname;
+	}
+
+	public void setFzempname(String fzempname) {
+		this.fzempname = fzempname;
+	}
+
 	
 }
