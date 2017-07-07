@@ -20,7 +20,9 @@ public interface ContactRecordService extends SoftService{
 	public Page queryList(TContactRecord contactRecord);
 	
 	public Page queryStreamList(TContactRecord contactRecord);
-
+	
+	public Page queryStatisticsList(TContactRecord contactRecord);
+	
 	public String saveOrUpdate(TContactRecord contactRecord);
 	
 }

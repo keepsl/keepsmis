@@ -10,13 +10,70 @@
     <div class="row" >
     	<div class="col-xs-12">
             <div class="J_conWarp g-warning-box">
-            	<h4 class="g-title">#if($!{operType}==1)全部客户管理#elseif($!{operType}==2)公共客户列表#elseif($!{operType}==3)我的客户列表#end<span class="intro J_arrowAction" style="cursor:pointer;">功能介绍<i class="gi-down"></i></span></h4>
+            	<h4 class="g-title">
+            	#if($!{operType}==1)全部客户管理#elseif($!{operType}==2)公共客户列表#elseif($!{operType}==3)我的客户列表#end
+            	&nbsp;&nbsp;&nbsp;
+            	<span style="color:#888;font-size:14px;">快速定位客户</span>
+            	<div class="btn-group J_dropDown">
+					  <button type="button" class="gbn gbn-s dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  	<span class="J_Text tracktimetext">按跟踪时间</span><span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu tracktime">
+					    <li><a href="javascript:;" attr-time='7'>7-14天未跟踪</a></li>
+					    <li><a href="javascript:;" attr-time='15'>15-29天未跟踪</a></li>
+					    <li><a href="javascript:;" attr-time='30'>30-59天未跟踪</a></li>
+					    <li><a href="javascript:;" attr-time='60'>60-99天未跟踪</a></li>
+					    <li><a href="javascript:;" attr-time='100'>100天以上未跟踪</a></li>
+					    <li role="separator" class="divider"></li>
+					    <li><a href="javascript:;" attr-time='0'>取消选择</a></li>
+					  </ul>
+				</div>
+				<div class="btn-group J_dropDown">
+					  <button type="button" class="gbn gbn-s dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  	<span class="J_Text hodgepodgetypetext">按分类查询</span><span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu hodgepodgetype">
+					    <li><a href="javascript:;" attr-time='1'>今日已联系的</a></li>
+					    <li><a href="javascript:;" attr-time='2'>本周已联系的</a></li>
+					    <li><a href="javascript:;" attr-time='3'>本月已联系的</a></li>
+					    <li role="separator" class="divider"></li>
+					    <li><a href="javascript:;" attr-time='4'>今天需联系的</a></li>
+					    <li><a href="javascript:;" attr-time='5'>本周需联系的</a></li>
+					    <li><a href="javascript:;" attr-time='6'>本月需联系的</a></li>
+					    <li role="separator" class="divider"></li>
+					    <li><a href="javascript:;" attr-time='7'>今天新登记的</a></li>
+					    <li><a href="javascript:;" attr-time='8'>本周新等级的</a></li>
+					    <li><a href="javascript:;" attr-time='9'>本月新等级的</a></li>
+					    <li role="separator" class="divider"></li>
+					    <li><a href="javascript:;" attr-time='0'>取消选择</a></li>
+					  </ul>
+				</div>
+				<div class="btn-group J_dropDown">
+					  <button type="button" class="gbn gbn-s dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					  	<span class="J_Text visitttimetypetext">按来访时间查询</span><span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu visitttimetype">
+					    <li><a href="javascript:;" attr-time='1'>今日来访</a></li>
+					    <li><a href="javascript:;" attr-time='2'>明日来访</a></li>
+					    <li><a href="javascript:;" attr-time='3'>后天来访</a></li>
+					   	<li><a href="javascript:;" attr-time='4'>两天后来访</a></li>
+					    <li role="separator" class="divider"></li>
+					    <li><a href="javascript:;" attr-time='5'>本周内来访的</a></li>
+					    <li><a href="javascript:;" attr-time='6'>本月内来访的</a></li>
+					    <li role="separator" class="divider"></li>
+					    <li><a href="javascript:;" attr-time='0'>取消选择</a></li>
+					  </ul>
+				</div>
+            	<span class="intro J_arrowAction" style="cursor:pointer;">功能介绍<i class="gi-down"></i></span></h4>
             	<p class="bg-warning J_tipBox g-t-mg">功能介绍：客户信息管理与维护。</p>
             	<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
             		<div class="row">
                 		<div class="col-xs-12">
 					  		<div class="col-container">
 					  			<form class="form-inline clearfix" role="form" id="form1" onsubmit="return false;">
+					  				<input type="hidden" id="tracktime" name="tracktime" value=""/>
+					  				<input type="hidden" id="hodgepodgetype" name="hodgepodgetype" value=""/>
+					  				<input type="hidden" id="visitttimetype" name="visitttimetype" value=""/>
 					  				<input type="hidden" id="operType" value="$!{operType}"/>
 			                        <span class="group">
 			                            <label for="name" >客户电话:</label>
@@ -40,7 +97,7 @@
 			                            <select class="form-control" name="attention" id="attention">
 											<option value="">请选择...</option>
 											#foreach ($list in $clientstarslist)
-											<option value="$list.id" #if ($list.id==$client.attention) selected #end>$list.name</option>
+											<option style="background:$list.value" value="$list.id" #if ($list.id==$client.attention) selected #end>$list.name</option>
 											#end
 										</select>
 			                        </span>
@@ -54,8 +111,8 @@
 										</select>
 			                        </span>
 			                        <span class="group">
-			                        	<a class="gbn gbn-search" id="btn_reset" href="javascript:;" onclick="query();"><i></i>查询</a>
-			                        	<a class="gbn gbn-gray" id="btn_query" href="javascript:;" onclick="query(1);"><i></i>重置</a>
+			                        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
+			                        	<a class="gbn gbn-gray" id="btn_reset" href="javascript:;" onclick="query(1);"><i></i>重置</a>
 			                        	
 						  				<a class="gbn" id="btn_imp" href="javascript:;" onclick="imp_obj()" right-attr='client/saveClientfile/$!{operType}'><i></i>导入</a>
 								  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="add_obj();" right-attr='client/save/$!{operType}'><i></i>新增</a>
@@ -117,6 +174,16 @@
 						                                <span class="input-group-addon">到</span>
 						                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="结束时间" readonly="readonly" 
 						                        			id="createtimeend" name="createtimeend" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+						                            </div>
+						                        </span>
+						                        <span class="group">
+						                        	<label>来访时间:</label>
+												 	<div class="input-group input-daterange">
+						                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="开始时间" readonly="readonly"
+						                                	id="visittimesta" name="visittimesta" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+						                                <span class="input-group-addon">到</span>
+						                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="结束时间" readonly="readonly" 
+						                        			id="visittimeend" name="visittimeend" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
 						                            </div>
 						                        </span>
 					                    	</div>

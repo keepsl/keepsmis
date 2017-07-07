@@ -1,0 +1,38 @@
+#parse("manager/page_header.vm")
+<style>
+    html,body{
+        overflow-y: hidden;
+        height: 100%;
+    }
+</style>
+<script type="text/javascript" src="${path}/plug/echarts/echarts.common.min.js"></script>
+<script type="text/javascript" src="${path}/javascript/MyEChart.js"></script>
+
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<h4 class="g-title">员工客户量统计</h4>
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12">
+					<form class="form-horizontal" role="form">
+						<div style="height:500px" id="echartId">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		var myEChart = null;
+		var	param = {url:basePath+'/statistics/empClient',echartId:'echartId',titletext:'当前阶段拥有最多客户的员工',labname:'客户人数'};
+		myEChart = new MyEChart(param);
+		myEChart.loadMyEChart();
+	});
+	window.onload = window.onresize = function() {
+	  $(".J_containerWarp").height($(window).height() - 60);
+	  $(".J_containerWarp").niceScroll({});
+	}
+</script>
+    

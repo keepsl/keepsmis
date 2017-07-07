@@ -1,0 +1,4 @@
+#parse("manager/news/add_edit_inner.vm")
+<script>
+
+</script>

@@ -10,9 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.keeps.core.controller.AbstractController;
+import com.keeps.crm.service.ClientService;
 import com.keeps.crm.service.MenuService;
+import com.keeps.crm.service.NewsService;
 import com.keeps.crm.service.RoleService;
+import com.keeps.crm.service.ScheduleService;
 import com.keeps.login.utils.UserLoginUtils;
+import com.keeps.model.TClient;
+import com.keeps.model.TNews;
+import com.keeps.model.TSchedule;
 import com.keeps.tools.utils.threadlocal.UserSchoolThread;
 import com.keeps.utils.FileUtil;
 
@@ -36,6 +42,12 @@ public class PageController extends AbstractController {
 	private MenuService menuService;
 	@Autowired
 	private RoleService roleService;
+	@Autowired
+	private NewsService newsService;
+	@Autowired
+	private ScheduleService scheduleService;
+	@Autowired
+	private ClientService clientService;
 	/**
 	  * @Title:			index 
 	  * @Description:	进入后台首页
@@ -64,6 +76,21 @@ public class PageController extends AbstractController {
 	@RequestMapping("main")
 	public ModelAndView main(ModelAndView view,HttpServletRequest request, HttpServletResponse response) {
 		view.setViewName("page/main");
+		//查询公告
+		TNews news = new TNews();
+		news.setPage(1);
+		news.setRows(20);
+		view.addObject("newslist", newsService.query(news));
+		
+		TSchedule schedule = new TSchedule();
+		schedule.setStatus(-1);
+		view.addObject("schedulelist", scheduleService.query(schedule));
+		
+		TClient client = new TClient();
+		client.setHodgepodgetype(4);
+		view.addObject("clientlist", clientService.queryList(client, 3));
+		
+		view.addObject("menutree",menuService.getIndexMenuTree());
 		return view;
 	}
 	

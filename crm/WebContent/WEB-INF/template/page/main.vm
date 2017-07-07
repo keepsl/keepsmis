@@ -27,6 +27,7 @@
     <script type="text/javascript" src="${path}/plug/jqueryui/jquery-ui.min.js"></script>
     
     <link rel="stylesheet" href="${path}/plug/jqueryui/css/jquery-ui.css" />
+    <script type="text/javascript" src="${path}/javascript/layerUtils.js"></script>
     <script type="text/javascript" src="${path}/javascript/utils.js"></script> 
  	<script type="text/javascript" src="${path}/plug/echarts/echarts.common.min.js"></script>
     <script type="text/javascript" src="${path}/javascript/MyEChart.js"></script>
@@ -49,16 +50,57 @@
 			<div class="row" >
 				<div class="col-xs-6">
 					<div class="g-panel">
-						<div class="g-blueline-title">员工客户数量</div>
-						<div class="chat-box" id="echartId">
-					    </div>
+						<div class="g-blueline-title">快捷菜单</div>
+						<p class="links-box">
+							#foreach($list in $menutree.children)
+								#if ($list.children.size() > 0)
+				          			#foreach ($menu in $list.children)
+					          			<a title="${menu.name}" href="${path}/${menu.href}" class="J_menuItem " attrname='${menu.name}'>
+					          				<span></span><br>${menu.name}
+										</a>
+									#end
+		          				#end
+	                       	#end
+						</p>
 					</div>						
 				</div>
 				<div class="col-xs-6">
 					<div class="g-panel">
-						<div class="g-blueline-title">电话量统计</div>
+						<div class="g-blueline-title">代办任务<a href="${path}/client/index/3" attrname='我的客户' class="J_menuItem">更多</a></div>
+						<div class="tab-content table-box" style="margin:0 10px;">
+						    <table cellpadding="0" cellspacing="0" class="g-table">
+						        <colgroup>
+						            <col width="15%">
+						            <col width="20%">
+						            <col width="30%">
+						            <col width="15%">
+						            <col>
+						        </colgroup>
+						        <thead>
+						            <tr>
+						                <th>客户名称</th>
+						                <th>联系电话</th>
+						                <th>联系时间</th>
+						                <th>任务描述</th>
+						                <th>操作</th>
+						            </tr>
+						        </thead>
+						        <tbody>
+						        	#foreach ($list in $!{clientlist.record})
+							        	<tr>
+							                <td>$!{list.name}</td>
+							               	<td>$!{list.phone}</td>
+							               	<td class="time">$!{list.nexttime}</td>
+							               	<td><span style="color:red">预约联系</span></td>
+							                <td class="action"><a href="javascript:;" onclick="showClient($!{list.id})">详细</a></td>
+							            </tr>
+						        	#end
+						         </tbody>
+					  	    </table>
+				  		</div>
+						<!--<div class="g-blueline-title">电话量统计</div>
 						<div class="chat-box" id="echartId2">
-					    </div>
+					    </div>-->
 					</div>
 				</div>
 			</div>
@@ -66,18 +108,71 @@
 			<div class="row g-t-mg" >
 				<div class="col-xs-6">
 					<div class="g-panel">
-						<div class="g-blueline-title">任务办理分析</div>
-						<div class="chat-box">
-							图表
-					    </div>
+						<div class="g-blueline-title">公告通知</div>
+						<div class="table-box" style="margin:0 10px;">
+						    <table cellpadding="0" cellspacing="0" class="g-table">
+						        <colgroup>
+						            <col width="30%">
+						            <col width="18%">
+						            <col width="18%">
+						            <col width="22%">
+						            <col>
+						        </colgroup>
+						        <thead>
+						            <tr>
+						                <th>标题</th>
+						                <th>公告类型</th>
+						                <th>发布人</th>
+						                <th>发布日期</th>
+						                <th>操作</th>
+						            </tr>
+						        </thead>
+						        <tbody>
+						        	#foreach ($list in $!{newslist.record})
+							        	<tr>
+							                <td>$!{list.title}</td>
+							                <td>$!{list.dicttypename}</td>
+							                <td>$!{list.empname}</td>
+							                <td class="time">$!{list.publishtimestr}</td>
+							                <td class="action"><a href="javascript:;" onclick="showNews($!{list.id})">查看</a></td>
+							            </tr>
+						        	#end
+						         </tbody>
+					  	    </table>
+				  		</div>
 					</div>
 				</div>
 				<div class="col-xs-6">
 					<div class="g-panel">
-						<div class="g-blueline-title">任务办理分析</div>
-						<div class="chat-box">
-							图表
-					    </div>
+						<div class="g-blueline-title">我的日程<a href="${path}/schedule/index" attrname='我的日程' class="J_menuItem">更多</a></div>
+						<div class="tab-content table-box" style="margin:0 10px;">
+						    <table cellpadding="0" cellspacing="0" class="g-table">
+						        <colgroup>
+						            <col width="36%">
+						            <col width="25%">
+						            <col width="18%">
+						            <col>
+						        </colgroup>
+						        <thead>
+						            <tr>
+						                <th>标题</th>
+						                <th>执行时间</th>
+						                <th>日程状态</th>
+						                <th>操作</th>
+						            </tr>
+						        </thead>
+						        <tbody>
+						        	#foreach ($list in $!{schedulelist.record})
+							        	<tr>
+							                <td>$!{list.title}</td>
+							                <td class="time">$!{list.scheduletimestr}</td>
+							               	<td>#if($!{list.status}==1)未执行#elseif($!{list.status}==2)执行中#end</td>
+							                <td class="action"><a href="javascript:;" onclick="showSchedule($!{list.id})">编辑</a></td>
+							            </tr>
+						        	#end
+						         </tbody>
+					  	    </table>
+				  		</div>
 					</div>
 				</div>
 			</div>
@@ -87,7 +182,26 @@
 </html>
 
     <script type="text/javascript">
-    	var myEChart = null;
+    	var onLocationSuccess = function (iframe,callback) {
+		    iframe.saveOrUpdate(function (success) {
+		    	if(success){
+		    		location.reload();
+		    	}
+		    	callback(success);
+		    });
+		}
+    	function showNews(id){
+    		openViewWin('${path}'+'/news/show?id='+id,'公告详情',850,550,'');
+    	}
+    	function showSchedule(id){
+    		openWin('../schedule/edit?id='+id,'编辑日程',750,550,'',onLocationSuccess);
+    		//openViewWin('${path}'+'/schedule/show?id='+id,'日程详细内容',600,400,'');
+    	}
+    	
+		function showClient(id){
+			openWin('../client/edit/1?id='+id,'客户详细',850,550,'',onLocationSuccess);
+		}
+    	/***var myEChart = null;
     	var	param = {url:'../statistics/empClient',echartId:'echartId',titletext:'当前阶段拥有最多客户的员工(前15名)',labname:'客户人数'};
     	myEChart = new MyEChart(param);
 		myEChart.loadMyEChart();
@@ -95,5 +209,81 @@
 		var myEChart2 = null;
     	var	param2 = {url:'../statistics/empClient',echartId:'echartId2',titletext:'本周内电话量最多的员工 (前15名)',titlesubtext:'2017-06-19 ~ 2017-06-25',labname:'电话次数'};
     	myEChart2 = new MyEChart(param2);
-		myEChart2.loadMyEChart();
+		myEChart2.loadMyEChart();*/
+		
+		//a链接点击事件
+      function f(l) {
+		var k = 0;
+		$(l, window.parent.document).each(function() {
+			k += $(this).outerWidth(true)
+		});
+		return k
+	 }
+      function g(n) {
+		var o = f($(n, window.parent.document).prevAll()),
+			q = f($(n, window.parent.document).nextAll());
+		var l = f($(".g-content-tabs", window.parent.document).children().not(".J_menuTabs"));
+		var k = $(".g-content-tabs", window.parent.document).outerWidth(true) - l;
+		var p = 0;
+		if ($(".page-tabs-content", window.parent.document).outerWidth() < k) {
+			p = 0
+		} else {
+			if (q <= (k - $(n, window.parent.document).outerWidth(true) - $(n, window.parent.document).next().outerWidth(true))) {
+				if ((k - $(n, window.parent.document).next().outerWidth(true)) > q) {
+					p = o;
+					var m = n;
+					while ((p - $(m, window.parent.document).outerWidth()) > ($(".page-tabs-content", window.parent.document).outerWidth() - k)) {
+						p -= $(m, window.parent.document).prev().outerWidth();
+						m = $(m, window.parent.document).prev()
+					}
+				}
+			} else {
+				if (o > (k - $(n, window.parent.document).outerWidth(true) - $(n, window.parent.document).prev().outerWidth(true))) {
+					p = o - $(n, window.parent.document).prev().outerWidth(true)
+				}
+			}
+		}
+		$(".page-tabs-content", window.parent.document).animate({
+			marginLeft: 0 - p + "px"
+		}, "fast")
+	}
+		function c() {
+	        var o = $(this).attr("href"),
+	            m = $(this).data("index"),
+	            l = $(this).attr('attrname'),
+	            k = true;
+	        if (o == undefined || $.trim(o).length == 0) {
+	            return false
+	        }
+			$(".J_menuTab", window.parent.document).each(function() {
+	            if ($(this).data("id") == o) {
+	                if (!$(this).hasClass("active")) {
+	                    $(this).addClass("active").siblings(".J_menuTab").removeClass("active");
+	                    g(this);
+	                   $(".J_mainContent .J_iframe", window.parent.document).each(function() {
+	                        if ($(this).data("id") == o) {
+	                            $(this).show().siblings(".J_iframe").hide();
+	                            return false
+	                        }
+	                    })
+	                }
+	                k = false;
+	                return false
+	            }
+        	});
+	        if (k) {
+	            var p = '<a href="javascript:;" class="active J_menuTab" data-id="' + o + '">' + l + ' <i class="gi-44"></i></a>';
+	            $(".J_menuTab", window.parent.document).removeClass("active");
+	            var n = '<iframe class="J_iframe" name="iframe' + m + '" width="100%" height="100%" src="' + o + '" frameborder="0" data-id="' + o + '" seamless></iframe>';
+	            $(".J_mainContent", window.parent.document).find("iframe.J_iframe").hide();
+	            //添加加载动画
+	            $(".J_mainContent", window.parent.document).addClass("page-loading");
+	            $(".J_mainContent", window.parent.document).append(n);
+	            $(".J_menuTabs .page-tabs-content", window.parent.document).append(p);
+	            g($(".J_menuTab.active", window.parent.document))
+	        }
+	        $(".g-main-container", window.parent.document).show();
+	        return false;
+   		}
+   		$("body").on("click",".J_menuItem",c);
     </script>

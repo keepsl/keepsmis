@@ -84,12 +84,36 @@ public class BuyRecordController extends AbstractController{
 		});
 	}
 	
+	@RequestMapping("statistics")
+	public ModelAndView statistics(ModelAndView view,HttpServletRequest request, HttpServletResponse response) {
+		view.setViewName("manager/buyRecordStatistics/list");
+		TEmp emp = new TEmp();
+		if (!UserSchoolThread.get().isSuperAdmin()) {
+			emp.setId(UserSchoolThread.get().getUserid());
+		}
+		view.addObject("emplist", empService.getList(emp));
+		return view;
+	}
+	
+
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("queryStatistics")
+	public @ResponseBody Map queryStatistics(final TBuyRecord buyRecord) {
+		return super.doJsonPost(new JsonPost() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void doInstancePost(Map map) {
+				map.put("message", buyRecordService.queryStatisticsList(buyRecord));
+			}
+		});
+	}
+	
 	@RequestMapping("add/{operType}")
 	public ModelAndView add(ModelAndView view,HttpServletRequest request, HttpServletResponse response, Integer clientid, @PathVariable("operType")Integer operType) {
 		view.setViewName("manager/buyRecord/add");
 		view.addObject("clientid", clientid);
 		view.addObject("operType", operType);
-		view.addObject("updatetimestr", DateUtils.formatNow());
+		view.addObject("updatetimestr", DateUtils.formatNow("yyyy-MM-dd HH:mm"));
 		return view;
 	}
 	

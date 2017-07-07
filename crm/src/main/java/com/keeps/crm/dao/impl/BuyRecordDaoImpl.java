@@ -59,11 +59,30 @@ public class BuyRecordDaoImpl extends AbstractDao implements BuyRecordDao {
 
 	public Page queryStreamList(TBuyRecord buyRecord,boolean isadmin){
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select a.id,b.name as clientname,b.phone as clientphone,a.productname,a.price,c.name as empname,a.updatetime,a.createtime,a.remark from t_buy_record a inner join t_client b on a.clientid = b.id ");
-		sb.append(" left join t_emp c on a.empid = c.id ");
-		sb.append(" where 1 = 1 ");
 		List<Object> values = new ArrayList<Object>();
+		sb.append(" select a.id,b.name as clientname,b.phone as clientphone,a.productname,a.price,a.updatetime,a.createtime,a.remark,c.fzempname AS fzempname,d.name as empname ");
+		sb.append(" from t_buy_record a inner join t_client b on a.clientid = b.id ");
+		if (buyRecord.getEmpid()!=null) {
+			sb.append("   inner join   ");
+		}else{
+			sb.append("   left join   ");
+		}
+		sb.append("  (select group_concat(b.name) fzempname,group_concat(b.id) fzempid,a.clientid from t_empclient a ");
+		sb.append("  inner join  t_emp b on a.empid = b.id  ");
 		if (!isadmin) {
+			sb.append(" and a.empid = ? ");
+			values.add(buyRecord.getEmpid());
+		}else{
+			if (buyRecord.getEmpid()!=null) {
+				sb.append(" and a.empid = ? ");
+				values.add(buyRecord.getEmpid());
+			}
+		}
+		sb.append("    group by a.clientid) ");
+		sb.append("  c ON b.id = c.clientid ");
+		sb.append(" left join t_emp d on a.empid = d.id ");
+		sb.append(" where 1 = 1 ");
+		/*if (!isadmin) {
 			sb.append(" and c.id = ? ");
 			values.add(buyRecord.getEmpid());
 		}else{
@@ -71,7 +90,7 @@ public class BuyRecordDaoImpl extends AbstractDao implements BuyRecordDao {
 				sb.append(" and c.id = ? ");
 				values.add(buyRecord.getEmpid());
 			}
-		}
+		}*/
 		
 		if (StringUtils.hasText(buyRecord.getClientname())) {
 			sb.append(" and (b.name like ? or b.pym like ? ) ");
@@ -100,13 +119,80 @@ public class BuyRecordDaoImpl extends AbstractDao implements BuyRecordDao {
 	        	sb.append("order by b.name "+buyRecord.getSord());
 			}else if (buyRecord.getSidx().equals("clientphone")) {
 	        	sb.append("order by b.phone "+buyRecord.getSord());
-			}else if (buyRecord.getSidx().equals("empname")) {
-	        	sb.append("order by c.name "+buyRecord.getSord());
+			}else if (buyRecord.getSidx().equals("fzempname")) {
+	        	sb.append("order by c.fzempname "+buyRecord.getSord());
+			}else if(buyRecord.getSidx().equals("empname")){
+	        	sb.append("order by d.name "+buyRecord.getSord());
 			}else{
 	        	sb.append("order by a."+buyRecord.getSidx()+" "+buyRecord.getSord());
 			}
 		}else{
 			sb.append("  order by a.updatetime desc ");
+		}
+		return super.queryBySql(sb.toString(), values.toArray(), buyRecord, TBuyRecord.class);
+	}
+
+	public Page queryStatisticsList(TBuyRecord buyRecord,boolean isadmin){
+		StringBuffer sb = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sb.append(" SELECT b.id, b.NAME AS clientname, b.phone AS clientphone, a.price,a.buynum,a.updatetime, c.fzempname AS fzempname ");
+		sb.append(" FROM (select a.clientid,sum(a.price) as price,count(1) buynum,max(a.updatetime) as updatetime from t_buy_record a group by a.clientid) a ");
+		sb.append(" INNER JOIN t_client b ON a.clientid = b.id ");
+		if (buyRecord.getEmpid()!=null) {
+			sb.append("   inner join   ");
+		}else{
+			sb.append("   left join   ");
+		}
+		sb.append("  (select group_concat(b.name) fzempname,group_concat(b.id) fzempid,a.clientid from t_empclient a ");
+		sb.append("  inner join  t_emp b on a.empid = b.id  ");
+		if (!isadmin) {
+			sb.append(" and a.empid = ? ");
+			values.add(buyRecord.getEmpid());
+		}else{
+			if (buyRecord.getEmpid()!=null) {
+				sb.append(" and a.empid = ? ");
+				values.add(buyRecord.getEmpid());
+			}
+		}
+		sb.append("    group by a.clientid) ");
+		sb.append("  c ON b.id = c.clientid ");
+
+		sb.append(" where 1 = 1 ");
+		
+		if (StringUtils.hasText(buyRecord.getClientname())) {
+			sb.append(" and (b.name like ? or b.pym like ? ) ");
+			values.add("%"+buyRecord.getClientname().trim()+"%");
+			values.add("%"+buyRecord.getClientname().trim()+"%");
+		}
+		if (StringUtils.hasText(buyRecord.getClientphone())) {
+			if (buyRecord.getClientphone().length()==4) {
+				sb.append(" and right(b.phone,4) = ? ");
+				values.add(buyRecord.getClientphone().trim());	
+			}else{
+				sb.append(" and b.phone like ? ");
+				values.add("%"+buyRecord.getClientphone().trim()+"%");
+			}
+		}
+		if (StringUtils.hasText(buyRecord.getBuytimesta())) {
+			sb.append(" and date_format(a.updatetime,'%Y-%m-%d') >= str_to_date(?,'%Y-%m-%d') ");
+			values.add(DateUtils.format(buyRecord.getBuytimesta(), "yyyy-MM-dd"));
+		}
+		if (StringUtils.hasText(buyRecord.getBuytimeend())) {
+			sb.append(" and date_format(a.updatetime,'%Y-%m-%d') <= str_to_date(?,'%Y-%m-%d') ");
+			values.add(DateUtils.format(buyRecord.getBuytimeend(), "yyyy-MM-dd"));
+		}
+		if(StringUtils.hasText(buyRecord.getSidx()) && StringUtils.hasText(buyRecord.getSord())) {
+			if (buyRecord.getSidx().equals("clientname")) {
+	        	sb.append("order by b.name "+buyRecord.getSord());
+			}else if (buyRecord.getSidx().equals("clientphone")) {
+	        	sb.append("order by b.phone "+buyRecord.getSord());
+			}else if (buyRecord.getSidx().equals("fzempname")) {
+	        	sb.append("order by c.fzempname "+buyRecord.getSord());
+			}else{
+	        	sb.append("order by a."+buyRecord.getSidx()+" "+buyRecord.getSord());
+			}
+		}else{
+			sb.append("  order by a.price DESC ");
 		}
 		return super.queryBySql(sb.toString(), values.toArray(), buyRecord, TBuyRecord.class);
 	}

@@ -32,10 +32,10 @@ public class ClientDaoImpl extends AbstractDao implements ClientDao {
 		List<Object> values = new ArrayList<Object>();
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select a.*,d.name as attentionname,d.value as attentionvalue,e.name as typename,"
-				+ "c.name as linkempname,b.remark as content,b.nexttime,b.updatetime contacttime,"
+				+ "c.name as linkempname,b.remark as content,date_format(b.nexttime,'%Y-%m-%d %H:%m') as nexttime,b.contacttime contacttime,b.visittime as visittime, "
 				+ "f.fzempname,f.fzempid,ca.name as receivename,b.recordnum,g.name as receivetypename from t_client a  ");
 		sb.append(" left join ");
-		sb.append(" (select a.id,count(1) as recordnum,max(a.clientid) clientid ,max(a.empid) empid,max(a.nexttime) nexttime,max(remark) remark,max(updatetime) updatetime ");
+		sb.append(" (select a.id,count(1) as recordnum,max(a.clientid) clientid ,max(a.empid) empid,max(a.nexttime) nexttime,max(a.visittime) visittime, max(remark) remark,max(contacttime) contacttime ");
 		sb.append(" from (select * from t_contact_record order by id desc) a group by a.clientid) b on a.id = b.clientid ");
 		sb.append(" left join t_emp c on b.empid = c.id ");
 		sb.append(" left join t_emp ca on a.receiveid = ca.id ");
@@ -110,11 +110,11 @@ public class ClientDaoImpl extends AbstractDao implements ClientDao {
 			values.add(client.getCreatetimeend().trim());
 		}
 		if (StringUtils.hasText(client.getContacttimesta())) {//最近联系时间开始日
-			sb.append(" and date_format(b.updatetime,'%Y-%m-%d') >= str_to_date(?,'%Y-%m-%d') ");
+			sb.append(" and date_format(b.contacttime,'%Y-%m-%d') >= str_to_date(?,'%Y-%m-%d') ");
 			values.add(client.getContacttimesta().trim());
 		}
 		if (StringUtils.hasText(client.getContacttimeend())) {//最近联系时间结束日
-			sb.append(" and date_format(b.updatetime,'%Y-%m-%d') <= str_to_date(?,'%Y-%m-%d') ");
+			sb.append(" and date_format(b.contacttime,'%Y-%m-%d') <= str_to_date(?,'%Y-%m-%d') ");
 			values.add(client.getContacttimeend().trim());
 		}
 		if (StringUtils.hasText(client.getNextcontacttimesta())) {//最近联系时间开始日
@@ -125,6 +125,24 @@ public class ClientDaoImpl extends AbstractDao implements ClientDao {
 			sb.append(" and date_format(b.nexttime,'%Y-%m-%d') <= str_to_date(?,'%Y-%m-%d') ");
 			values.add(client.getNextcontacttimeend().trim());
 		}
+
+		if (StringUtils.hasText(client.getTracktimesta())) {//时间跟踪，多少天未联系
+			sb.append(" and date_format(b.contacttime,'%Y-%m-%d') <= str_to_date(?,'%Y-%m-%d') ");
+			values.add(client.getTracktimesta().trim());
+		}
+		if (StringUtils.hasText(client.getTracktimeend())) {
+			sb.append(" and date_format(b.contacttime,'%Y-%m-%d') >= str_to_date(?,'%Y-%m-%d') ");
+			values.add(client.getTracktimeend().trim());
+		}
+		
+		if (StringUtils.hasText(client.getVisittimesta())) {//来访
+			sb.append(" and date_format(b.visittime,'%Y-%m-%d') >= str_to_date(?,'%Y-%m-%d') ");
+			values.add(client.getVisittimesta().trim());
+		}
+		if (StringUtils.hasText(client.getVisittimeend())) {
+			sb.append(" and date_format(b.visittime,'%Y-%m-%d') <= str_to_date(?,'%Y-%m-%d') ");
+			values.add(client.getVisittimeend().trim());
+		}
 		if(StringUtils.hasText(client.getSidx()) && StringUtils.hasText(client.getSord())) {
 			if ("linkempname".equals(client.getSidx())) {
 				sb.append("order by c.name "+client.getSord());
@@ -133,7 +151,9 @@ public class ClientDaoImpl extends AbstractDao implements ClientDao {
 			}else if ("typename".equals(client.getSidx())){
 				sb.append("order by e.name "+client.getSord());
 			}else if ("contacttime".equals(client.getSidx())){
-				sb.append("order by b.updatetime "+client.getSord());
+				sb.append("order by b.contacttime "+client.getSord());
+			}else if ("visittime".equals(client.getSidx())){
+				sb.append("order by b.visittime "+client.getSord());
 			}else if ("nexttime".equals(client.getSidx())) {
 				sb.append("order by b.nexttime "+client.getSord());
 			}else if ("fzempname".equals(client.getSidx())) {
@@ -148,19 +168,39 @@ public class ClientDaoImpl extends AbstractDao implements ClientDao {
 				sb.append("order by a."+client.getSidx()+" "+client.getSord());
 			}
 		}else{
-			sb.append("  order by b.updatetime desc ");
+			sb.append("  order by b.contacttime desc ");
 		}
 		return super.queryBySql(sb.toString(), values.toArray(), client, TClient.class);
 	}
-
+	
+	@SuppressWarnings("unchecked")
+	public List<TClient> getListInfoByPhone(String phone){
+		List<Object> values = new ArrayList<Object>();
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select a.*,b.fzempid,b.fzempname from t_client a inner join  ");
+		sb.append(" (select group_concat(b.name) fzempname,group_concat(b.id) fzempid,a.clientid from t_empclient a left join t_emp b on a.empid = b.id  ");
+		sb.append(" group by a.clientid) b  on a.id = b.clientid ");
+		if (StringUtils.hasText(phone)) {
+			if (phone.length()==4) {
+				sb.append(" and right(a.phone,4) = ? ");
+				values.add(phone.trim());
+			}else{
+				sb.append(" and a.phone = ? ");
+				values.add(phone.trim());
+			}
+		}
+		List<TClient> list = super.getByPropertySql(sb.toString(), values.toArray(), TClient.class);
+		return CollectionUtils.isEmpty(list)?null:list;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public TClient getListById(Integer id){
 		List<Object> values = new ArrayList<Object>();
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select a.*,d.name as attentionname,d.value as attentionvalue,e.name as typename,"
-				+ "c.name as linkempname,b.remark as content,b.nexttime,b.updatetime contacttime,"
+				+ "c.name as linkempname,b.remark as content,b.nexttime,b.contacttime contacttime,"
 				+ "f.fzempname,f.fzempid,ca.name as receivename,g.name as receivetypename from t_client a  ");
-		sb.append(" left join (select a.id,max(a.clientid) clientid ,max(a.empid) empid,max(a.nexttime) nexttime,max(remark) remark,max(updatetime) updatetime ");
+		sb.append(" left join (select a.id,max(a.clientid) clientid ,max(a.empid) empid,max(a.nexttime) nexttime,max(remark) remark,max(contacttime) contacttime ");
 		sb.append(" from (select * from t_contact_record order by id desc) a group by a.clientid) b on a.id = b.clientid ");
 		sb.append(" left join t_emp c on b.empid = c.id ");
 		sb.append(" left join t_emp ca on a.receiveid = ca.id ");
@@ -176,15 +216,15 @@ public class ClientDaoImpl extends AbstractDao implements ClientDao {
 		List<TClient> list = super.getByPropertySql(sb.toString(), values.toArray(), TClient.class);
 		return CollectionUtils.isEmpty(list)?null:list.get(0);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<TClient> getListByIds(String ids){
 		List<Object> values = new ArrayList<Object>();
 		StringBuffer sb = new StringBuffer();
 		sb.append(" select a.*,d.name as attentionname,d.value as attentionvalue,e.name as typename,"
-				+ "c.name as linkempname,b.remark as content,b.nexttime,b.updatetime contacttime,"
+				+ "c.name as linkempname,b.remark as content,b.nexttime,b.contacttime contacttime,"
 				+ "f.fzempname,f.fzempid,ca.name as receivename,g.name as receivetypename from t_client a  ");
-		sb.append(" left join (select a.id,max(a.clientid) clientid ,max(a.empid) empid,max(a.nexttime) nexttime,max(remark) remark,max(updatetime) updatetime ");
+		sb.append(" left join (select a.id,max(a.clientid) clientid ,max(a.empid) empid,max(a.nexttime) nexttime,max(remark) remark,max(contacttime) contacttime ");
 		sb.append(" from (select * from t_contact_record order by id desc) a group by a.clientid) b on a.id = b.clientid ");
 		sb.append(" left join t_emp c on b.empid = c.id ");
 		sb.append(" left join t_emp ca on a.receiveid = ca.id ");

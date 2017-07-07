@@ -8,6 +8,46 @@ var onSaveUpdateSuccess = function (iframe,callback) {
     });
 }
 $(function(){
+	
+	$(".tracktime li a").click(function(){
+		$("#tracktime").val($(this).attr('attr-time'));
+		$('.hodgepodgetypetext').html('按分类查询');
+		$("#hodgepodgetype").val('');
+		$('.visitttimetypetext').html('按来访时间查询');
+		$("#visitttimetype").val('');
+	    if($(this).attr('attr-time')==0){
+		    $('.tracktimetext').html('按跟踪时间');
+	    }else{
+		    $('.tracktimetext').html($(this).html());
+	    }
+	    query(1);
+	});
+	$(".hodgepodgetype li a").click(function(){
+		$("#hodgepodgetype").val($(this).attr('attr-time'));
+		$('.tracktimetext').html('按跟踪时间');
+		$("#tracktime").val('');
+		$('.visitttimetypetext').html('按来访时间查询');
+		$("#visitttimetype").val('');
+	    if($(this).attr('attr-time')==0){
+		    $('.hodgepodgetypetext').html('按分类查询');
+	    }else{
+		    $('.hodgepodgetypetext').html($(this).html());
+	    }
+	    query(1);
+	});
+	$(".visitttimetype li a").click(function(){
+		$("#visitttimetype").val($(this).attr('attr-time'));
+		$('.tracktimetext').html('按跟踪时间');
+		$("#tracktime").val('');
+		$('.hodgepodgetypetext').html('按分类查询');
+		$("#hodgepodgetype").val('');
+	    if($(this).attr('attr-time')==0){
+		    $('.visitttimetypetext').html('按来访时间查询');
+	    }else{
+		    $('.visitttimetypetext').html($(this).html());
+	    }
+	    query(1);
+	});
 	grid = [
 		{"hidden":true,"align":"left","sortable":false,"width":10,"name":"id","resizable":false,"label":"id"},
 		{"hidden":true,"align":"left","sortable":false,"width":10,"name":"attentionvalue","resizable":false,"label":"attentionvalue"},
@@ -23,7 +63,7 @@ $(function(){
 		{"hidden":false,"align":"left","sortable":true,"width":70,"name":"name","resizable":true,"label":"姓名"},
 		{"hidden":false,"align":"left","sortable":true,"width":100,"name":"phone","resizable":true,"label":"联系电话",formatter:function(cellValue, options, rowObject){
 			if(cellValue==null || cellValue == ''){
-				return '无'
+				return '无';
 			}
 			if($('#operType').val()!=1){
 				var reg = /^(\d{3})\d{4}(\d{4})$/;
@@ -37,13 +77,13 @@ $(function(){
 			}
 			return cellValue +"&nbsp&nbsp<a href='javascript:;' onclick='showContactRecord("+rowObject.id+",\""+rowObject.name+"\")' ><span style='color:#3399ff'>更多》</span></a>";
 		}},*/
-		{"hidden":false,"align":"left","sortable":true,"width":70,"name":"recordnum","resizable":true,"label":"联系次数"},
+		{"hidden":false,"align":"left","sortable":true,"width":90,"name":"linkempname","resizable":true,"label":"最近联系人"},
 		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"contacttime","resizable":true,"label":"最近联系时间",formatter:function(cellValue, options, rowObject){
 			if(cellValue==null || cellValue == ''){
 				return '无';
 			}
 			var cdate = new Date(cellValue);
-			var str = cdate.format("yyyy-MM-dd hh:mm:ss");
+			var str = cdate.format("yyyy-MM-dd hh:mm");
 			return str;
 		}},
 		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"nexttime","resizable":true,"label":"下次联系时间",formatter:function(cellValue, options, rowObject){
@@ -51,7 +91,15 @@ $(function(){
 				return '无';
 			}
 			var cdate = new Date(cellValue);
-			var str = cdate.format("yyyy-MM-dd hh:mm:ss");
+			var str = cdate.format("yyyy-MM-dd hh:mm");
+			return str;
+		}},
+		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"visittime","resizable":true,"label":"来访时间",formatter:function(cellValue, options, rowObject){
+			if(cellValue==null || cellValue == ''){
+				return '无';
+			}
+			var cdate = new Date(cellValue);
+			var str = cdate.format("yyyy-MM-dd hh:mm");
 			return str;
 		}},
 		{"hidden":false,"align":"left","sortable":true,"width":70,"name":"attentionname","resizable":true,"label":"关注度",formatter:function(cellValue, options, rowObject){
@@ -171,7 +219,7 @@ function openOrCloseClient(isopen){
 	});
 }
 function showContactRecord(id,name){
-	openViewWin('../contactrecord/index/'+$('#operType').val()+'?clientid='+id,'查看与《'+name+'》的沟通记录',750,550,'',onSaveUpdateSuccess);
+	openViewWin('../contactrecord/index/'+$('#operType').val()+'?clientid='+id,'查看与《'+name+'》的沟通记录',850,550,'',onSaveUpdateSuccess);
 }
 
 
@@ -182,13 +230,27 @@ var onRowsData = function (callback) {
 	if($('#operType').val()!=1){
 		$("#jqGridId").setGridParam().hideCol("operattr");
     }
-	var ids = $("#jqGridId").getDataIDs();
-    for(var i=0;i<ids.length;i++){
-        var rowData = $("#jqGridId").getRowData(ids[i]);
-        if(rowData.attentionvalue!='' && rowData.attentionvalue!=undefined && rowData.attentionvalue!=null){
-            $('#'+ids[i]).find("td[aria-describedby='jqGridId_attentionname']").css("background-color",rowData.attentionvalue);
-        }
-    }
+	var re_records = $("#jqGridId").getGridParam('records');
+	if(re_records == null || re_records == 0){
+		if($('#operType').val()!=1 && $('#phone').val()!=null  && $('#phone').val()!='' && $('#phone').val().length==11){
+			$.post(basePath+'/client/getListInfoByPhone', {'phone':$('#phone').val()}, function(json){
+				if(json&&json.code==1){
+					var str = '客户姓名：'+json.recored.name+"<br/>所属人："+json.recored.fzempname;
+					viewOpen(encodeURI(str),'客户已存在',500,300);
+				}else{
+					//Log.e(json.message);
+				}
+			},'json');
+		}
+	}else{
+		var ids = $("#jqGridId").getDataIDs();
+	    for(var i=0;i<ids.length;i++){
+	        var rowData = $("#jqGridId").getRowData(ids[i]);
+	        if(rowData.attentionvalue!='' && rowData.attentionvalue!=undefined && rowData.attentionvalue!=null){
+	            $('#'+ids[i]).find("td[aria-describedby='jqGridId_attentionname']").css("background-color",rowData.attentionvalue);
+	        }
+	    }
+	}
 }
 function query(reset){
 	if(reset==1){
@@ -243,7 +305,7 @@ function batch_edit_obj(){
 	}
 	ids = myGrid.selectedId();
 	if(ids!=null){
-		openWin('../client/batchEdit/'+$('#operType').val()+'?ids='+ids,'批量编辑客户',750,550,'',onEditUpdateSuccess);
+		openWin('../client/batchEdit/'+$('#operType').val()+'?ids='+ids,'批量编辑客户',800,550,'',onEditUpdateSuccess);
 	}
 }
 function edit_obj(id){
@@ -251,7 +313,7 @@ function edit_obj(id){
 		id = myGrid.selectedId(1);
 	}
 	if(id!=null){
-		openWin('../client/edit/'+$('#operType').val()+'?id='+id,'编辑客户',750,550,'',onSaveUpdateSuccess);
+		openWin('../client/edit/'+$('#operType').val()+'?id='+id,'编辑客户',850,550,'',onSaveUpdateSuccess);
 	}
 }
 //调整表格宽高

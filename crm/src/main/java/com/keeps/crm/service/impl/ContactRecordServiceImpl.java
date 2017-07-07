@@ -42,19 +42,34 @@ public class ContactRecordServiceImpl extends AbstractService implements Contact
 		return contactRecordDao.queryStreamList(contactRecord, UserSchoolThread.get().isSuperAdmin());
 	}
 
+	public Page queryStatisticsList(TContactRecord contactRecord){
+		if (!UserSchoolThread.get().isSuperAdmin()) {
+			contactRecord.setEmpid(UserSchoolThread.get().getUserid());
+		}
+		return contactRecordDao.queryStatisticsList(contactRecord, UserSchoolThread.get().isSuperAdmin());
+	}
+
 	@Override
 	public String saveOrUpdate(TContactRecord contactRecord) {
 		Assert.isTrue(contactRecord.getClientid()!=null, "客户id不能为空!");
-		if (StringUtils.notText(contactRecord.getUpdatetimestr())) {
-			contactRecord.setUpdatetimestr(DateUtils.formatNow());
+		if (StringUtils.notText(contactRecord.getContacttimestr())) {
+			contactRecord.setContacttimestr(DateUtils.formatNow());
 		}
-		Assert.isTrue(StringUtils.hasText(contactRecord.getUpdatetimestr()), "联系时间不允许为空!");
+		
+		Assert.isTrue(contactRecord.getIsvisit()!=null, "是否来访不能为空!");
+		Assert.isTrue(StringUtils.hasText(contactRecord.getContacttimestr()), "联系时间不允许为空!");
 		Assert.isTrue(StringUtils.hasText(contactRecord.getRemark()), "沟通内容不允许为空!");
 		if (StringUtils.notText(contactRecord.getNexttime())) {
 			contactRecord.setNexttime(null);
 		}
+		if (contactRecord.getIsvisit().intValue()==1) {
+			Assert.isTrue(StringUtils.hasText(contactRecord.getVisittimestr()), "来访时间不能为空!");
+			contactRecord.setVisittime(DateUtils.parse(contactRecord.getVisittimestr(), "yyyy-MM-dd HH:mm"));
+		}else{
+			
+		}
 		contactRecord.setEmpid(UserSchoolThread.get().getUserid());
-		contactRecord.setUpdatetime(DateUtils.parse("yyyy-MM-dd HH:mm:ss", contactRecord.getUpdatetimestr()));
+		contactRecord.setContacttime(DateUtils.parse(contactRecord.getContacttimestr(), "yyyy-MM-dd HH:mm"));
 		super.save(contactRecord);
 		return null;
 	}

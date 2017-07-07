@@ -172,9 +172,6 @@ function MyJqGrid(obj){
 	        		
 	        		callback();
 	        	}
-	        	
-	        	
-	        	
 	        }
 		});
 		//$("#"+this.jqGridId).closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });

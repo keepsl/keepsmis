@@ -9,7 +9,7 @@
                 </span>
                 <span class="group">
                     <label>联系日期:</label>
-                    <input type="text" class="form-control Wdate g-Wate-left" readonly="readonly" id="updatetimestr" name="updatetimestr" value="$!DatesTool.format('yyyy-MM-dd',$!{updatetimestr})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+                    <input type="text" class="form-control Wdate g-Wate-left" readonly="readonly" id="contacttimestr" name="contacttimestr" value="$!DatesTool.format('yyyy-MM-dd',$!{updatetimestr})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
                 </span>
                 <span class="group">
                 	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>

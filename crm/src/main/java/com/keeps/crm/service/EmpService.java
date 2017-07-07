@@ -50,4 +50,6 @@ public interface EmpService extends SoftService{
 	  * @data:			2017年6月24日
 	 */
 	public Map<String, Object> getClientGroupByEmp();
+	
+	public Map<String, Object> getContactGroupByEmp(String contacttimesta,String contacttimeend);
 }

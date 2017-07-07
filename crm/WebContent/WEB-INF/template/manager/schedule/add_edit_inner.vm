@@ -1,0 +1,67 @@
+#parse("manager/page_header.vm")
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="formid" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="id" id="id" value="$!{schedule.id}"/>
+						<div class="form-group">
+							<label for="title" class="col-xs-2 control-label"><em class="text-red">*</em>日程标题：</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="title" name="title" value="$!{schedule.title}" maxlength="50">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="publishtimestr" class="col-xs-2 control-label"><em class="text-red">*</em>执行时间：</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control Wdate g-Wate-left" id="scheduletimestr" name="scheduletimestr" readonly value="$!DatesTool.format('yyyy-MM-dd HH:mm',$!{schedule.scheduletime})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="dicttype" class="col-xs-2 control-label"><em class="text-red">*</em>日程状态：</label>
+							<div class="col-xs-9">
+								#dictselecttag('status','dic_schedule_status',$!{schedule.status},'0')
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="content" class="col-xs-2 control-label">备注：</label>
+							<div class="col-xs-9">
+								<textarea class="form-control" rows="6" style="height:150px;" id="remark" name="remark">$!{schedule.remark}</textarea>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+	function saveOrUpdate(callback){
+		var url = $("#id").val()==''?basePath+'/schedule/save':basePath+'/schedule/update';
+		var options = {
+			url: url, 
+			dataType: 'json', 
+			data:$("#formid").serialize(),
+			type: "POST",
+			success: function(json) {
+				if(json&&json.success==true){
+				}else{
+					Log.e(json.message);
+				}
+				callback(json.success);
+			},error:function(){
+				Log.e('请求错误!');
+				callback(false);
+		   	}
+		};
+		$('#formid').ajaxSubmit(options);
+	}
+</script>

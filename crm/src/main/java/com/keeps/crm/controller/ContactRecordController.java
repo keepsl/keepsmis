@@ -91,13 +91,37 @@ public class ContactRecordController extends AbstractController{
 			}
 		});
 	}
+	
 
+	@RequestMapping("statistics")
+	public ModelAndView statistics(ModelAndView view,HttpServletRequest request, HttpServletResponse response) {
+		view.setViewName("manager/contactRecordStatistics/list");
+		TEmp emp = new TEmp();
+		if (!UserSchoolThread.get().isSuperAdmin()) {
+			emp.setId(UserSchoolThread.get().getUserid());
+		}
+		view.addObject("emplist", empService.getList(emp));
+		return view;
+	}
+
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("queryStatistics")
+	public @ResponseBody Map queryStatistics(final TContactRecord contactRecord) {
+		return super.doJsonPost(new JsonPost() {
+			@SuppressWarnings("unchecked")
+			@Override
+			public void doInstancePost(Map map) {
+				map.put("message", contactRecordService.queryStatisticsList(contactRecord));
+			}
+		});
+	}
+	
 	@RequestMapping("add/{operType}")
 	public ModelAndView add(ModelAndView view,HttpServletRequest request, HttpServletResponse response, Integer clientid, @PathVariable("operType")Integer operType) {
 		view.setViewName("manager/contactRecord/add");
 		view.addObject("clientid", clientid);
 		view.addObject("operType", operType);
-		view.addObject("updatetimestr", DateUtils.formatNow());
+		view.addObject("contacttimestr", DateUtils.formatNow("yyyy-MM-dd HH:mm"));
 		//view.addObject("clienttypelist", dictService.getDictTypeByCode(Constants.DICT_CODE[0]));
 		//view.addObject("clientstarslist", dictService.getDictByCode(Constants.DICT_CODE[2]));
 		return view;

@@ -42,4 +42,7 @@ public interface EmpDao extends SoftDao{
 	
 	public List<Map<String, Object>> getClientGroupByEmp();
 	
+	public List<Map<String, Object>> getContactGroupByEmp(String contacttimesta,String contacttimeend);
+
+	
 }

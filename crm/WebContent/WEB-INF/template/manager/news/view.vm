@@ -1,0 +1,27 @@
+#parse("manager/page_header.vm")
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+
+
+<div>
+	<div  class="container-fluid g-t-mg">
+		<div class="row" >
+	    	<div class="col-xs-12 g-b-mg">
+	    		
+		  		<div style="text-align:center;margin:0 auto;border-bottom:1px dashed #000; height:70px;width:760px;">
+	                <h3>$!{news.title}</h3>
+	                	发布日期：$!{news.publishtimestr}</p>
+	            </div>
+	            <div class="detail_con">
+	                <p>&nbsp;$!{news.content}</p>
+	            </div>	
+
+		  	<div>
+        </div><!-- row结束 -->
+    </div>
+</div>

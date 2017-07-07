@@ -83,25 +83,13 @@
        <p class="g-menu-box">
        </p>
         <p class='g-action-box'>
-            <a class="user" href="javascript:;"><i class="gi2 gi-37"></i>个人中心</a>
-            <!--<a class="pwd"  href="javascript:;"><i class="gi2 gi-38"></i>待办任务</a>-->
-            <a class="pwd"  href="javascript:;"><i class="gi2 gi-39"></i>消息提醒</a>
+            <!--<a class="user" href="javascript:;"><i class="gi2 gi-37"></i>个人中心</a>
+            <a class="pwd"  href="javascript:;"><i class="gi2 gi-38"></i>待办任务</a>
+            <a class="pwd"  href="javascript:;"><i class="gi2 gi-39"></i>消息提醒</a>-->
             <a class="pwd"  href="javascript:;" onclick="changePwd()"><i class="gi2 gi-40"></i>修改密码</a>
             <!--<a class="clear" href="javascript:;"><i class="gi2 gi-41"></i>清除缓存</a>
             <a class="exit" href="javascript:;"><i class="gi2 gi-42"></i>退出</a>-->
         </p>
-    </div>
-    <div class="g-history-list J_historyList">
-        <h2>历史记录<em>清除所有历史记录</em></h2>
-        <dl>
-            <dt>今天-8/27</dt>
-                <dd>个人中心</dd>
-                <dd>主页</dd>
-            <dt>昨天-8/26</dt>
-                <dd>系统服务</dd>
-            <dt>更早</dt>
-                <dd>离校服务</dd>
-        </dl>
     </div>
     <div class="g-nav g-main-nav">
         <div class="search-box">
@@ -228,7 +216,7 @@ function logout(){
                 $(".g-search-nav").show();
            }else{
                 $(".g-search-nav").hide();
-            }
+           }
         }
 	}).autocomplete( "instance" )._renderItem = function( ul, item ) {
 		return $("<li>").append("<a class='J_menuItem' href='"+item.link+"'>" + item.value+ "</a>").appendTo(ul);

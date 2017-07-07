@@ -1,0 +1,68 @@
+#parse("manager/page_header.vm")
+<style>
+    html,body{
+        overflow-y: hidden;
+        height: 100%;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row" >
+    	<div class="col-xs-12">
+            <div class="J_conWarp g-warning-box">
+            	<h4 class="g-title">客户购买统计<span class="intro J_arrowAction" style="cursor:pointer;">功能介绍<i class="gi-down"></i></span></h4>
+            	<p class="bg-warning J_tipBox g-t-mg">功能介绍：客户购买记录数据统计。</p>
+            	<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
+            		<div class="row">
+                		<div class="col-xs-12">
+					  		<div class="col-container">
+					  			<form class="form-inline clearfix" role="form" id="form1" onsubmit="return false;">
+			                        <span class="group">
+			                            <label for="name" >客户电话:</label>
+			                            <input type="text" class="form-control" id="clientphone" name="clientphone">
+			                        </span>
+			                        
+			                        <span class="group">
+			                            <label for="name" >客户姓名:</label>
+			                            <input type="text" class="form-control" id="clientname" name="clientname">
+			                        </span>
+			                        <span class="group">
+			                            <label for="name" >负责人:</label>
+			                            <select class="form-control" name="empid" id="empid">
+											<option value="">请选择...</option>
+											#foreach ($list in $emplist)
+											<option value="$list.id">$list.name</option>
+											#end
+										</select>
+			                        </span>
+			                        <span class="group">
+			                        	<label>购买时间:</label>
+									 	<div class="input-group input-daterange">
+			                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="开始时间" readonly="readonly"
+			                                	id="buytimesta" name="buytimesta" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+			                                <span class="input-group-addon">到</span>
+			                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="结束时间" readonly="readonly" 
+			                        			id="buytimeend" name="buytimeend" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+			                            </div>
+			                        </span>
+			                        <span class="group">
+			                        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
+			                        	<a class="gbn gbn-gray" id="btn_reset" href="javascript:;" onclick="query(1);"><i></i>重置</a>
+			                        </span>
+								</form>
+	                    	</div>
+	                    </div>
+                    </div>
+               		<div class="row" >
+						<div class="col-xs-12">
+					  		<div>
+					  			<table id="jqGridId"></table><div id="jqGridPagerId"></div>
+					  		</div>
+						</div>
+					</div><!-- 列表区域 -->
+            	</div>
+            </div>
+         </div>
+	</div>
+</div>
+<script type="text/javascript" src="${path}/javascript/buyRecordStatistics.js?date=201701220001"></script>

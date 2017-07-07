@@ -21,18 +21,32 @@ $(function(){
 			}
 			return cellValue;
 		}},
-		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"updatetime","resizable":true,"label":"联系时间",formatter:function(cellValue, options, rowObject){
+		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"contacttime","resizable":true,"label":"联系时间",formatter:function(cellValue, options, rowObject){
 			if(cellValue==null || cellValue == ''){
 				return '无';
 			}
 			var cdate = new Date(cellValue);
-			var str = cdate.format("yyyy-MM-dd hh:mm:ss");
+			var str = cdate.format("yyyy-MM-dd hh:mm");
+			return str;
+		}},
+		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"visittime","resizable":true,"label":"来访时间",formatter:function(cellValue, options, rowObject){
+			if(cellValue==null || cellValue == ''){
+				return '无';
+			}
+			var cdate = new Date(cellValue);
+			var str = cdate.format("yyyy-MM-dd hh:mm");
 			return str;
 		}},
 		{"hidden":false,"align":"left","sortable":true,"width":250,"name":"remark","resizable":true,"label":"备注",formatter:function(cellValue, options, rowObject){
 			return "<a href='javascript:;' onclick='viewOpen(\""+encodeURI(cellValue)+"\",\"查看详细\",\"500\",\"300\")' ><span style='color:#3399ff'>详细</span></a>&nbsp&nbsp"+cellValue;
 		}},
-		{"hidden":false,"align":"left","sortable":true,"width":80,"name":"empname","resizable":true,"label":"负责人"}
+		{"hidden":false,"align":"left","sortable":true,"width":80,"name":"fzempname","resizable":true,"label":"负责人",formatter:function(cellValue, options, rowObject){
+			if(cellValue==null || cellValue == ''){
+				return '无';
+			}
+			return cellValue;
+		}},
+		{"hidden":false,"align":"left","sortable":true,"width":80,"name":"empname","resizable":true,"label":"创建人"}
 	];
 	query();
 	resize();

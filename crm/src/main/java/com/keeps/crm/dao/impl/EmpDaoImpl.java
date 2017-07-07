@@ -115,7 +115,6 @@ public class EmpDaoImpl extends AbstractDao implements EmpDao {
 		sb.append(" left join t_emprole c on a.id = c.empid ");
 		sb.append(" left join t_role d on c.roleid = d.id ");
 		sb.append(" where a.id =? and a.isadmin<>1 ");
-		sb.append(" group by a.id ");
 		List<TEmp> list = super.getByPropertySql(sb.toString(), new Object[]{id}, TEmp.class);
 		return (CollectionUtils.isEmpty(list)) ? null : list.get(0);
 	}
@@ -153,10 +152,30 @@ public class EmpDaoImpl extends AbstractDao implements EmpDao {
 		sb.append(" on a.id = b.clientid ");
 		sb.append(" inner join t_emp c on b.empid = c.id ");
 		sb.append(" group by b.empid ");
-		sb.append("  order by name ");
+		sb.append("  order by c.name ");
 		List<Map<String, Object>> list = super.getByPropertySql(sb.toString(),null,HashMap.class);
 		return list;
 	}
+	
+	
+	public List<Map<String, Object>> getContactGroupByEmp(String contacttimesta,String contacttimeend){
+		StringBuffer sb = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sb.append(" select a.contactnum,b.name,b.id from (select count(1) as contactnum,a.empid from t_contact_record a where 1=1 ");
+		if (StringUtils.hasText(contacttimesta)) {//联系开始日
+			sb.append(" and date_format(a.contacttime,'%Y-%m-%d') >= str_to_date(?,'%Y-%m-%d') ");
+			values.add(contacttimesta.trim());
+		}
+		if (StringUtils.hasText(contacttimeend)) {//联系结束日
+			sb.append(" and date_format(a.contacttime,'%Y-%m-%d') <= str_to_date(?,'%Y-%m-%d') ");
+			values.add(contacttimeend.trim());
+		}
+		sb.append(" group by a.empid) a ");
+		sb.append(" inner join t_emp b on a.empid = b.id ");
+		List<Map<String, Object>> list = super.getByPropertySql(sb.toString(),values.toArray(),HashMap.class);
+		return list;
+	}
+
 
 
 }

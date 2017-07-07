@@ -30,12 +30,12 @@
 						<div class="form-group">
 							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>购买时间：</label>
 							<div class="col-xs-9">
-								<input type="text" class="form-control Wdate g-Wate-left" id="updatetimestr" name="updatetimestr" value="$!{updatetimestr}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});">
+								<input type="text" class="form-control Wdate g-Wate-left" id="updatetimestr" name="updatetimestr" value="$!{updatetimestr}" readonly onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});">
 								<p class="help-block">客户的本次购买商品时间,默认为当前操作时间.</p>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="tocouponsurl" class="col-xs-2 control-label"><em class="text-red">*</em>备注：</label>
+							<label for="tocouponsurl" class="col-xs-2 control-label">备注：</label>
 							<div class="col-xs-9">
 								<textarea class="form-control" rows="6" style="height:100px;" id="remark" name="remark"></textarea>
 							</div>

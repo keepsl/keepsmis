@@ -20,6 +20,8 @@ public interface BuyRecordService extends SoftService{
 	public Page queryList(TBuyRecord buyRecord);
 	
 	public Page queryStreamList(TBuyRecord buyRecord);
+	
+	public Page queryStatisticsList(TBuyRecord buyRecord);
 
 	public String saveOrUpdate(TBuyRecord buyRecord);
 	

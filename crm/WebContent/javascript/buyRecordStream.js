@@ -13,7 +13,7 @@ $(function(){
 		{"hidden":false,"align":"left","sortable":true,"width":100,"name":"clientname","resizable":true,"label":"客户姓名"},
 		{"hidden":false,"align":"left","sortable":true,"width":100,"name":"clientphone","resizable":true,"label":"联系电话",formatter:function(cellValue, options, rowObject){
 			if(cellValue==null || cellValue == ''){
-				return '无'
+				return '无';
 			}
 			if($('#operType').val()!=1){
 				var reg = /^(\d{3})\d{4}(\d{4})$/;
@@ -28,13 +28,19 @@ $(function(){
 				return '无';
 			}
 			var cdate = new Date(cellValue);
-			var str = cdate.format("yyyy-MM-dd hh:mm:ss");
+			var str = cdate.format("yyyy-MM-dd hh:mm");
 			return str;
 		}},
 		{"hidden":false,"align":"left","sortable":true,"width":250,"name":"remark","resizable":true,"label":"备注",formatter:function(cellValue, options, rowObject){
 			return "<a href='javascript:;' onclick='viewOpen(\""+encodeURI(cellValue)+"\",\"查看详细\",\"500\",\"300\")' ><span style='color:#3399ff'>详细</span></a>&nbsp&nbsp"+cellValue;
 		}},
-		{"hidden":false,"align":"left","sortable":true,"width":100,"name":"empname","resizable":true,"label":"负责人"}
+		{"hidden":false,"align":"left","sortable":true,"width":100,"name":"fzempname","resizable":true,"label":"负责人",formatter:function(cellValue, options, rowObject){
+			if(cellValue==null || cellValue == ''){
+				return '无';
+			}
+			return cellValue;
+		}},
+		{"hidden":false,"align":"left","sortable":true,"width":100,"name":"empname","resizable":true,"label":"创建人"}
 	];
 	query();
 	resize();

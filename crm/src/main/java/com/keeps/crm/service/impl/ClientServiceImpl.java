@@ -27,6 +27,7 @@ import com.keeps.tools.exception.CapecException;
 import com.keeps.tools.utils.Assert;
 import com.keeps.tools.utils.CalendarUtil;
 import com.keeps.tools.utils.CommonUtils;
+import com.keeps.tools.utils.DateUtils;
 import com.keeps.tools.utils.EditType;
 import com.keeps.tools.utils.ExcelUtil;
 import com.keeps.tools.utils.StringUtils;
@@ -59,6 +60,73 @@ public class ClientServiceImpl extends AbstractService implements ClientService 
 			return null;
 		}
 		Page page = null;
+		if (client.getTracktime()!=null) {
+			if (client.getTracktime().intValue()==7) {//7-14天未联系
+				client.setTracktimesta(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -7), "yyyy-MM-dd"));
+				client.setTracktimeend(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -14), "yyyy-MM-dd"));
+			}else if(client.getTracktime().intValue()==15){//15-29天未联系
+				client.setTracktimesta(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -15), "yyyy-MM-dd"));
+				client.setTracktimeend(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -29), "yyyy-MM-dd"));
+			}else if(client.getTracktime().intValue()==30){
+				client.setTracktimesta(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -30), "yyyy-MM-dd"));
+				client.setTracktimeend(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -59), "yyyy-MM-dd"));
+			}else if(client.getTracktime().intValue()==60){
+				client.setTracktimesta(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -60), "yyyy-MM-dd"));
+				client.setTracktimeend(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -99), "yyyy-MM-dd"));
+			}else if(client.getTracktime().intValue()==100){
+				client.setTracktimesta(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -100), "yyyy-MM-dd"));
+			}
+		}
+		if (client.getHodgepodgetype()!=null) {//大杂烩 按照分类查询，1今日已联系，2本周已联系，3本月已联系 4，今日需要联系，5本周需联系，6本月需联系，7今日新登记，8本周新登记，9本月新登记
+			if (client.getHodgepodgetype().intValue()==1) {
+				client.setContacttimesta(DateUtils.formatNow());
+				client.setContacttimeend(DateUtils.formatNow());
+			}else if (client.getHodgepodgetype().intValue()==2) {
+				client.setContacttimesta(CommonUtils.getWeekStart(DateUtils.getNow()));
+				client.setContacttimeend(CommonUtils.getWeekLast(DateUtils.getNow()));
+			}else if(client.getHodgepodgetype().intValue()==3){
+				client.setContacttimesta(CommonUtils.getMonthStart());
+				client.setContacttimeend(CommonUtils.getMonthLast());
+			}else if(client.getHodgepodgetype().intValue()==4){
+				client.setNextcontacttimesta(DateUtils.formatNow());
+				client.setNextcontacttimeend(DateUtils.formatNow());
+			}else if(client.getHodgepodgetype().intValue()==5){
+				client.setNextcontacttimesta(CommonUtils.getWeekStart(DateUtils.getNow()));
+				client.setNextcontacttimeend(CommonUtils.getWeekLast(DateUtils.getNow()));
+			}else if(client.getHodgepodgetype().intValue()==6){
+				client.setNextcontacttimesta(CommonUtils.getMonthStart());
+				client.setNextcontacttimeend(CommonUtils.getMonthLast());
+			}else if(client.getHodgepodgetype().intValue()==7){
+				client.setCreatetimesta(DateUtils.formatNow());
+				client.setCreatetimeend(DateUtils.formatNow());
+			}else if(client.getHodgepodgetype().intValue()==8){
+				client.setCreatetimesta(CommonUtils.getWeekStart(DateUtils.getNow()));
+				client.setCreatetimeend(CommonUtils.getWeekLast(DateUtils.getNow()));
+			}else if(client.getHodgepodgetype().intValue()==9){
+				client.setCreatetimesta(CommonUtils.getMonthStart());
+				client.setCreatetimeend(CommonUtils.getMonthLast());
+			}
+		}
+		if (client.getVisitttimetype()!=null) {//按来访时间类型查询，1今天来访，2，明日来访，3后天来访，4.三天后要来访客户，5，本周所有来访客户，6，本月所有来访客户
+			if (client.getVisitttimetype()==1) {//1 今日来访
+				client.setVisittimesta(DateUtils.formatNow());
+				client.setVisittimeend(DateUtils.formatNow());
+			}else if (client.getVisitttimetype()==2) {//2 明日来访
+				client.setVisittimesta(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), 1),"yyyy-MM-dd"));
+				client.setVisittimeend(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), 1),"yyyy-MM-dd"));
+			}else if (client.getVisitttimetype()==3) {//3 后天来访
+				client.setVisittimesta(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), 2),"yyyy-MM-dd"));
+				client.setVisittimeend(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), 2),"yyyy-MM-dd"));
+			}else if (client.getVisitttimetype()==4) {//4两天后要来访客户
+				client.setVisittimesta(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), 2),"yyyy-MM-dd"));
+			}else if (client.getVisitttimetype()==5) {//5本周所有来访客户
+				client.setVisittimesta(CommonUtils.getWeekStart(DateUtils.getNow()));
+				client.setVisittimeend(CommonUtils.getWeekLast(DateUtils.getNow()));
+			}else if (client.getVisitttimetype()==6) {//6本月所有来访客户
+				client.setVisittimesta(CommonUtils.getMonthStart());
+				client.setVisittimeend(CommonUtils.getMonthLast());
+			}
+		}
 		if (operType.intValue()==1 || operType.intValue()==2 || operType.intValue()==3) {
 			client.setCreateperson(UserSchoolThread.get().getUserid());//当查询我的客户时使用
 			page = clientDao.queryList(client,operType);
@@ -75,6 +143,11 @@ public class ClientServiceImpl extends AbstractService implements ClientService 
 		}
 		*/
 		return page;
+	}
+	
+	@Override
+	public List<TClient> getListInfoByPhone(String phone){
+		return clientDao.getListInfoByPhone(phone);
 	}
 
 	@Override

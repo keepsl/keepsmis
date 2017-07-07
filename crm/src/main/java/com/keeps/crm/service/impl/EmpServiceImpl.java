@@ -240,6 +240,21 @@ public class EmpServiceImpl extends AbstractService implements EmpService{
 		recored.put("data", listvalue);
 		return recored;
 	}
+	
+	public Map<String, Object> getContactGroupByEmp(String contacttimesta,String contacttimeend){
+		List<Map<String, Object>> list = empDao.getContactGroupByEmp(contacttimesta,contacttimeend);
+		List<Object> listtitle = new ArrayList<>();
+		List<Object> listvalue = new ArrayList<>();
+		Map<String, Object> recored = new HashMap<>();
+		for (Map<String, Object> map : list) {
+			listtitle.add(map.get("NAME"));
+			listvalue.add(map.get("CONTACTNUM"));
+		}
+		recored.put("categories", listtitle);
+		recored.put("data", listvalue);
+		return recored;
+	}
+
 
 
 }

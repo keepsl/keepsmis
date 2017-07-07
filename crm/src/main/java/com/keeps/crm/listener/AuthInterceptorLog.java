@@ -61,7 +61,11 @@ public class AuthInterceptorLog extends HandlerInterceptorAdapter {
     		}
     		TLogOperation logOperation = new TLogOperation();
     		Integer userid = UserSchoolThread.get().getUserid();
-    		logOperation.setMessage(new Gson().toJson(map));
+    		String message = new Gson().toJson(map);
+    		if (message.length()>1000) {
+    			message = message.substring(0, 1000);
+			}
+    		logOperation.setMessage(message);
     		logOperation.setUserid(userid);
     		logOperation.setMethod(request.getServletPath());
     		logOperation.setIp(CommonUtils.getIp(request));

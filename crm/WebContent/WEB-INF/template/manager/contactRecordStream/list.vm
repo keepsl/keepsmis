@@ -46,8 +46,8 @@
 			                            </div>
 			                        </span>
 			                        <span class="group">
-			                        	<a class="gbn gbn-search" id="btn_reset" href="javascript:;" onclick="query();"><i></i>查询</a>
-			                        	<a class="gbn gbn-gray" id="btn_query" href="javascript:;" onclick="query(1);"><i></i>重置</a>
+			                        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
+			                        	<a class="gbn gbn-gray" id="btn_reset" href="javascript:;" onclick="query(1);"><i></i>重置</a>
 			                        </span>
 								</form>
 	                    	</div>

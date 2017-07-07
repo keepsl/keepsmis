@@ -1,5 +1,7 @@
 package com.keeps.crm.utils;
 
+import com.keeps.tools.utils.DateUtils;
+
 import net.sourceforge.pinyin4j.PinyinHelper;
 
 /** 
@@ -27,7 +29,15 @@ public class Test {
 		
 		System.out.println(Hanyu.getFirstSpell(str));
 
+		System.out.println(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -7)));
+		System.out.println(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -14)));
 		
+
+		System.out.println(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -15)));
+		System.out.println(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -29)));
+		
+		System.out.println(DateUtils.format(DateUtils.addDay(DateUtils.getNow(), -100)));
+
 	}
 
 }

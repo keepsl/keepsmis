@@ -97,7 +97,7 @@
 	<div class="form-group">
 		<label for="birthdate" class="col-xs-2 control-label">出生日期：</label>
 		<div class="col-xs-3">
-			<input type="text" class="form-control Wdate g-Wate-left" id="birthdate" name="birthdate" value="$!DatesTool.format('yyyy-MM-dd',$!{client.birthdate})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+			<input type="text" class="form-control Wdate g-Wate-left" id="birthdate" name="birthdate" readonly value="$!DatesTool.format('yyyy-MM-dd',$!{client.birthdate})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
 		</div>
 		<label for="islunar" class="col-xs-2 control-label">是否农历：</label>
 		<div class="col-xs-2">

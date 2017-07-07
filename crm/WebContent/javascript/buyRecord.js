@@ -23,9 +23,12 @@ $(function(){
 				return '';
 			}
 			var cdate = new Date(cellValue);
-			return cdate.format("yyyy-MM-dd hh:mm:ss");
+			return cdate.format("yyyy-MM-dd hh:mm");
 		}},
 		{"hidden":false,"align":"left","sortable":true,"width":180,"name":"remark","resizable":true,"label":"备注",formatter:function(cellValue, options, rowObject){
+			if(cellValue==null || cellValue == ''){
+				return '无';
+			}
 			return "<a href='javascript:;' onclick='viewOpen(\""+encodeURI(cellValue)+"\",\"查看详细\",\"500\",\"300\")' ><span style='color:#3399ff'>详细</span></a>&nbsp&nbsp"+cellValue;
 		}}
 	];

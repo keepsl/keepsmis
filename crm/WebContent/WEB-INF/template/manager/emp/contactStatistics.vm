@@ -1,0 +1,66 @@
+#parse("manager/page_header.vm")
+<style>
+    html,body{
+        height: 100%;
+    }
+</style>
+<script type="text/javascript" src="${path}/plug/echarts/echarts.common.min.js"></script>
+<script type="text/javascript" src="${path}/javascript/MyEChart.js"></script>
+
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<h4 class="g-title">员工电话量统计</h4>
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row">
+	    		<div class="col-xs-12">
+	    			<div class="col-container">
+	    				<form class="form-inline clearfix" role="form" id="form1" onsubmit="return false;">
+		    				<span class="group">
+		                    	<label>电话量时间段:</label>
+							 	<div class="input-group input-daterange">
+		                            <input type="text" class="form-control Wdate g-Wate-left" placeholder="开始时间" readonly="readonly"
+		                            	id="contacttimesta" name="contacttimesta" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+		                            <span class="input-group-addon">到</span>
+		                            <input type="text" class="form-control Wdate g-Wate-left" placeholder="结束时间" readonly="readonly" 
+		                    			id="contacttimeend" name="contacttimeend" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+		                        </div>
+	                        </span>
+	                        <span class="group">
+	                        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="queryData();"><i></i>查询</a>
+	                        </span>
+	                    
+	                    </form>
+                    </div>
+	    		</div>
+    		</div>
+			<div class="row" >
+				<div class="col-xs-12">
+					<form class="form-horizontal" role="form">
+						<div style="height:500px" id="echartId">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	var myEChart = null;
+	function queryData(){
+		var	param = {url:basePath+'/statistics/empContact?contacttimesta='+$("#contacttimesta").val()+"&contacttimeend="+$("#contacttimeend").val(),echartId:'echartId',titletext:new Date($("#contacttimesta").val()).format("yyyyMMdd")+'-'+new Date($("#contacttimeend").val()).format("yyyyMMdd")+'电话量最多的员工',labname:'电话量'};
+		myEChart = new MyEChart(param);
+		myEChart.loadMyEChart();
+	}
+	$(function(){
+		var cdate = new Date();
+		var datetime = cdate.format("yyyy-MM-dd");
+		$("#contacttimesta").val(datetime);
+		$("#contacttimeend").val(datetime);
+		queryData();
+	});
+	window.onload = window.onresize = function() {
+	  $(".J_containerWarp").height($(window).height() - 60);
+	  $(".J_containerWarp").niceScroll({});
+	}
+</script>
+    

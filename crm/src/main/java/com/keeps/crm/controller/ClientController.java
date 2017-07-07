@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-import com.keeps.core.controller.AbstractController;
+import com.keeps.core.controller.AbstractAPIController;
 import com.keeps.crm.service.ClientService;
 import com.keeps.crm.service.DictService;
 import com.keeps.crm.service.EmpService;
@@ -25,6 +25,7 @@ import com.keeps.crm.service.impl.ClientServiceImpl;
 import com.keeps.model.TClient;
 import com.keeps.model.TEmp;
 import com.keeps.tools.utils.JsonPost;
+import com.keeps.tools.utils.page.Page;
 import com.keeps.tools.utils.threadlocal.UserSchoolThread;
 import com.keeps.utils.Constants;
 import com.keeps.utils.FileUtil;
@@ -42,7 +43,7 @@ import com.keeps.utils.FileUtil;
  */
 @Controller
 @RequestMapping("client")
-public class ClientController extends AbstractController {
+public class ClientController extends AbstractAPIController {
 	
 	@Autowired
 	private ClientService clientService;
@@ -77,11 +78,33 @@ public class ClientController extends AbstractController {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void doInstancePost(Map map) {
-				map.put("message", clientService.queryList(client,operType));
+				Page page = clientService.queryList(client,operType);
+				/*if(operType.intValue()!=1){
+					if (StringUtils.hasText(client.getPhone())) {//通过搜索电话号码找寻客户。
+						if (page.getTotal()==0) {
+							//查询客户，告诉当前搜索人员，该客户属于谁。
+							
+						}
+					}
+				}*/
+				map.put("message", page);
 			}
 		});
 	}
-
+	
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("getListInfoByPhone")
+	public @ResponseBody Map getListInfoByPhone(String phone) {
+		Map m = success();
+		List<TClient> list = clientService.getListInfoByPhone(phone);
+		TClient client = new TClient();
+		if (list!=null) {
+			client = list.get(0);
+		}
+		m.put("recored", client);
+		return m;
+	}
+	
 	@RequestMapping("progressbar")
 	public @ResponseBody String progressbar(HttpServletRequest request,Integer flag) {
 		Map<Object, Object> map= new HashMap<>();

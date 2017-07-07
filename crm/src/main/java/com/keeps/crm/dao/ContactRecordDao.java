@@ -20,5 +20,8 @@ public interface ContactRecordDao extends SoftDao{
 	public Page queryList(TContactRecord contactRecord);
 	
 	public Page queryStreamList(TContactRecord contactRecord,boolean isadmin);
+	
+	public Page queryStatisticsList(TContactRecord contactRecord,boolean isadmin);
 
+	
 }

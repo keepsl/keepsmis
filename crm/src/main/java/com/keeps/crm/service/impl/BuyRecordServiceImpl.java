@@ -46,7 +46,14 @@ public class BuyRecordServiceImpl extends AbstractService implements BuyRecordSe
 		return buyRecordDao.queryStreamList(buyRecord,UserSchoolThread.get().isSuperAdmin());
 	}
 
+	public Page queryStatisticsList(TBuyRecord buyRecord){
+		if (!UserSchoolThread.get().isSuperAdmin()) {
+			buyRecord.setEmpid(UserSchoolThread.get().getUserid());
+		}
+		return buyRecordDao.queryStatisticsList(buyRecord,UserSchoolThread.get().isSuperAdmin());
+	}
 
+	
 	@Override
 	public String saveOrUpdate(TBuyRecord buyRecord) {
 		Assert.isTrue(buyRecord.getClientid()!=null, "客户id不能为空!");
@@ -63,7 +70,7 @@ public class BuyRecordServiceImpl extends AbstractService implements BuyRecordSe
 		}
 		Assert.isTrue(StringUtils.hasText(buyRecord.getUpdatetimestr()), "购买时间不允许为空!");
 		buyRecord.setEmpid(UserSchoolThread.get().getUserid());
-		buyRecord.setUpdatetime(DateUtils.parse("yyyy-MM-dd HH:mm:ss", buyRecord.getUpdatetimestr()));
+		buyRecord.setUpdatetime(DateUtils.parse("yyyy-MM-dd HH:mm", buyRecord.getUpdatetimestr()));
 		//buyRecord.setClientid(clientid);
 		super.save(buyRecord);
 		return null;

@@ -22,6 +22,8 @@ public interface ClientDao extends SoftDao{
 	public Page queryList(TClient client, Integer operType);
 	
 	public TClient getListById(Integer id);
+	
+	public List<TClient> getListInfoByPhone(String phone);
 
 	public List<TClient> getListByIds(String ids);
 

@@ -19,4 +19,8 @@ public interface BuyRecordDao {
 	public Page queryList(TBuyRecord buyRecord,boolean isadmin);
 
 	public Page queryStreamList(TBuyRecord buyRecord,boolean isadmin);
+	
+	public Page queryStatisticsList(TBuyRecord buyRecord,boolean isadmin);
+
+	
 }

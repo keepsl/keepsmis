@@ -18,7 +18,7 @@
 						<div class="form-group">
 							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>联系时间：</label>
 							<div class="col-xs-9">
-								<input type="text" class="form-control Wdate g-Wate-left" id="updatetimestr" name="updatetimestr" value="$!{updatetimestr}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});">
+								<input type="text" class="form-control Wdate g-Wate-left" id="contacttimestr" name="contacttimestr" value="$!{contacttimestr}" readonly onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});">
 								<p class="help-block">您与客户的本次联系时间,默认为当前操作时间.</p>
 							</div>
 						</div>
@@ -30,9 +30,28 @@
 							</div>
 						</div>
 						<div class="form-group">
+							<label for="tocouponsurl" class="col-xs-2 control-label"><em class="text-red">*</em>是否来访：</label>
+							<div class="col-xs-9">
+								<div class="J_radioBox" style="padding-top:7px">
+									<label class="radio-inline">
+									  <input type="radio" name="isvisit" value="1"> 是
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="isvisit" value="2"> 否
+									</label>
+							    </div>
+							</div>
+						</div>
+						<div class="form-group" id="visittimediv">
+							<label for="tocouponsurl" class="col-xs-2 control-label"><em class="text-red">*</em>来访时间：</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control Wdate g-Wate-left" id="visittimestr" name="visittimestr" value="" readonly onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});">
+							</div>
+						</div>
+						<div class="form-group">
 							<label for="tocouponsurl" class="col-xs-2 control-label">下次联系时间：</label>
 							<div class="col-xs-9">
-								<input type="text" class="form-control Wdate g-Wate-left" id="nexttime" name="nexttime" value="" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});">
+								<input type="text" class="form-control Wdate g-Wate-left" id="nexttime" name="nexttime" value="" readonly onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});">
 								<p class="help-block">您与客户下次的联系时间,选择性填写.</p>
 							</div>
 						</div>
@@ -69,6 +88,19 @@
 	<div>
 </div>
 <script>
+	$(function(){
+		$("input[name='isvisit']").click(function(){
+		 	$(this).closest("label").siblings("label").removeClass("on");
+		 	if($(this).is(':checked')){
+		 		if($(this).val()==1){
+		 			$("#visittimediv").show();
+		 		}else{
+		 			$("#visittimediv").hide();
+		 		}
+		 		$(this).closest("label").addClass("on");
+		 	}
+		});
+	});
 	function saveOrUpdate(callback){
 		$.post('../save/'+$('#operType').val(), $("#formid").serialize(), function(json){
 			if(json&&json.success==true){

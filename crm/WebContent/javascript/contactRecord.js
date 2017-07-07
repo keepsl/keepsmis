@@ -11,14 +11,25 @@ $(function(){
 	grid = [
 		{"hidden":true,"align":"left","sortable":false,"width":10,"name":"id","resizable":false,"label":"id"},
 		{"hidden":false,"align":"left","sortable":true,"width":70,"name":"empname","resizable":true,"label":"联系人"},
-		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"updatetime","resizable":true,"label":"联系时间",formatter:function(cellValue, options, rowObject){
+		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"contacttime","resizable":true,"label":"联系时间",formatter:function(cellValue, options, rowObject){
 			if(cellValue==null || cellValue == ''){
 				return '';
 			}
 			var cdate = new Date(cellValue);
-			return cdate.format("yyyy-MM-dd hh:mm:ss");
+			return cdate.format("yyyy-MM-dd hh:mm");
+		}},
+		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"visittime","resizable":true,"label":"来访时间",formatter:function(cellValue, options, rowObject){
+			if(cellValue==null || cellValue == ''){
+				return '无';
+			}
+			var cdate = new Date(cellValue);
+			var str = cdate.format("yyyy-MM-dd hh:mm");
+			return str;
 		}},
 		{"hidden":false,"align":"left","sortable":true,"width":180,"name":"remark","resizable":true,"label":"联系内容",formatter:function(cellValue, options, rowObject){
+			if(cellValue==null || cellValue == ''){
+				return '无';
+			}
 			return "<a href='javascript:;' onclick='viewOpen(\""+encodeURI(cellValue)+"\",\"查看联系详细内容\",\"500\",\"300\")' ><span style='color:#3399ff'>详细</span></a>&nbsp&nbsp"+cellValue;
 		}},
 		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"nexttime","resizable":true,"label":"下次联系时间",formatter:function(cellValue, options, rowObject){
@@ -26,7 +37,7 @@ $(function(){
 				return '';
 			}
 			var cdate = new Date(cellValue);
-			return cdate.format("yyyy-MM-dd hh:mm:ss");
+			return cdate.format("yyyy-MM-dd hh:mm");
 		}}
 	];
 	query();
@@ -57,7 +68,7 @@ function resize(){
 }
 
 function addContactRecord(id){
-	openWin(basePath+'/contactrecord/add/'+$('#operType').val()+'?clientid='+$("#id").val(),'新增沟通记录',700,500,'',onSaveUpdateSuccess);
+	openWin(basePath+'/contactrecord/add/'+$('#operType').val()+'?clientid='+$("#id").val(),'新增沟通记录',730,500,'',onSaveUpdateSuccess);
 }
 
 $(window).resize(resize); 
