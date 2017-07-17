@@ -11,21 +11,23 @@ $(function(){
 	grid2 = [
 		{"hidden":true,"align":"left","sortable":false,"width":10,"name":"id","resizable":false,"label":"id"},
 		{"hidden":false,"align":"left","sortable":true,"width":70,"name":"empname","resizable":true,"label":"负责人"},
-		{"hidden":false,"align":"left","sortable":true,"width":70,"name":"productname","resizable":true,"label":"负责人"},
-		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"price","resizable":true,"label":"购买金额",formatter:function(cellValue, options, rowObject){
+		{"hidden":false,"align":"left","sortable":true,"width":140,"name":"productname","resizable":true,"label":"产品名称"},
+		{"hidden":false,"align":"left","sortable":true,"width":80,"name":"price","resizable":true,"label":"单价"},
+		{"hidden":false,"align":"left","sortable":true,"width":80,"name":"buynum","resizable":true,"label":"购买数量"},
+		{"hidden":false,"align":"left","sortable":true,"width":80,"name":"totalprice","resizable":true,"label":"总金额",formatter:function(cellValue, options, rowObject){
 			if(cellValue==null || cellValue == ''){
 				return 0;
 			}
 			return cellValue;
 		}},
-		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"updatetime","resizable":true,"label":"购买时间",formatter:function(cellValue, options, rowObject){
+		{"hidden":false,"align":"left","sortable":true,"width":140,"name":"updatetime","resizable":true,"label":"购买时间",formatter:function(cellValue, options, rowObject){
 			if(cellValue==null || cellValue == ''){
 				return '';
 			}
 			var cdate = new Date(cellValue);
 			return cdate.format("yyyy-MM-dd hh:mm");
 		}},
-		{"hidden":false,"align":"left","sortable":true,"width":180,"name":"remark","resizable":true,"label":"备注",formatter:function(cellValue, options, rowObject){
+		{"hidden":false,"align":"left","sortable":true,"width":170,"name":"remark","resizable":true,"label":"备注",formatter:function(cellValue, options, rowObject){
 			if(cellValue==null || cellValue == ''){
 				return '无';
 			}
@@ -43,8 +45,8 @@ $(function(){
 });
 
 function buyquery(){
-	var url = basePath+'/buyrecord/query/'+$('#operType').val()+'?'+$("#form1").serialize();
-	var	param = {url:url, colModel:grid2, jqGridId:"jqGridId2",multiselect:true, shrinkToFit:true, jqGridPagerId:"jqGridPagerId2"};
+	var url = basePath+'/buyrecord/query/'+$('#operType').val()+'?'+$("#form2").serialize();
+	var	param = {url:url, colModel:grid2, jqGridId:"jqGridId2",multiselect:false, shrinkToFit:true, jqGridPagerId:"jqGridPagerId2"};
 	if(myGrid2 == null){
 		myGrid2 = new MyJqGrid(param);
 		myGrid2.loadMyGrid();

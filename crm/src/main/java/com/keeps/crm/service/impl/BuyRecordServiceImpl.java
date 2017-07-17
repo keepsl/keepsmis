@@ -60,11 +60,16 @@ public class BuyRecordServiceImpl extends AbstractService implements BuyRecordSe
 		if (StringUtils.notText(buyRecord.getUpdatetimestr())) {
 			buyRecord.setUpdatetimestr(DateUtils.formatNow());
 		}
-		Assert.isTrue(StringUtils.hasText(buyRecord.getProductname()), "商品名称不允许为空!");
-		Assert.isTrue(buyRecord.getPrice()!=null, "商品价格不允许为空!");
+		Assert.isTrue(StringUtils.hasText(buyRecord.getProductname()), "产品名称不允许为空!");
+		String[] nameprices = buyRecord.getProductname().split("￥");
+		buyRecord.setProductname(nameprices[0]);
+		Assert.isTrue(buyRecord.getBuynum()!=null, "数量不能为空");
+		Assert.isTrue(buyRecord.getBuynum()>0, "数量不能小于0");
+		//Assert.isTrue(buyRecord.getPrice()!=null, "产品价格不允许为空!");
 		DecimalFormat df = new DecimalFormat("#.##");
 		try {
-			buyRecord.setPrice(Float.parseFloat(df.format(buyRecord.getPrice())));
+			buyRecord.setPrice(Float.parseFloat(nameprices[1]));
+			buyRecord.setTotalprice(Float.parseFloat(df.format(buyRecord.getPrice()*buyRecord.getBuynum())));
 		} catch (NumberFormatException e) {
 			throw new CapecException("");
 		}

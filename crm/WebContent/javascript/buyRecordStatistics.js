@@ -19,8 +19,8 @@ $(function(){
 			return "<span title='"+rowObject.clientphone+"' >"+cellValue.replace(reg, "$1****$2")+"</span>";
 			return cellValue;
 		}},
-		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"buynum","resizable":true,"label":"购买次数"},
-		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"price","resizable":true,"label":"购买总金额"},
+		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"buynum","resizable":true,"label":"购买数量"},
+		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"totalprice","resizable":true,"label":"购买总金额"},
 		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"updatetime","resizable":true,"label":"最近购买时间",formatter:function(cellValue, options, rowObject){
 			if(cellValue==null || cellValue == ''){
 				return '无';

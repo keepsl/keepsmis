@@ -42,7 +42,7 @@
 							    </div>
 							</div>
 						</div>
-						<div class="form-group" id="visittimediv">
+						<div class="form-group" id="visittimediv" >
 							<label for="tocouponsurl" class="col-xs-2 control-label"><em class="text-red">*</em>来访时间：</label>
 							<div class="col-xs-9">
 								<input type="text" class="form-control Wdate g-Wate-left" id="visittimestr" name="visittimestr" value="" readonly onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});">

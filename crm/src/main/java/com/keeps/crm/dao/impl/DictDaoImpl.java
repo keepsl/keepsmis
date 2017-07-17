@@ -53,9 +53,18 @@ public class DictDaoImpl extends AbstractDao implements DictDao {
 		return super.queryBySql(sb.toString(), values.toArray(), dict, TDict.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<TDict> getDictList(TDict dict){
-		return null;
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select * from t_dict where status=1 ");
+		List<Object> values = new ArrayList<Object>();
+		if (dict.getTypeid()!=null) {
+			sb.append(" and typeid = ? ");
+			values.add(dict.getTypeid());
+		}
+		sb.append("order by sort ");
+		return super.getByPropertySql(sb.toString(),values.toArray(),TDict.class);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -87,11 +96,16 @@ public class DictDaoImpl extends AbstractDao implements DictDao {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<TreeNode> getDictTypeTree() {
+	public List<TreeNode> getDictTypeTree(String code) {
 		StringBuffer sb = new StringBuffer();
-		sb.append(" select id,pid as pId,CONCAT(name,if(fixed=1,'[内置]','')) as name,code as obj,isinsertdict as type  from t_dict_type ");
+		sb.append(" select id,pid as pId,CONCAT(name,if(fixed=1,'[内置]','')) as name,code as obj,isinsertdict as type from t_dict_type ");
+		List<Object> values = new ArrayList<Object>();
+		if (StringUtils.hasText(code)) {
+			sb.append(" where code = ? ");
+			values.add(code);
+		}
 		sb.append("order by sort ");
-		return super.getByPropertySql(sb.toString(),null,TreeNode.class);
+		return super.getByPropertySql(sb.toString(),values.toArray(),TreeNode.class);
 	}
 	
 	@SuppressWarnings("rawtypes")

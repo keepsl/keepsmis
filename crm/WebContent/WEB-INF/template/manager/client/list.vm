@@ -42,8 +42,8 @@
 					    <li><a href="javascript:;" attr-time='6'>本月需联系的</a></li>
 					    <li role="separator" class="divider"></li>
 					    <li><a href="javascript:;" attr-time='7'>今天新登记的</a></li>
-					    <li><a href="javascript:;" attr-time='8'>本周新等级的</a></li>
-					    <li><a href="javascript:;" attr-time='9'>本月新等级的</a></li>
+					    <li><a href="javascript:;" attr-time='8'>本周新登记的</a></li>
+					    <li><a href="javascript:;" attr-time='9'>本月新登记的</a></li>
 					    <li role="separator" class="divider"></li>
 					    <li><a href="javascript:;" attr-time='0'>取消选择</a></li>
 					  </ul>

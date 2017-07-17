@@ -43,7 +43,7 @@ public class ContactRecordDaoImpl extends AbstractDao implements ContactRecordDa
 		}
 		if (StringUtils.hasText(contactRecord.getContacttimestr())) {
 			sb.append(" and date_format(a.contacttime,'%Y-%m-%d') = ? ");
-			values.add(DateUtils.format(contactRecord.getUpdatetimestr(), "yyyy-MM-dd"));
+			values.add(DateUtils.format(contactRecord.getContacttimestr(), "yyyy-MM-dd"));
 		}
 		if(StringUtils.hasText(contactRecord.getSidx()) && StringUtils.hasText(contactRecord.getSord())) {
 			if (contactRecord.getSidx().equals("empname")) {

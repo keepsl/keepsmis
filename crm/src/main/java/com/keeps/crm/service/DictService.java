@@ -23,6 +23,8 @@ public interface DictService extends SoftService{
 
 	public Page queryDictList(TDict dict);
 	
+	public List<TreeNode> getDictTree(String code);
+	
 	public List<TDict> getDictList(TDict dict);
 	
 	public List<TDictType> getDictTypeList(TDictType tDictType);

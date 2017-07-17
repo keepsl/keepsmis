@@ -47,7 +47,20 @@
 <script type="text/javascript">
 	var myEChart = null;
 	function queryData(){
-		var	param = {url:basePath+'/statistics/empContact?contacttimesta='+$("#contacttimesta").val()+"&contacttimeend="+$("#contacttimeend").val(),echartId:'echartId',titletext:new Date($("#contacttimesta").val()).format("yyyyMMdd")+'-'+new Date($("#contacttimeend").val()).format("yyyyMMdd")+'电话量最多的员工',labname:'电话量'};
+		var str = "";
+		if($("#contacttimesta").val() != '' && $("#contacttimeend").val() != ''){
+			if($("#contacttimesta").val()==$("#contacttimeend").val()){
+				str = new Date($("#contacttimesta").val()).format("yyyyMMdd");
+			}else{
+				str = new Date($("#contacttimesta").val()).format("yyyyMMdd")+"-"+new Date($("#contacttimeend").val()).format("yyyyMMdd");
+			}
+		}else if($("#contacttimesta").val() != ''){
+			str = "从"+new Date($("#contacttimesta").val()).format("yyyyMMdd")+"到目前";
+		}else if($("#contacttimeend").val() != ''){
+			str = "截至"+new Date($("#contacttimeend").val()).format("yyyyMMdd");
+		}
+		
+		var	param = {url:basePath+'/statistics/empContact?contacttimesta='+$("#contacttimesta").val()+"&contacttimeend="+$("#contacttimeend").val(),echartId:'echartId',titletext:str+'电话量最多的员工',labname:'电话量'};
 		myEChart = new MyEChart(param);
 		myEChart.loadMyEChart();
 	}

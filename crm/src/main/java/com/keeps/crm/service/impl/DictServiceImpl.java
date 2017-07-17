@@ -1,5 +1,6 @@
 package com.keeps.crm.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,35 @@ public class DictServiceImpl extends AbstractService implements DictService {
 		return dictDao.getDictList(dict);
 	}
 
+	public List<TreeNode> getDictTree(String code){
+		List<TreeNode> newlistnode = new ArrayList<>();
+		TreeNode node  = new TreeNode();
+		/*node.setId("0");
+		node.setpId("0");
+		node.setOpen(1);
+		node.setName("产品分类");*/
+		List<TreeNode> listtreenode  = dictDao.getDictTypeTree(code);
+		for (TreeNode treeNode : listtreenode) {
+			treeNode.setNocheck(true);
+			TDict newmo = new TDict();
+			newmo.setTypeid(Integer.parseInt(treeNode.getId()));
+			List<TDict> dictlist = dictDao.getDictList(newmo);
+			for (TDict tDict : dictlist) {
+				node = new TreeNode();
+				node.setId(String.valueOf(tDict.getId()));
+				node.setName(tDict.getName()+"￥"+tDict.getValue());
+				node.setpId(treeNode.getId());
+				node.setNocheck(false);
+				node.setObj(tDict.getValue());
+				node.setType(2);
+				newlistnode.add(node);
+			}
+			newlistnode.add(treeNode);
+		}
+		//listtreenode.add(node);
+		return newlistnode;
+	}
+
 	@Override
 	public List<TDictType> getDictTypeList(TDictType tDictType){
 		return dictDao.getDictTypeList(tDictType);
@@ -87,10 +117,9 @@ public class DictServiceImpl extends AbstractService implements DictService {
 		node.setpId("0");
 		node.setOpen(1);
 		node.setName("全部字典分类");
-		List<TreeNode> listtreenode  = dictDao.getDictTypeTree();
+		List<TreeNode> listtreenode  = dictDao.getDictTypeTree("");
 		listtreenode.add(node);
 		return listtreenode;
-	
 	}
 	
 	public String saveOrUpdateDict(TDict dict){

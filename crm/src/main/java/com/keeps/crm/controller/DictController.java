@@ -1,5 +1,6 @@
 package com.keeps.crm.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.keeps.core.controller.AbstractAPIController;
 import com.keeps.core.controller.AbstractController;
 import com.keeps.crm.service.DictService;
+import com.keeps.model.TClient;
 import com.keeps.model.TDict;
 import com.keeps.model.TDictType;
 import com.keeps.tools.utils.JsonPost;
+import com.keeps.utils.Constants;
 
 /** 
  * <p>Title: DictController.java</p>  
@@ -30,9 +34,27 @@ import com.keeps.tools.utils.JsonPost;
  */
 @Controller
 @RequestMapping("dict")
-public class DictController extends AbstractController {
+public class DictController extends AbstractAPIController {
 	@Autowired
 	private DictService dictService;
+	
+	
+	@RequestMapping("productSelectWin")
+	public ModelAndView productSelectWin(ModelAndView view,HttpServletRequest request, HttpServletResponse response) {
+		view.setViewName("manager/dict/dictSelectWin");
+		view.addObject("code", Constants.DICT_CODE[1]);
+		return view;
+	}
+	
+
+	@SuppressWarnings("rawtypes")
+	@RequestMapping("getDictTree")
+	public @ResponseBody Map getDictTree(String code) {
+		Map m = success();
+		m.put("recored", dictService.getDictTree(code));
+		return m;
+	}
+	
 	
 	/**
 	  * @Title:			index 

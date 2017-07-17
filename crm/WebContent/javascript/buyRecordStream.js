@@ -21,8 +21,10 @@ $(function(){
 			}
 			return cellValue;
 		}},
-		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"productname","resizable":true,"label":"商品名称"},
-		{"hidden":false,"align":"left","sortable":true,"width":100,"name":"price","resizable":true,"label":"商品价格"},
+		{"hidden":false,"align":"left","sortable":true,"width":150,"name":"productname","resizable":true,"label":"产品名称"},
+		{"hidden":false,"align":"left","sortable":true,"width":100,"name":"price","resizable":true,"label":"单价"},
+		{"hidden":false,"align":"left","sortable":true,"width":100,"name":"buynum","resizable":true,"label":"购买数量"},
+		{"hidden":false,"align":"left","sortable":true,"width":100,"name":"totalprice","resizable":true,"label":"总金额"},
 		{"hidden":false,"align":"left","sortable":true,"width":200,"name":"updatetime","resizable":true,"label":"购买时间",formatter:function(cellValue, options, rowObject){
 			if(cellValue==null || cellValue == ''){
 				return '无';

@@ -42,7 +42,7 @@ public class BuyRecordDaoImpl extends AbstractDao implements BuyRecordDao {
 			values.add(buyRecord.getClientid());
 		}
 		if (StringUtils.hasText(buyRecord.getUpdatetimestr())) {
-			sb.append(" and a.buytime = ? ");
+			sb.append(" and date_format(a.updatetime,'%Y-%m-%d') = ? ");
 			values.add(DateUtils.format(buyRecord.getUpdatetimestr(), "yyyy-MM-dd"));
 		}
 		if(StringUtils.hasText(buyRecord.getSidx()) && StringUtils.hasText(buyRecord.getSord())) {
@@ -60,7 +60,7 @@ public class BuyRecordDaoImpl extends AbstractDao implements BuyRecordDao {
 	public Page queryStreamList(TBuyRecord buyRecord,boolean isadmin){
 		StringBuffer sb = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
-		sb.append(" select a.id,b.name as clientname,b.phone as clientphone,a.productname,a.price,a.updatetime,a.createtime,a.remark,c.fzempname AS fzempname,d.name as empname ");
+		sb.append(" select a.id,a.buynum,a.totalprice,b.name as clientname,b.phone as clientphone,a.productname,a.price,a.updatetime,a.createtime,a.remark,c.fzempname AS fzempname,d.name as empname ");
 		sb.append(" from t_buy_record a inner join t_client b on a.clientid = b.id ");
 		if (buyRecord.getEmpid()!=null) {
 			sb.append("   inner join   ");
@@ -135,8 +135,8 @@ public class BuyRecordDaoImpl extends AbstractDao implements BuyRecordDao {
 	public Page queryStatisticsList(TBuyRecord buyRecord,boolean isadmin){
 		StringBuffer sb = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
-		sb.append(" SELECT b.id, b.NAME AS clientname, b.phone AS clientphone, a.price,a.buynum,a.updatetime, c.fzempname AS fzempname ");
-		sb.append(" FROM (select a.clientid,sum(a.price) as price,count(1) buynum,max(a.updatetime) as updatetime from t_buy_record a group by a.clientid) a ");
+		sb.append(" SELECT b.id, b.NAME AS clientname, b.phone AS clientphone, a.totalprice,a.buynum,a.updatetime, c.fzempname AS fzempname ");
+		sb.append(" FROM (select a.clientid,sum(a.totalprice) as totalprice,sum(a.buynum) as buynum,max(a.updatetime) as updatetime from t_buy_record a group by a.clientid) a ");
 		sb.append(" INNER JOIN t_client b ON a.clientid = b.id ");
 		if (buyRecord.getEmpid()!=null) {
 			sb.append("   inner join   ");
@@ -192,7 +192,7 @@ public class BuyRecordDaoImpl extends AbstractDao implements BuyRecordDao {
 	        	sb.append("order by a."+buyRecord.getSidx()+" "+buyRecord.getSord());
 			}
 		}else{
-			sb.append("  order by a.price DESC ");
+			sb.append("  order by a.totalprice DESC ");
 		}
 		return super.queryBySql(sb.toString(), values.toArray(), buyRecord, TBuyRecord.class);
 	}

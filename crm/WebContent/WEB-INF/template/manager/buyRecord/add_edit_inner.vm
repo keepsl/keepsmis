@@ -14,8 +14,9 @@
 				<div class="col-xs-12" >
 					<form class="form-horizontal" role="form" id="formid" method="post">
 						<input type="hidden" name="clientid" id="clientid" value="$!{clientid}"/>
+						<input type="hidden" name="dictid" id="dictid" value=""/>
 						<input type="hidden" name="operType" id="operType" value="$!{operType}"/>
-						<div class="form-group">
+						<!--<div class="form-group">
 							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>商品名称：</label>
 							<div class="col-xs-9">
 								<input type="text" class="form-control" id="productname" name="productname" value="">
@@ -25,6 +26,29 @@
 							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>商品价格：</label>
 							<div class="col-xs-9">
 								<input type="number" class="form-control" id="price" name="price" value="" min="0" max="99999999999" maxlength="11">
+							</div>
+						</div>-->
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>选择产品：</label>
+							<div class="col-xs-9">
+								<div class="input-group">
+									<input type="text" class="form-control" id="productname" name="productname" value="" readonly>
+									<span class="input-group-btn">
+										<button class="gbn btn btn-default" id="add_service_ok_btn" type="button" onclick="productSelectWin()">选择</button>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>数量：</label>
+							<div class="col-xs-9">
+								<input type="number" class="form-control" id="buynum" name="buynum" value="1" min="1" max="99999999999" maxlength="11">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>总价格：</label>
+							<div class="col-xs-9 form-control-static">
+								<span id="sp_price">0.00</span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -47,6 +71,15 @@
 	<div>
 </div>
 <script>
+	$(function(){
+		$("#buynum").keyup(function(){
+			if($('#productname').val()==''){
+				return false;
+			}
+			var price = $('#productname').val().split("￥")[1];
+		    $('#sp_price').html((this.value*price).toFixed(2));
+		});
+	});
 	function saveOrUpdate(callback){
 		$.post('../save/'+$('#operType').val(), $("#formid").serialize(), function(json){
 			if(json&&json.success==true){
@@ -56,5 +89,23 @@
 				callback(false);
 			}
 		},'json');
+	}
+	function productSelectWin(){
+		var onData = function (iframe,callback) {
+		    iframe.getData(function (data) {
+		    	$('#dictid').val((data.idarr).toString());
+				$('#productname').val((data.namearr).toString());
+				$('#sp_price').html((data.valuearr).toString());
+				var valuearr = data.valuearr;
+				var sp_price = '0.00'*1;
+				for(var i=0;i<valuearr.length;i++){
+					sp_price += parseFloat(valuearr[i])*1;
+				}
+				$('#sp_price').html((sp_price*$("#buynum").val()).toFixed(2));
+	    		callback(true);
+		    });
+		   	callback(false);
+		}
+		openWin(basePath+'/dict/productSelectWin','选择产品',450,500,'',onData);
 	}
 </script>

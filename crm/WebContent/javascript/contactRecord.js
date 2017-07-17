@@ -52,7 +52,7 @@ $(function(){
 
 function query(){
 	var url = basePath+'/contactrecord/query/'+$('#operType').val()+'?'+$("#form1").serialize();
-	var	param = {url:url, colModel:grid, jqGridId:"jqGridId",multiselect:true, shrinkToFit:true, jqGridPagerId:"jqGridPagerId"};
+	var	param = {url:url, colModel:grid, jqGridId:"jqGridId",multiselect:false, shrinkToFit:true, jqGridPagerId:"jqGridPagerId"};
 	if(myGrid == null){
 		myGrid = new MyJqGrid(param);
 		myGrid.loadMyGrid();

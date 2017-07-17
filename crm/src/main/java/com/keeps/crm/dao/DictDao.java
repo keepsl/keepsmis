@@ -29,7 +29,7 @@ public interface DictDao extends SoftDao{
 	
 	public TDict getDictById(Integer id);
 	
-	public List<TreeNode> getDictTypeTree();
+	public List<TreeNode> getDictTypeTree(String code);
 
 	public Integer countDictFixedByIds(String ids);
 
