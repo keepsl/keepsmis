@@ -48,8 +48,8 @@ public class GoodsClassServiceImpl extends AbstractService implements GoodsClass
 	@Override
 	public List<TreeNode> queryListTree() {
 		TreeNode node  = new TreeNode();
-		node.setId(0);
-		node.setpId(0);
+		node.setId("0");
+		node.setpId("0");
 		node.setOpen(1);
 		node.setName("全部商品分类");
 		List<TreeNode> listtreenode  = goodsClassDao.queryListTree();

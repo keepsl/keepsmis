@@ -136,8 +136,8 @@ public class MenuServiceImpl extends AbstractService implements MenuService{
 	 */
 	public List<TreeNode> getMenuTree(){
 		TreeNode node  = new TreeNode();
-		node.setId(0);
-		node.setpId(0);
+		node.setId("0");
+		node.setpId("0");
 		node.setOpen(1);
 		node.setName("全部菜单");
 		List<TreeNode> listtreenode  = menuDao.queryListTree();

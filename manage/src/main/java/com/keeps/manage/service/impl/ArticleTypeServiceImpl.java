@@ -50,8 +50,8 @@ public class ArticleTypeServiceImpl extends AbstractService implements ArticleTy
 	@Override
 	public List<TreeNode> queryListTree() {
 		TreeNode node  = new TreeNode();
-		node.setId(0);
-		node.setpId(0);
+		node.setId("0");
+		node.setpId("0");
 		node.setOpen(1);
 		node.setName("全部栏目");
 		List<TreeNode> listtreenode  = articleTypeDao.queryListTree();
