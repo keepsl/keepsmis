@@ -7,4 +7,10 @@ public interface UserSchoolDao extends SoftDao {
 	
 	public UserSchool getUserSchool(String id);
 	
+	public Integer countUrlByRole(Integer userid,String url);
+	
+	public Integer countMethodUrlByUrl(String code);
+
+	public Integer countMenuUrlByUrl(String url);
+
 }

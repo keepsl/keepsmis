@@ -9,6 +9,7 @@ import com.keeps.security.SecurityControl;
 import com.keeps.tools.utils.CookieUtils;
 import com.keeps.tools.utils.LoginPageVar;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 public class UserLoginUtils {
@@ -34,7 +35,8 @@ public class UserLoginUtils {
 				maxage = Integer.valueOf(LoginPageVar.Remberme_time.intValue() * 60);
 			} else {
 				log.info(logvar.getId() + "登录，没有选择rember me 功能。");
-				maxage = 3600;
+				//3600 一小时
+				maxage = 6*60*60;//半天
 			}
 			CookieUtils.setCookie(response,COOKIE_DEFAULT_NAME,URLEncoder.encode(SecurityControl.getInstance().encode(random), "UTF-8"),maxage);
 		} catch (Exception e) {
@@ -53,7 +55,7 @@ public class UserLoginUtils {
 	 */
 	public static void removeLoginStatus(HttpServletRequest request,HttpServletResponse response){
 		try {
-			String cookieid = CookieUtils.getCookieId(request, COOKIE_DEFAULT_NAME);
+			String cookieid = CookieUtils.getCookieValue(request, COOKIE_DEFAULT_NAME);
 			if(StringUtils.isBlank(cookieid)){
 				return ;
 			}
@@ -75,11 +77,11 @@ public class UserLoginUtils {
 	 */
 	public static String ifLoginReturnUid(HttpServletRequest request,HttpServletResponse response){
 		try {
-			String cookieid = CookieUtils.getCookieId(request, COOKIE_DEFAULT_NAME);
-			if(StringUtils.isBlank(cookieid)){
+			String cookievalue = CookieUtils.getCookieValue(request, COOKIE_DEFAULT_NAME);
+			if(StringUtils.isBlank(cookievalue)){
 				return null;
 			}
-			String[] userinfo = SecurityControl.getInstance().decode(cookieid).split(COOKIE_SEPARATOR);
+			String[] userinfo = SecurityControl.getInstance().decode(URLDecoder.decode(cookievalue, "utf-8")).split(COOKIE_SEPARATOR);
 			if(userinfo.length!=2){
 				return null;
 			}

@@ -6,5 +6,7 @@ import com.keeps.tools.utils.UserSchool;
 public interface UserSchoolService extends SoftService{
 	
 	UserSchool getUserSchool(String id);
+	
+	boolean hasAuthorizition(Integer userid,String targetUrl);
 
 }
