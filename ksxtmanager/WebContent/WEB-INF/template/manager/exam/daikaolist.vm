@@ -1,0 +1,31 @@
+<div class="g-total-pd" id="jqGridWarp2">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="col-container clearfix">
+				
+				<div class="button-inline g-fl">
+                    <form class="form-inline g-fr" role="form" id="form1" onsubmit="return false;">
+				        <span class="group">
+				            <label>标题：</label>
+				            <input type="text" class="form-control" id="title" name="title">
+				        </span>
+				        <span class="group">
+				        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
+				        </span>
+				    </form>
+			    </div>
+			    
+			</div>
+		    
+	    </div>
+    </div><!-- 查询表单域 -->
+                    
+    <div class="row" >
+		<div class="col-xs-12">
+			<table id="jqGridId"></table>
+			<!-- <div id="jqGridPagerId"></div> -->
+		</div>
+	</div><!-- 列表区域 -->
+    
+</div>
+<script type="text/javascript" src="${path}/javascript/ks/exam_daikaolist.js?date=201701220001"></script>

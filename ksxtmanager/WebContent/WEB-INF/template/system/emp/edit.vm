@@ -1,0 +1,12 @@
+#parse("system/emp/add_edit_inner.vm")
+<input type="hidden" id="sex" value="$!{emp.sex}"/>
+<input type="hidden" id="islunar" value="$!{emp.islunar}"/>
+<script type="text/javascript">
+	var eq_sex = $('#sex').val()*1-1;
+	$("input[name='sex']").eq(eq_sex).parent(".radio-inline").addClass('on');
+	$("input[name='sex']").eq(eq_sex).attr("checked",true);
+	
+	var eq_islunar = $('#islunar').val()*1-1;
+	$("input[name='islunar']").eq(eq_islunar).parent(".radio-inline").addClass('on');
+	$("input[name='islunar']").eq(eq_islunar).attr("checked",true);
+</script>

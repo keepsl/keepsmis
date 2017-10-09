@@ -1,0 +1,35 @@
+#parse("page_header.vm")
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div>
+	<div class="container-fluid">
+		<div class="row" >
+	    	<div class="col-xs-12">
+		  		<div style="text-align:center;margin:0 auto;border-bottom:1px dashed #000;">
+	                <h3>$!{eamNews.title}</h3>
+	                <p>试题所在分类：$!{questions.questionstypename}&nbsp;&nbsp;试题类型：$!{questions.problemtypename}&nbsp;&nbsp;难易度：$!{questions.degofdifftypename}</p>
+	            </div>
+		  	</div>
+		  	<div class="col-xs-12 g-t-mg">
+	       		<strong>&nbsp;&nbsp;$!{questions.title}</strong>
+		  	</div>
+		  	<div class="col-xs-12 g-t-mg">
+	       		<p>&nbsp;&nbsp;选项：$!{questions.answeroption}</p>
+		  	</div>
+		  	<div class="col-xs-12 g-t-mg">
+	        	<p>&nbsp;&nbsp;正确答案：$!{questions.answeroption}</p>
+		  	</div>
+		  	<div class="col-xs-12 g-t-mg">
+	        	<p>&nbsp;&nbsp;解析：$!{questions.remark}</p>
+		  	</div>
+        </div><!-- row结束 -->
+    </div>
+</div>
+<script>
+
+</script>

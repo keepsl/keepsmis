@@ -1,0 +1,40 @@
+#parse("page_header.vm")
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+
+
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="formid" method="post" enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="title" class="col-xs-2 control-label"><em class="text-red">*</em>标题：</label>
+							<div class="col-xs-9 form-control-static">
+								$!{schedule.title}
+							</div>
+						</div>
+			    		<div class="form-group">
+							<label for="title" class="col-xs-2 control-label"><em class="text-red">*</em>描述：</label>
+							<div class="col-xs-9 form-control-static">
+								$!{schedule.remark}
+							</div>
+						</div>
+				  		<div class="form-group">
+							<label for="title" class="col-xs-2 control-label"><em class="text-red">*</em>状态：</label>
+							<div class="col-xs-9 form-control-static">
+								#dictselecttag('status','dic_schedule_status',$!{schedule.status},'0')
+							</div>
+						</div>
+					</form>
+			  	<div>
+	        </div><!-- row结束 -->
+	    </div>
+	</div>
+</div>

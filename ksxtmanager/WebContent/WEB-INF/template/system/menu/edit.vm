@@ -1,0 +1,14 @@
+#parse("page_header.vm")
+#parse("system/menu/add_edit_inner.vm")
+<script>
+function update(callback){
+	$.post('../menu/update', $("#formid").serialize(), function(json){
+		if(json&&json.success==true){
+			callback(true);
+		}else{
+			Log.e(json.message);
+			callback(false);
+		}
+	},'json');
+}
+</script>

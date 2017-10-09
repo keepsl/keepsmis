@@ -1,0 +1,259 @@
+#parse("page_header.vm")
+<script type="text/javascript" src="${path}/javascript/ztreeselect.js?date=20170406022111"></script>
+<style>
+	html,body{
+		overflow-y: hidden;
+		height: 100%;
+		background-color:#fff;
+	}
+</style>
+<div  class="container-fluid g-checkPeople-dialog g-t-mg">
+	<div class="row" >
+		<div class="col-xs-12">
+			<div class="box g-fl g-clear" style="margin-top:5px">
+				<h5 class="title">待选题目
+				</h5>
+				<div class="col-container">
+					<form class="form-inline clearfix" role="form1" id="form1" onsubmit="return false;">
+						<span class="group clearfix">
+                        	<label>分类：</label>
+                        	<input type="text" class="form-control" name="questionstype" id="questionstype"/>
+                        </span>
+                        <span class="group">
+                        	<label>类型:</label>
+                            <select class="form-control" name="problemtype" id="problemtype">
+								<option value="">请选择...</option>
+								#foreach ($list in $problemtypelist)
+								<option value="$list.id" #if ($list.id==$questions.problemtype) selected #end>$list.name</option>
+								#end
+							</select>
+                        </span>
+                        <span class="group">
+                            <label>难度：</label>
+                            <select class="form-control" name="degofdifftype" id="degofdifftype">
+								<option value="">请选择...</option>
+								#foreach ($list in $degofdifftypelist)
+								<option value="$list.id" #if ($list.id==$questions.degofdifftype) selected #end>$list.name</option>
+								#end
+							</select>
+                        </span>
+                        <span class="group">
+                        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="initMyGrid();"><i></i>查询</a>
+                        </span>
+					</form>
+				</div>
+				<div class="g-clear">
+				    <div class="g-fl">
+						<table id="myGridId"></table>
+				     </div>
+			    </div>
+			</div>
+			<div class="arrow-action g-fl" style="margin-right:5px">
+				<a class="arrow-add" onclick="selectAll()"></a>
+				<a class="arrow-minus" onclick="clearAll()"></a>
+			</div>
+			<div class="box g-fl" style="margin-top:5px">
+				<h5 class="title">已选题目&nbsp;&nbsp;&nbsp;<span id="yxnum">0</span>题</h5>
+				<table id="myGridId2"></table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	var myGrid1 = null,myGrid2 = null;
+	var _rightIds ='$!{questionsids}'.split(","),_rightData = [];
+    $(document).ready(function(){
+	    $("#questionstype").droptree({items:$!{questionstypejson}, 
+		    transition:"ztree",
+		    isCheckParent:true
+	    }); 
+        initMyGrid(function (success) {//加载待选课程列表
+			if(success){ 
+				_rightIds = [];
+				initMyGrid2(_rightData);
+			}
+		});
+        //在文本框敲击Enter 触发查询按钮点击事件
+        $('#coursename').keydown(function(e) {
+            if (e.keyCode == 13) {
+                $('#searchid').trigger('click');
+                return false;
+            }
+        });
+        $("#searchid").click(function(){
+        	initMyGrid(function (success) {
+				if(success){
+				}
+			});
+        });
+    });
+    
+    
+    function initMyGrid(callback){
+		var grid = [
+	     	{"hidden":true,"align":"left","sortable":false,"width":10,"name":"id","resizable":false,"label":"id"},
+			{"hidden":false,"align":"left","sortable":true,"width":150,"name":"title","resizable":true,"label":"试题名称"},
+			{"hidden":false,"align":"left","sortable":true,"width":120,"name":"questionstypename","resizable":true,"label":"分类"},
+			{"hidden":false,"align":"left","sortable":true,"width":80,"name":"problemtypename","resizable":true,"label":"类型"},
+			{"hidden":false,"align":"left","sortable":true,"width":80,"name":"degofdifftypename","resizable":true,"label":"难易度"},
+			{"hidden":false,"align":"left","sortable":false,"width":80,"name":"note","resizable":true,"label":"操作",formatter: function(cellvalue, options, rowObject) {
+	        	return "<a href='javascript:;' onclick=\"addById('"+ rowObject.id + "','" + rowObject.title + "','" + rowObject.questionstypename + "','" + rowObject.problemtypename + "','" + rowObject.degofdifftypename + "','" + options.rowId + "')\" style='color: #0069A9;'><span style=' position: relative;'><i class='add-icon'></i>添加</span></a>";
+	     	}}
+		];
+		var url = '../questions/query?'+$("#form1").serialize();
+		var	param = {url:url, colModel:grid, multiselect: false, jqGridId:"myGridId", rowNum:'999999', height: 365,width: 500,shrinkToFit: true,
+				jsonReader: {
+		            root: function (obj) {
+		            	var data = obj.message.record;
+		            	//data.splice(0,1);
+		            	var newdata = [];
+		            	for(var i = 0; i<data.length; i++){
+	            			if (_rightIds.indexOf(data[i].id) < 0) {
+		            			newdata.push(data[i]);
+		            		}else{//填充右侧表格数据
+		            			_rightData.push(data[i]);
+		            		}
+		            	}
+		            	return newdata;
+		            }
+		        },
+				onSelectRow:function(rowid){
+				    if (rowid) {
+				    	var rowData = $("#myGridId").jqGrid('getRowData',rowid);
+				    }else{
+				    	parent.layer.msg('请先选择行数据!');
+				    }
+				},callback(){
+					callback(true);
+				}
+		};
+		if(myGrid1 == null){
+			myGrid1 = new MyJqGrid(param);
+			myGrid1.loadMyGrid();
+		}else{
+			myGrid1.query(param);
+		}
+		resize();
+	}
+	function initMyGrid2(_rightData) {
+		var grid = [
+	        {"hidden":true,"align":"left","sortable":false,"width":0,"name":"id","resizable":true,key:true,"label":"id",formatter: function(cellValue, options, rowObject) {
+                _rightIds.push(cellValue);
+                return cellValue;
+            }},
+			{"hidden":false,"align":"left","sortable":true,"width":150,"name":"title","resizable":true,"label":"试题名称"},
+			{"hidden":false,"align":"left","sortable":true,"width":120,"name":"questionstypename","resizable":true,"label":"分类"},
+			{"hidden":false,"align":"left","sortable":true,"width":80,"name":"problemtypename","resizable":true,"label":"类型"},
+			{"hidden":false,"align":"left","sortable":true,"width":80,"name":"degofdifftypename","resizable":true,"label":"难易度"},
+	        {"hidden":false,"align":"left","sortable":false,"width":80,"name":"note","resizable":true,"label":"操作",formatter: function(cellvalue, options, rowObject){
+	        	return "<a href='javascript:;' onclick=\"removeById('"+ rowObject.id + "','" + rowObject.title + "','" + rowObject.questionstypename + "','" + rowObject.problemtypename + "','" + rowObject.degofdifftypename + "','" + options.rowId + "')\" style='color: #0069A9;'><span style=' position: relative;'><i class='add-icon'></i>移除</span></a>";
+            }}
+		];
+		var	param = {url:'', colModel:grid, multiselect: false, jqGridId:"myGridId2", rowNum:'999999', height: 365,width: 450,datatype:"local",shrinkToFit: true,
+			localReader: {
+		            root: function (obj) {
+		            	return _rightData;
+		            }
+		        },
+				onSelectRow:function(rowid, selected){
+				    if (rowid) {
+				    	var rowData = $("#myGridId2").jqGrid('getRowData',rowid);
+				    }else {
+				    	parent.layer.msg('请先选择行数据!');
+				    }
+				}
+		};
+		if(myGrid2 == null){
+			myGrid2 = new MyJqGrid(param);
+			myGrid2.loadMyGrid();
+		}else{
+			myGrid2.query(param);
+		}
+		resize();
+	}
+	
+	//添加到已选择grid并删除未选择grid
+	function addById(id, title, questionstypename, problemtypename, degofdifftypename, rowid) {
+		if (_rightIds.indexOf(id) < 0) {
+			/*已选课程列表添加课程*/
+	        var data = [
+	            { 'id':id, 'title': title, 'questionstypename': questionstypename, 'problemtypename': problemtypename, 'degofdifftypename': degofdifftypename}
+	        ];
+	        $("#myGridId2").jqGrid("addRowData", data[0].outid, data[0], "first");
+	        
+	        var rowIds = $("#myGridId2").getDataIDs();
+	        $("#yxnum").html(rowIds.length);
+		}
+	    /*未选课程列表移除课程*/
+	    $("#myGridId").jqGrid('delRowData', id);
+	}
+	
+	function removeById(id, title, questionstypename, problemtypename, degofdifftypename, rowid) {
+		_rightIds.remove(id);
+        /*未选课程列表添加课程*/
+        var data = [
+	  		{ 'id':id, 'title': title, 'questionstypename': questionstypename, 'problemtypename': problemtypename, 'degofdifftypename': degofdifftypename}
+        ];
+        $("#myGridId").jqGrid("addRowData", data[0].id, data[0], "first");
+	    /*已选课程列表移除课程*/
+	    $("#myGridId2").jqGrid('delRowData', id);
+	    var rowIds = $("#myGridId2").getDataIDs();
+	    $("#yxnum").html(rowIds.length);
+	}
+	
+	//清除全部已选课程
+	function clearAll() {//正在使用
+	    /*获取行ID*/
+	    var rowIds = $("#myGridId2").getDataIDs();
+	    if (rowIds.length > 1000) {
+	        /*人数过多时，浏览器会繁忙，导致全选失败*/
+	        if (!confirm("您选择的" + rowIds.length + "条数据,大约需要 " + Math.ceil(0.007 * rowIds.length) + " 秒！是否继续？")) {
+	            return;
+	        };
+	    }
+	    /*获取数据*/
+	    var json = $("#myGridId2").jqGrid('getRowData');
+	    /*循环调用删除方法*/
+	    for (var i = 0; i < rowIds.length; i++) {
+	        removeById(json[i].id, json[i].title, json[i].questionstypename, json[i].problemtypename, json[i].degofdifftypename, rowIds[i]);
+	    }
+	}
+	
+	//将待选课程全部移动到已选课程列表中
+	function selectAll() {//正在使用
+	    /*获取行ID*/
+	    var rowIds = $("#myGridId").getDataIDs();
+	    if (rowIds.length > 1000) {
+	        /*人数过多时，浏览器会繁忙，导致全选失败*/
+	        if (!confirm("您选择的" + rowIds.length + "条数据,大约需要 " + Math.ceil(0.007 * rowIds.length) + " 秒！是否继续？")) {
+	            return;
+	        };
+	    }
+	    /*获取数据*/
+	    var json = $("#myGridId").jqGrid('getRowData');
+	    /*循环调用添加方法*/
+	    for (var i = 0; i < rowIds.length; i++) {
+	        addById(json[i].id, json[i].title, json[i].questionstypename, json[i].problemtypename, json[i].degofdifftypename, rowIds[i]);
+	    }
+	}
+	//调整表格宽高
+	function resize(){
+	    $(".J_conWarp").height($(window).height()-20);
+	    $(".J_conWarp").niceScroll({});
+	    var width = $("#jqGridWarp").width();
+	}
+	
+	function getData(callback){
+		var json = $("#myGridId2").jqGrid('getRowData');
+    	var idarr = [];
+    	for(var i=0;i<json.length;i++){
+    		idarr.push(json[i].id);
+    	}
+    	var data={
+		    idarr:idarr
+		};
+		callback(data);
+	}
+	$(window).resize(resize);  
+</script>

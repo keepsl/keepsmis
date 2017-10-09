@@ -1,0 +1,73 @@
+#parse("page_header.vm")
+<style>
+    html,body{
+        overflow-y: hidden;
+        height: 100%;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row" >
+    	
+	    <div class="col-xs-2" >
+            <div id="treediv" class="J_conWarp g-area-loading">
+                <h4 class="g-title">字典分类树</h4>
+                <div class="g-total-pd"><!--给块级加内边距10px-->
+					<div class="row" >
+						<div class="col-xs-12" >
+							<div class="btn-group  btn-tree-edit" style="width: 100%">
+							  <button type="button" class="btn btn-default" onclick="add_type_obj()"><span class="gi4 gi-50"></span>&nbsp;添加</button>
+							  <button type="button" class="btn btn-default" onclick="edit_type_obj()"><span class="gi4 gi-49"></span>&nbsp;编辑</button>
+							  <button type="button" class="btn btn-default" onclick="delete_type_obj()"><span class="gi4 gi-48"></span>&nbsp;删除</button>
+							</div>
+						</div>
+					</div>
+					<div class="row" >
+						<div class="col-xs-12" >
+							<ul id="dicttypetreeid" class="ztree reset-box-sizing J_containerWarp2"></ul>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+        
+    	<div class="col-xs-10">
+            <div class="J_conWarp g-warning-box">
+            	<h4 class="g-title">字典管理<span class="intro J_arrowAction" style="cursor:pointer;">功能介绍<i class="gi-down"></i></span></h4>
+            	<p class="bg-warning J_tipBox g-t-mg">功能介绍：主要用来定义数据，给系统中各个模块提供基础数据。</p>
+            	<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
+            		<div class="row">
+                		<div class="col-xs-12">
+					  		<div class="col-container clearfix">
+					  			<div class="button-inline g-fl">
+							  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="add_obj();"><i></i>新增</a>
+			                        <a class="gbn gbn-edit" id="btn_modify" href="javascript:;" onclick="edit_obj();"><i></i>编辑</a>
+			                        <a class="gbn gbn-del" id="btn_del" href="javascript:;" onclick="delete_obj();"><i></i>删除</a>
+							    </div>
+					  			<form class="form-inline g-fr" role="form" id="form1" onsubmit="return false;">
+					  				<input type="hidden" name="typeid"/>
+			                        <span class="group">
+			                            <label>字典名称:</label>
+			                            <input type="text" class="form-control" id="name" name="name">
+			                        </span>
+			                        <span class="group">
+			                        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
+			                        </span>
+			                    </form>
+	                    	</div>
+	                    </div>
+                    </div><!-- 查询表单域 -->
+                    
+               		<div class="row" >
+						<div class="col-xs-12">
+					  		<div>
+					  			<table id="jqGridId"></table><div id="jqGridPagerId"></div>
+					  		</div>
+						</div>
+					</div><!-- 列表区域 -->
+            	</div>
+            </div>
+         </div>
+	</div>
+</div>
+<script type="text/javascript" src="${path}/javascript/system/dict.js?date=201701220001"></script>

@@ -1,0 +1,63 @@
+#parse("page_header.vm")
+<style>
+    html,body{
+        overflow-y: hidden;
+        height: 100%;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row" >
+    	<div class="col-xs-2" >
+            <div id="treediv" class="J_conWarp g-area-loading">
+                <h4 class="g-title">菜单树</h4>
+                <div class="g-total-pd">
+                	<!--<div id="areTreeDiv" class="input-group g-search-box2">
+					 	<span class="input-group-addon" id="searchTerm" onclick="searchTerm()"></span>
+					 	<input type="text" class="form-control" id="termname" name="termname" placeholder="搜索">
+					</div>-->
+                    <ul id="menutreeid" class="ztree reset-box-sizing"></ul>
+               </div>
+            </div>
+        </div>
+    	
+    	<div class="col-xs-10">
+            <div class="J_conWarp g-warning-box">
+            	<h4 class="g-title">菜单管理</h4>
+            	<!--<h4 class="g-title">菜单管理<span class="intro J_arrowAction" style="cursor:pointer;">功能介绍<i class="gi-down"></i></span></h4>-->
+            	<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
+            		<div class="row">
+                		<div class="col-xs-12">
+					  		<div class="col-container clearfix">
+					  			<div class="button-inline g-fl">
+							  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="addMenu();"><i></i>新增</a>
+			                        <a class="gbn gbn-edit" id="btn_modify" href="javascript:;" onclick="editMenu();"><i></i>编辑</a>
+			                        <a class="gbn gbn-del" id="btn_del" href="javascript:;" onclick="deleteMenu();"><i></i>删除</a>
+							    </div>
+					  			<form class="form-inline g-fr" role="form" id="form1" onsubmit="return false;">
+					  				<input type="hidden" name="pid"/>
+			                        <span class="group">
+			                            <label>菜单名称:</label>
+			                            <input type="text" class="form-control" id="menuname" name="menuname">
+			                        </span>
+			                        <span class="group">
+			                        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
+			                        </span>
+			                    </form>
+	                    	</div>
+	                    </div>
+                    </div><!-- 查询表单域 -->
+                    
+               		<div class="row" >
+						<div class="col-xs-12">
+					  		<div>
+					  			<table id="jqGridId"></table><div id="jqGridPagerId"></div>
+					  		</div>
+						</div>
+					</div><!-- 列表区域 -->
+            	</div>
+            </div>
+         </div>
+	</div>
+</div>
+<script type="text/javascript" src="${path}/javascript/system/menulist.js?date=2016102810001"></script>

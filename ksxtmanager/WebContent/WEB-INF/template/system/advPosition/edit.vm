@@ -1,0 +1,9 @@
+#parse("system/advPosition/add_edit_inner.vm")
+<input type="hidden" id="isShow" value="$!{advPosition.isShow}"/>
+<script type="text/javascript">
+$(function () {
+	var eqisShow = $('#isShow').val()*1-1;
+	$("input[name='isShow']").eq(eqisShow).parent(".radio-inline").addClass('on');
+	$("input[name='isShow']").eq(eqisShow).attr("checked",true);
+});
+</script>

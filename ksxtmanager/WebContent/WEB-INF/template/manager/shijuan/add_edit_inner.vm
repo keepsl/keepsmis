@@ -1,0 +1,197 @@
+#parse("page_header.vm")
+<script type="text/javascript" src="${path}/javascript/ztreeselect.js?date=20170406022111"></script>
+<script type="text/javascript" src="${path}/javascript/selectTree.js?date=2017040600009"></script>
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="formid" method="post">
+						<input type="hidden" name="id" id="id" value="$!{shijuan.id}"/>
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>试卷标题：</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="title" name="title" value="$!{shijuan.title}" maxlength="100">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="questionstype" class="col-xs-2 control-label"><em class="text-red">*</em>试卷分类：</label>
+							<div class="col-xs-4">
+								<input type="text" class="form-control" name="shijuantype" id="shijuantype" value="$!{shijuan.shijuantype}"/>
+							</div>
+							<label for="questionstype" class="col-xs-2 control-label"><em class="text-red">*</em>难易度：</label>
+							<div class="col-xs-3">
+								<select class="form-control" name="degofdifftype" id="degofdifftype">
+									<option value="">请选择...</option>
+									#foreach ($list in $degofdifftypelist)
+									<option value="$list.id" #if ($list.id==$shijuan.degofdifftype) selected #end>$list.name</option>
+									#end
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="questionstype" class="col-xs-2 control-label"><em class="text-red">*</em>答题时长：</label>
+							<div class="col-xs-4">
+								<div class="input-group ">
+									<input type="number" class="form-control" id="timelength" name="timelength" value="$!{shijuan.timelength}" maxlength="11">
+									<span class="input-group-addon">分</span>
+								</div>
+							</div>
+						    <label for="coursetype" class="col-xs-2 control-label"><em class="text-red">*</em>状态：</label>
+							<div class="col-xs-3">
+								#dictselecttag('status','dic_status',$!{role.status})
+						    </div>
+						</div>
+						
+					  	<div class="form-group">
+					    	<label for="inputPassword3" class="col-xs-2 control-label"><em class="text-red">*</em>发布时间：</label>
+					    	<div class="col-xs-9">
+					    	
+							 	<div class="input-group input-daterange">
+	                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="开始时间" readonly="readonly" id="starttimestr" name="starttimestr" value="$!{shijuan.starttimestr}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});">
+	                                <span class="input-group-addon">到</span>
+	                                <input type="text" class="form-control Wdate g-Wate-left" placeholder="结束时间" readonly="readonly" id="endtimestr" name="endtimestr" value="$!{shijuan.endtimestr}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm'});">
+	                            </div>
+	                            <p class="help-block">设置发布时间段,当前日期在这个时间段时,考生才可以看到该试卷并可以进行答题.</p>
+					    	</div>
+					  	</div>
+					  	
+						<div class="form-group">
+							<label for="coursetype" class="col-xs-2 control-label"><em class="text-red">*</em>考试方式：</label>
+							<div class="col-xs-4">
+								<div class="J_radioBox" style="padding-top:7px">
+									<label class="radio-inline">
+									  <input type="radio" name="kaoshitype" value="1"> 按部门
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="kaoshitype" value="2"> 按人员
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="kaoshitype" value="3"> 公开
+									</label>
+							    </div>
+						    </div>
+						</div>
+						
+						<div class="form-group" style="display:none" id="selectcustdept">
+						    <label class="col-xs-2 control-label"><em class="text-red">*</em>考试部门：</label>
+						    <div class="col-xs-9">
+						    	<div class="input-group">
+							    	<input type="text" class="form-control" id="orgids" name="orgids" value="$!{shijuan.orgids}" readonly/>
+							    	<span class="input-group-btn">
+										<button class="gbn btn btn-default" type="button" onclick="showOrgtree();">选择</button>
+									</span>
+								</div>
+						    </div>
+					  	</div>
+					  	
+					  	<div class="form-group" style="display:none" id="selectuser">
+						    <label class="col-xs-2 control-label"><em class="text-red">*</em>考试人员：</label>
+						    <div class="col-xs-9">
+						    	<div class="input-group">
+							    	<input type="text" class="form-control" id="empids" name="empids" value="$!{shijuan.empids}" readonly/>
+							    	<span class="input-group-btn">
+										<button class="gbn btn btn-default" type="button" onclick="showEmptree();">选择</button>
+									</span>
+								</div>
+						    </div>
+					  	</div>
+					  	
+					  	<div class="form-group">
+					    	<label for="inputPassword3" class="col-xs-2 control-label"><em class="text-red">*</em>试题：</label>
+					    	<div class="col-xs-9">
+							 	<div class="input-group">
+							    	<input type="text" class="form-control" id="questionsids" name="questionsids" value="$!{shijuan.questionsids}" readonly/>
+							    	<span class="input-group-btn">
+										<button class="gbn btn btn-default" type="button" onclick="showQuestionsWin();">选择</button>
+									</span>
+								</div>
+					    	</div>
+					  	</div>
+					  	
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+	$(function(){
+		$("#shijuantype").droptree({items:$!{shijuantypejson}, 
+		    transition:"ztree"
+	    });
+		$("input[name='kaoshitype']").click(function(){
+		 	if($(this).val()==1){
+		 		$('#selectcustdept').show();
+		 		$('#selectuser').hide();
+		 	}else if($(this).val()==2){
+		 		$('#selectcustdept').hide();
+		 		$('#selectuser').show();
+		 	}else{
+		 		$('#selectcustdept').hide();
+		 		$('#selectuser').hide();
+		 	}
+		});
+	});
+	
+	function showOrgtree(){
+		var onData = function (iframe,callback) {
+		    iframe.getData(function (data) {
+		    	$("#orgids").val(data.idarr);
+		    	callback(true);
+		    });
+		}
+		openWin('../org/orgSelectWin?orgids='+$("#orgids").val(),'部门',350,500,'',onData);
+	}
+	function showEmptree(){
+		var onData = function (iframe,callback) {
+		    iframe.getData(function (data) {
+		    	$("#empids").val(data.idarr);
+		    	callback(true);
+		    });
+		}
+		openWin('../emp/empSelectWin?empids='+$("#empids").val()+'&type=1','人员',350,500,'',onData);
+	}
+	
+	function showQuestionsWin(){
+		var onInit = function (iframe) {
+			/*已选课程列表添加
+	        var data = [
+	            { 'id':1, 'coursename': '111', 'teachername': '222', 'teacheroutid': '333'}
+	        ];
+	        iframe.$("#myGridId2").jqGrid("addRowData", data[0].outid, data[0], "first");*/
+        };
+       
+        var onSuccess = function (iframe,callback) {
+		    iframe.getData(function (data) {
+		    	var ids = data.idarr;
+		    	if(ids.length==0){
+		    		parent.layer.msg('请选择要添加的试题!');
+		    		callback(false);
+		    	}else{
+			    	$("#questionsids").val(ids);
+			    	callback(true);
+		    	}
+		    });
+		}
+		openWin('../questions/selectWin?questionsids='+$("#questionsids").val(),'选择试题',1060,580,'',onSuccess);
+	}
+	function saveOrUpdate(callback){
+		var url = $("#id").val()==''?'../shijuan/save':'../shijuan/update';
+		$.post(url, $("#formid").serialize(), function(json){
+			if(json.code==1){
+				callback(true);
+			}else{
+				Log.e(json.msg);
+				callback(false);
+			}
+		},'json');
+	}
+</script>

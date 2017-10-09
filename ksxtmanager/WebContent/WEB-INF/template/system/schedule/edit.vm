@@ -1,0 +1,3 @@
+#parse("system/schedule/add_edit_inner.vm")
+<script type="text/javascript">
+</script>

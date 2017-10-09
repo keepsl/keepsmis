@@ -1,0 +1,148 @@
+#parse("page_header.vm")
+<script type="text/javascript" charset="utf-8" src="${path}/javascript/imageRead.js"></script>
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="formid" method="post" enctype="multipart/form-data">
+						<input type="hidden" name="id" value="$!{advPosition.id}"/>
+						<input type="hidden" name="defaultContent"  value="$!{advPosition.defaultContent}"/>
+						<div class="form-group">
+							<label for="apName" class="col-xs-2 control-label"><em class="text-red">*</em>名称：</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="apName" name="apName" value="$!{advPosition.apName}" maxlength="10">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="apClass" class="col-xs-2 control-label"><em class="text-red">*</em>类别：</label>
+							<div class="col-xs-9">
+								#if ($!{advPosition.id})
+									<input type="hidden" name="apClass"  value="$!{advPosition.apClass}"/>
+									<p class="form-control-static">#dictk2vtag('dic_adv_position_class',$!{advPosition.apClass})</p>
+								#else
+									#dictselecttag('apClass','dic_adv_position_class',$!{advPosition.apClass})
+								#end
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="apDisplay" class="col-xs-2 control-label"><em class="text-red">*</em>展示方式：</label>
+							<div class="col-xs-9">
+								#if ($!{advPosition.id})
+									<input type="hidden" name="apDisplay"  value="$!{advPosition.apDisplay}"/>
+									<p class="form-control-static">#dictk2vtag('dic_adv_position_display',$!{advPosition.apDisplay})</p>
+								#else
+									#dictselecttag('apDisplay','dic_adv_position_display',$!{advPosition.apDisplay})
+								#end
+							</div>
+						</div>
+						<div id="opClass1">
+							<div class="form-group">
+					  			<label class="col-xs-2 control-label"><em class="text-red">*</em>默认封面：</label>
+						  		<div class="col-xs-9">
+					  				<div class="g-file-box">
+					  					<input type="file" name="defaultcontentfile" id="defaultcontentfile" onchange="previewImage({file:this,imgId:'image1',divId:'image1',regex:'.jpg.bmp.gif.png',width:'330',height:'180'});" style="width: 330px; height: 180px; font-size: 20px; filter: alpha(opacity=0); position: absolute; opacity: 0;cursor: pointer;" >
+										<img style="width:330px;height:180px" src="#if(!$!{advPosition.defaultContent}) ${path}/skins/template/img/02.png #else ${viewpath}/$!{advPosition.defaultContent} #end" id="image1"/>
+										<p class="help-block"><a class="gbn gbn-s gbn-gray" href="javascript:;" onclick="resetFile(this,'image1','02.png');document.getElementsByName('defaultContent')[0].value='';">删除所选</a><!--&nbsp;&nbsp;&nbsp;封面图片推荐尺寸为660*360.--></p>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="apWidth" class="col-xs-2 control-label"><em class="text-red">*</em>宽度：</label>
+								<div class="col-xs-4">
+									<input type="number" class="form-control" id="apWidth" name="apWidth" value="$!{advPosition.apWidth}" min="0" max="99999999999" maxlength="11">
+								</div>
+								<label for="apHeight" class="col-xs-1 control-label">高度：</label>
+									<div class="col-xs-4">
+									<input type="number" class="form-control" id="apHeight" name="apHeight" value="$!{advPosition.apHeight}" min="0" max="99999999999" maxlength="11">
+								</div>
+							</div>
+						</div>
+						<div id="opClass2">
+							<div class="form-group">
+								<label for="apWidthWord" class="col-xs-2 control-label"><em class="text-red">*</em>字数：</label>
+								<div class="col-xs-9">
+									<input type="number" class="form-control" id="apWidthWord" name="apWidthWord" value="$!{advPosition.apWidth}" min="0" max="99999999999" maxlength="11">
+									<p class="help-block">广告位默认字数</p>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="defaultContentWord" class="col-xs-2 control-label"><em class="text-red">*</em>默认文字：</label>
+								<div class="col-xs-9">
+									<input class="form-control" id="defaultContentWord" name="defaultContentWord" value="$!{advPosition.defaultContent}" maxlength="100">
+									<p class="help-block">当没有广告可供展示时使用的默认文字</p>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="apIntro" class="col-xs-2 control-label"><em class="text-red">*</em>简介：</label>
+							<div class="col-xs-9">
+								<textarea class="form-control" rows="6" style="height:100px;" id="apIntro" name="apIntro">$!{advPosition.apIntro}</textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="isShow" class="col-xs-2 control-label check-label"><em class="text-red">*</em>是否展示：</label>
+							<div class="col-xs-9">
+								<div class="J_radioBox ">
+									<label class="radio-inline">
+									  <input type="radio" name="isShow" value="1"> 是
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="isShow" value="2"> 否
+									</label>
+							    </div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+	$(function(){
+		if($("select[name='apClass']").val()==2){
+			$("#opClass1").hide();
+			$("#opClass2").show();
+		}else{
+			$("#opClass2").hide();
+			$("#opClass1").show();
+		}
+		$("select[name='apClass']").change(function(){
+			if($(this).val() == 2){
+				$("#opClass1").hide();
+				$("#opClass2").show();
+			}else{
+				$("#opClass2").hide();
+				$("#opClass1").show();
+			}
+		});
+	});
+	function saveOrUpdate(callback){
+		var options = {
+			url: "../advPosition/saveOrUpdate", 
+			dataType: 'json', 
+			data:$("#formid").serialize(),
+			type: "POST",
+			success: function(json) {
+				callback(json.success);
+				if(json&&json.success==true){
+					
+				}else{
+					Log.e(json.message);
+				}
+			},error:function(){
+				Log.e('请求错误!');
+				callback(false);
+		   	}
+		};
+		$('#formid').ajaxSubmit(options);
+	}
+</script>

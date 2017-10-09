@@ -1,0 +1,14 @@
+#parse("manager/shijuan/add_edit_inner.vm")
+<input type="hidden" id="kaoshitype" value="$!{shijuan.kaoshitype}"/>
+<script type="text/javascript">
+
+var eq_kaoshitype = $('#kaoshitype').val()*1-1;
+$("input[name='kaoshitype']").eq(eq_kaoshitype).parent(".radio-inline").addClass('on');
+$("input[name='kaoshitype']").eq(eq_kaoshitype).attr("checked",true);
+if(eq_kaoshitype==0){
+	$("#selectcustdept").show();
+}else if(eq_kaoshitype==1){
+	$("#selectuser").show();
+}
+
+</script>

@@ -1,0 +1,7 @@
+#parse("system/adv/add_edit_inner.vm")
+<script>
+$(function () {
+	$("input[name='isShow']").eq(0).parent(".radio-inline").addClass('on');
+	$("input[name='isShow']").eq(0).attr("checked",true);
+});
+</script>

@@ -1,0 +1,85 @@
+#parse("page_header.vm")
+<script type="text/javascript" src="${path}/javascript/selectTree.js?date=2017040600009"></script>
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="formid">
+						<input type="hidden" name="id" value="$!{menu.id}"/>
+						<div class="form-group">
+							<label for="menuname" class="col-xs-2 control-label"><em class="text-red">*</em>菜单名称</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="menuname" name="menuname" value="$!{menu.menuname}" maxlength="100">
+							</div>
+						</div>
+						<div class="form-group">
+						    <label for="pid" class="col-xs-2 control-label"><em class="text-red">*</em>上级菜单</label>
+						    <div class="col-xs-9">
+							      <select class="form-control" name="pid" id="pid">
+							        <option value="0">一级菜单</option>
+							        #foreach ($list in $menulist)
+							        	#if($pid)
+								       		<option value="$list.id" #if ($list.id==$pid) selected #end parent="$list.pid">$list.menuname</option>
+								        #else
+								        	#if($menu.id!=$list.id)
+									    		<option value="$list.id" #if ($list.id==$menu.pid) selected #end parent="$list.pid">$list.menuname</option>
+									    	#end
+								        #end
+							        #end
+							      </select>
+							      <p class="help-block">该菜单所属的上级菜单.</p>
+						    </div>
+						</div>
+						<div class="form-group">
+							<label for="url" class="col-xs-2 control-label"><em class="text-red">*</em>菜单连接</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="url" name="url" value="$!{menu.url}" maxlength="100">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="sort" class="col-xs-2 control-label"><em class="text-red">*</em>顺序</label>
+							<div class="col-xs-9">
+								<input type="number" class="form-control" id="sort" name="sort" value="$!{menu.sort}" maxlength="10">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="icon" class="col-xs-2 control-label">样式名</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="icon" name="icon" value="$!{menu.icon}" maxlength="50">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="status" class="col-xs-2 control-label"><em class="text-red">*</em>状态</label>
+							<div class="col-xs-9">
+								#dictselecttag('status','dic_status',$!{menu.status})
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="icon" class="col-xs-2 control-label">功能操作</label>
+							<div class="col-xs-9">
+								<!--onfocus="if(value=='描述:操作名:操作方法|操作名2:操作方法2'){value=''}" onblur="if (value ==''){value='描述:操作名:操作方法|操作名2:操作方法2'}"-->
+								<textarea class="form-control" rows="6" style="height:100px;" id="operates" name="operates" >$!{menu.operates}</textarea>
+								<p class="help-block">
+									该菜单下的所有功能操作,用来分配权限.如果要删除操作方法使用,请使用（操作方法|操作名-del）<br/>
+									填写方式：（操作名：操作方法|操作名2：操作方法2）.
+								</p>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+
+$("#pid").selectTotree();
+</script>

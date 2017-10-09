@@ -1,0 +1,54 @@
+#parse("page_header.vm")
+<style>
+    html,body{
+        overflow-y: hidden;
+        height: 100%;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row" >
+    	<div class="col-xs-12">
+            <div class="J_conWarp g-warning-box">
+            	<h4 class="g-title">角色管理<span class="intro J_arrowAction" style="cursor:pointer;">功能介绍<i class="gi-down"></i></span></h4>
+            	<p class="bg-warning J_tipBox g-t-mg">功能介绍：新增或修改角色信息，角色主要用于分配菜单和操作权限。</p>
+            	<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
+            		<div class="row">
+                		<div class="col-xs-12">
+					  		<div class="col-container clearfix">
+					  			<div class="button-inline g-fl">
+							  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="add_obj();" right-attr='role/save'><i></i>新增</a>
+			                        <a class="gbn gbn-edit" id="btn_modify" href="javascript:;" onclick="edit_obj();" right-attr='role/update'><i></i>编辑</a>
+			                        <a class="gbn gbn-del" id="btn_del" href="javascript:;" onclick="delete_obj();" right-attr='role/delete'><i></i>删除</a>
+							    </div>
+					  			<form class="form-inline g-fr" role="form" id="form1" onsubmit="return false;">
+					  				<input type="hidden" name="typeid" value="0"/>
+			                        <span class="group">
+			                            <label>角色名称:</label>
+			                            <input type="text" class="form-control" id="name" name="name">
+			                        </span>
+			                        <span class="group">
+			                            <label>状态:</label>
+			                            #dictselecttag('status','dic_status',$!{role.status},'1')
+			                        </span>
+			                        <span class="group">
+			                        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
+			                        </span>
+			                    </form>
+	                    	</div>
+	                    </div>
+                    </div><!-- 查询表单域 -->
+                    
+               		<div class="row" >
+						<div class="col-xs-12">
+					  		<div>
+					  			<table id="jqGridId"></table><div id="jqGridPagerId"></div>
+					  		</div>
+						</div>
+					</div><!-- 列表区域 -->
+            	</div>
+            </div>
+         </div>
+	</div>
+</div>
+<script type="text/javascript" src="${path}/javascript/system/role.js?date=201701220001"></script>

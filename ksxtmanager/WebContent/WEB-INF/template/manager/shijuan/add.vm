@@ -1,0 +1,6 @@
+#parse("manager/shijuan/add_edit_inner.vm")
+<script>
+$("input[name='kaoshitype']").eq(0).parent(".radio-inline").addClass('on');
+$("input[name='kaoshitype']").eq(0).attr("checked",true);
+$("#selectcustdept").show();
+</script>

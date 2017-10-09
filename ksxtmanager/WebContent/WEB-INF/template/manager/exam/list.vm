@@ -1,0 +1,32 @@
+#parse("page_header.vm")
+<style>
+    html,body{
+        overflow-y: hidden;
+        height: 100%;
+    }
+</style>
+
+<div class="J_conWarp g-lr-mg">
+	<div  class="container-fluid J_containerWarp">
+		<div class="row" >
+			<div class="col-xs-12" >
+				
+				<ul class="nav nav-tabs g-nav-tab1" role="tablist" id="myTab">
+			  		<li role="presentation" class="active" id="daikaoli"><a href="#daikaodiv" role="tab" data-toggle="tab" >待考</a></li>
+				  	<li role="presentation" id="yikaoli"><a href="#yikaodiv" role="tab" data-toggle="tab" >已考</a></li>
+				</ul>
+					
+				<div class="tab-content">
+			  		<div role="tabpanel" class="tab-pane active" id="daikaodiv">
+				  		#parse("manager/exam/daikaolist.vm")
+				  	</div>
+				  	<div role="tabpanel" class="tab-pane" id="yikaodiv">
+				  		#parse("manager/exam/daikaolist.vm")
+				  	</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+

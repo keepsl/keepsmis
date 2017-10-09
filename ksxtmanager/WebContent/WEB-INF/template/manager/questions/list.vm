@@ -1,0 +1,79 @@
+#parse("page_header.vm")
+<style>
+    html,body{
+        overflow-y: hidden;
+        height: 100%;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row" >
+    	
+	    <div class="col-xs-2" >
+            <div id="treediv" class="J_conWarp g-area-loading">
+                <h4 class="g-title">试题分类</h4>
+                <div class="g-total-pd">
+                    <ul id="questionstreeid" class="ztree reset-box-sizing"></ul>
+               </div>
+            </div>
+        </div>
+        
+    	<div class="col-xs-10">
+            <div class="J_conWarp g-warning-box">
+            	<h4 class="g-title">试题列表<span class="intro J_arrowAction" style="cursor:pointer;">功能介绍<i class="gi-down"></i></span></h4>
+            	<p class="bg-warning J_tipBox g-t-mg">功能介绍：管理试题信息，可根据左侧分类筛选试题，可新增或修改试题信息。</p>
+            	<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
+            		<div class="row">
+                		<div class="col-xs-12">
+					  		<div class="col-container clearfix">
+					  			<div class="button-inline g-fl">
+							  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="add_obj();" right-attr='questions/save'><i></i>新增</a>
+			                        <a class="gbn gbn-edit" id="btn_modify" href="javascript:;" onclick="edit_obj();" right-attr='questions/update'><i></i>编辑</a>
+			                        <a class="gbn gbn-del" id="btn_del" href="javascript:;" onclick="delete_obj();" right-attr='questions/delete'><i></i>删除</a>
+							    	<a class="gbn gbn-info" id="btn_info" href="javascript:;" onclick="info_obj();" right-attr='questions/delete'><i></i>详细</a>
+							    </div>
+					  			<form class="form-inline g-fr" role="form" id="form1" onsubmit="return false;">
+					  				<input type="hidden" name="questionstype"/>
+									<span class="group">
+			                            <label>类型:</label>
+			                            <select class="form-control" name="problemtype" id="problemtype">
+											<option value="">请选择...</option>
+											#foreach ($list in $problemtypelist)
+											<option value="$list.id" #if ($list.id==$questions.problemtype) selected #end>$list.name</option>
+											#end
+										</select>
+			                        </span>
+			                        <span class="group">
+			                            <label>难易度:</label>
+			                            <select class="form-control" name="degofdifftype" id="degofdifftype">
+											<option value="">请选择...</option>
+											#foreach ($list in $degofdifftypelist)
+											<option value="$list.id" #if ($list.id==$questions.degofdifftype) selected #end>$list.name</option>
+											#end
+										</select>
+			                        </span>
+			                        <span class="group">
+			                            <label>标题:</label>
+			                            <input type="text" class="form-control" id="title" name="title">
+			                        </span>
+			                        <span class="group">
+			                        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
+			                        </span>
+			                    </form>
+	                    	</div>
+	                    </div>
+                    </div><!-- 查询表单域 -->
+                    
+               		<div class="row" >
+						<div class="col-xs-12">
+					  		<div>
+					  			<table id="jqGridId"></table><div id="jqGridPagerId"></div>
+					  		</div>
+						</div>
+					</div><!-- 列表区域 -->
+            	</div>
+            </div>
+         </div>
+	</div>
+</div>
+<script type="text/javascript" src="${path}/javascript/ks/questions.js?date=201701220001"></script>

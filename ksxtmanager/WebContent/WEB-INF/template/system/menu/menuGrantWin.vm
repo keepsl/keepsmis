@@ -1,0 +1,86 @@
+#parse("page_header.vm")
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<input type="hidden" class="form-control" id="roleid" name="roleid" value="${roleid}">
+<ul id="menutree" class="ztree reset-box-sizing J_containerWarp2" ></ul>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	initSelectTree();
+});
+function initSelectTree(){
+	var setting = {
+        view: {
+            selectedMulti: false
+        },
+		check: {
+			enable: true,
+			chkboxType: { "Y": "ps", "N": "ps" }
+		},
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        callback: {
+        	beforeClick: function(treeId, treeNode){
+			},
+			onCheck: function(event, treeId, treeNode){
+			}
+    	}
+    };
+	var url = basePath+"/menu/getMenuGrantTree?roleid="+$("#roleid").val();
+    $.ajax({
+        type:"POST",
+        url: url,
+        success:function(data){
+            $.fn.zTree.init($("#menutree"), setting, $.parseJSON(data).message);
+        }
+    });
+}
+function save(callback){
+	var treeObj = $.fn.zTree.getZTreeObj('menutree');
+	var nodes = treeObj.getCheckedNodes(true);
+	var idarr = [];
+	var typearr = [];
+	for(var i=0; i<nodes.length; i++) {
+		var node = nodes[i];
+		if(node.id!=0){
+			idarr.push(node.id);
+			typearr.push(node.type);
+		}
+	}
+	/*var data={
+	    idarr:idarr,
+	    typearr:typearr,
+	    roleid:$("#roleid").val()
+	};*/
+	$.post(basePath+'/menu/saveOrgMenuGrant', {'roleid':$("#roleid").val(),'idarr':idarr.join(","),'typearr':typearr.join(",")}, function(json){
+		if(json&&json.success==true){
+			callback(true);
+		}else{
+			Log.e(json.message);
+			callback(false);
+		}
+	},'json');
+	//callback(data);
+}
+/*
+function save(callback){
+	var url = $("#id").val()==''?'../save':'../update';
+	$.post(url+'/'+$('#operType').val(), $("#formid").serialize(), function(json){
+		if(json&&json.success==true){
+			callback(true);
+		}else{
+			Log.e(json.message);
+			callback(false);
+		}
+	},'json');
+}*/
+</script>

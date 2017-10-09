@@ -1,0 +1,68 @@
+#parse("page_header.vm")
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<input type="hidden" class="form-control" id="roleids" name="roleids" value="${roleids}">
+<ul id="roletree" class="ztree reset-box-sizing J_containerWarp2" ></ul>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	initSelectTree();
+});
+function initSelectTree(){
+	var setting = {
+        view: {
+            selectedMulti: false
+        },
+		check: {
+			enable: true,
+			chkboxType: { "Y": "ps", "N": "ps" }
+		},
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        callback: {
+        	beforeClick: function(treeId, treeNode){
+				
+			},
+			onCheck: function(event, treeId, treeNode){
+				
+			}
+    	}
+    };
+	var url = basePath+"/role/getRoleTree?roleids="+$("#roleids").val();
+    $.ajax({
+        type:"POST",
+        url: url,
+        success:function(data){
+            $.fn.zTree.init($("#roletree"), setting, $.parseJSON(data).message);
+            //$("#roleTreeContent").removeClass("g-area-loading");
+        }
+    });
+}
+function getData(callback){
+	var treeObj = $.fn.zTree.getZTreeObj('roletree');
+	var nodes = treeObj.getCheckedNodes(true);
+	var idarr = [];
+	var namearr = [];
+	for(var i=0; i<nodes.length; i++) {
+		var node = nodes[i];
+		if(node.id!=0){
+			idarr.push(node.id);
+			namearr.push(node.name);
+		}
+	}
+	var data={
+	    idarr:idarr,
+	    namearr:namearr
+	};
+	callback(data);
+}
+</script>

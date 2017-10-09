@@ -1,0 +1,136 @@
+#parse("page_header.vm")
+<script type="text/javascript" src="${path}/javascript/ztreeselect.js?date=20170406022111"></script>
+<script type="text/javascript" src="${path}/javascript/selectTree.js?date=2017040600009"></script>
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="formid" method="post">
+						<input type="hidden" name="id" id="id" value="$!{emp.id}"/>
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>姓名：</label>
+							<div class="col-xs-3">
+								<input type="text" class="form-control" id="name" name="name" value="$!{emp.name}" maxlength="50"/>
+							</div>
+							<label for="sex" class="col-xs-2 control-label">性别：</label>
+							<div class="col-xs-4">
+								<div class="J_radioBox" style="padding-top:7px">
+									<label class="radio-inline">
+									  <input type="radio" name="sex" value="1"> 男
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="sex" value="2"> 女
+									</label>
+							    </div>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label for="pid" class="col-xs-2 control-label"><em class="text-red">*</em>所属组织：</label>
+						    <div class="col-xs-9">
+						    	<input type="text" class="form-control" name="orgid" id="orgid" value="$!{emp.orgid}"/>
+							    <p class="help-block">该员工所属组织.</p>
+						    </div>
+						</div>
+						<div class="form-group">
+							<label for="rolenames" class="col-xs-2 control-label">角色：</label>
+						    <div class="col-xs-9">
+						    	<div class="input-group">
+									<input type="hidden" class="form-control" id="roleids" name="roleids" value="$!{emp.roleids}">
+									<input type="text" class="form-control" id="rolenames" name="rolenames" value="$!{emp.rolenames}" >
+									<span class="input-group-btn">
+										<button class="gbn btn btn-default" type="button" onclick="showRoletree();">选择</button>
+									</span>
+								</div>
+							      <!--<select class="form-control" name="orgid" id="orgid">
+							        <option value="0">所属角色</option>
+							        #foreach ($list in $orglist)
+							        	#if(${orgid})
+								       		<option value="$list.id" #if ($list.id==${orgid}) selected #end parent="$list.pid">$list.name</option>
+								        #else
+								        	#if($org.id!=$list.id)
+									    		<option value="$list.id" #if ($list.id==$emp.orgid) selected #end parent="$list.pid">$list.name</option>
+									    	#end
+								        #end
+							        #end
+							      </select>-->
+							      <p class="help-block">该员工所属角色.</p>
+						    </div>
+						</div>
+						<div class="form-group">
+							<label for="phone" class="col-xs-2 control-label"><em class="text-red">*</em>手机号：</label>
+							<div class="col-xs-3">
+								<input type="number" class="form-control" id="phone" name="phone" value="$!{emp.phone}" maxlength="11" />
+							</div>
+							<label for="email" class="col-xs-2 control-label">邮箱：</label>
+							<div class="col-xs-4">
+								<input type="text" class="form-control" id="email" name="email" value="$!{emp.email}"  />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="birthdate" class="col-xs-2 control-label">出生日期：</label>
+							<div class="col-xs-3">
+								<input type="text" class="form-control Wdate g-Wate-left" id="birthdate" name="birthdate" value="$!DatesTool.format('yyyy-MM-dd',$!{emp.birthdate})" onclick="WdatePicker({dateFmt:'yyyy-MM-dd'});">
+							</div>
+							<label for="islunar" class="col-xs-2 control-label">是否农历：</label>
+							<div class="col-xs-2">
+								<div class="J_radioBox" style="padding-top:7px">
+									<label class="radio-inline">
+									  <input type="radio" name="islunar" value="1"> 是
+									</label>
+									<label class="radio-inline">
+									  <input type="radio" name="islunar" value="2"> 否
+									</label>
+							    </div>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="status" class="col-xs-2 control-label">状态：</label>
+							<div class="col-xs-9">
+								#dictselecttag('status','dic_emp_status',$!{emp.status})
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+	$(function(){
+		$("#orgid").droptree({items:$!{orgjson}, 
+		    transition:"ztree",
+		    isCheckParent:false,
+		    isopen:true
+	    });
+	});
+	function showRoletree(){
+		var onData = function (iframe,callback) {
+		    iframe.getData(function (data) {
+		    	$("#roleids").val(data.idarr);
+		    	$("#rolenames").val(data.namearr);
+		    	callback(true);
+		    });
+		}
+		openWin('../role/roleSelectWin?roleids='+$("#roleids").val(),'角色',350,500,'',onData);
+	}
+	function saveOrUpdate(callback){
+		var url = $("#id").val()==''?'../emp/save':'../emp/update';
+		$.post(url, $("#formid").serialize(), function(json){
+			if(json&&json.success==true){
+				callback(true);
+			}else{
+				Log.e(json.message);
+				callback(false);
+			}
+		},'json');
+	}
+</script>

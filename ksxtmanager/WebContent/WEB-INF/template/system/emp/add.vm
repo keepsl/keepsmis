@@ -1,0 +1,10 @@
+#parse("system/emp/add_edit_inner.vm")
+<script>
+$(function () {
+	$("input[name='sex']").eq(0).parent(".radio-inline").addClass('on');
+	$("input[name='sex']").eq(0).attr("checked",true);
+	
+	$("input[name='islunar']").eq(0).parent(".radio-inline").addClass('on');
+	$("input[name='islunar']").eq(0).attr("checked",true);
+});
+</script>

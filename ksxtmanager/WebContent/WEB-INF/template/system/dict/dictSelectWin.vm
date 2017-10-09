@@ -1,0 +1,81 @@
+#parse("page_header.vm")
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<input type="hidden" class="form-control" id="code" name="code" value="$!{code}">
+<ul id="dicttree" class="ztree reset-box-sizing J_containerWarp2" ></ul>
+
+<script type="text/javascript">
+
+$(document).ready(function(){
+	initSelectTree();
+});
+function initSelectTree(){
+	var check = {
+		enable: true,
+		chkboxType: { "Y": "ps", "N": "ps" }
+	}
+	var setting = {
+        view: {
+            selectedMulti: false
+        },
+		//check: check,
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        callback: {
+        	beforeClick: function(treeId, treeNode){
+				
+			},
+			onCheck: function(event, treeId, treeNode){
+				
+			}
+    	}
+    };
+	var url = basePath+"/dict/getDictTree?code="+$("#code").val();
+    $.ajax({
+        type:"POST",
+        url: url,
+        success:function(data){
+            $.fn.zTree.init($("#dicttree"), setting, $.parseJSON(data).recored);
+            var treeObj = $.fn.zTree.getZTreeObj("dicttree");
+			treeObj.expandAll(true);
+        }
+    });
+}
+function getData(callback){
+	var treeObj = $.fn.zTree.getZTreeObj('dicttree');
+	//var nodes = treeObj.getCheckedNodes(true);
+	var nodes = treeObj.getSelectedNodes();
+	if(nodes.length==0){
+		layer.msg('请选择产品！');
+	}
+	var idarr = [];
+	var namearr = [];
+	var valuearr = [];
+	for(var i=0; i<nodes.length; i++) {
+		var node = nodes[i];
+		if(node.type==1){
+			layer.msg('请选择产品！');
+			return false;
+		}
+		if(node.id!=0){
+			idarr.push(node.id);
+			namearr.push(node.name);
+			valuearr.push(node.obj);
+		}
+	}
+	var data={
+	    idarr:idarr,
+	    namearr:namearr,
+	    valuearr:valuearr
+	};
+	callback(data);
+}
+</script>

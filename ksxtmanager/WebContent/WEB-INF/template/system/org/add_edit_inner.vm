@@ -1,0 +1,56 @@
+#parse("page_header.vm")
+<script type="text/javascript" src="${path}/javascript/ztreeselect.js?date=20170406022111"></script>
+<script type="text/javascript" src="${path}/javascript/selectTree.js?date=2017040600009"></script>
+<style>
+    html,body{
+    	overflow:auto;
+        height: 100%;
+        background-color:#fff;
+    }
+</style>
+<div class="J_conWarp g-lr-mg g-warning-box">
+	<div class="J_containerWarp">
+		<div  class="container-fluid g-t-mg2">
+			<div class="row" >
+				<div class="col-xs-12" >
+					<form class="form-horizontal" role="form" id="formid" method="post">
+						<input type="hidden" name="id" id="id" value="$!{org.id}"/>
+						<div class="form-group">
+							<label for="name" class="col-xs-2 control-label"><em class="text-red">*</em>名称：</label>
+							<div class="col-xs-9">
+								<input type="text" class="form-control" id="name" name="name" value="$!{org.name}" maxlength="50">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="pid" class="col-xs-2 control-label"><em class="text-red">*</em>上级组织：</label>
+						    <div class="col-xs-9">
+							      <input type="text" class="form-control" name="pid" id="pid" value="$!{org.pid}"/>
+							      <p class="help-block">该组织所属的上级组织.</p>
+						    </div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	<div>
+</div>
+<script>
+	$(function(){
+		$("#pid").droptree({items:$!{orgjson}, 
+		    transition:"ztree",
+		    isCheckParent:true,
+		    isopen:true
+	    });
+	});
+	function saveOrUpdate(callback){
+		var url = $("#id").val()==''?'../org/save':'../org/update';
+		$.post(url, $("#formid").serialize(), function(json){
+			if(json&&json.success==true){
+				callback(true);
+			}else{
+				Log.e(json.message);
+				callback(false);
+			}
+		},'json');
+	}
+</script>
