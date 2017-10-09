@@ -29,6 +29,8 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 	private Integer dictid;
 	private String productname;
 	private Float price;
+	private Float totalprice;
+	private Integer buynum;
 	private Date createtime;
 	private Date updatetime;
 	private String remark;
@@ -39,7 +41,6 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 	private String updatetimestr;
 	private String clientphone;
 
-	private String buynum;
 	private String fzempid;
 	private String fzempname;
 	
@@ -53,12 +54,15 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 		this.empid = empid;
 	}
 
-	public TBuyRecord(Integer empid, Integer dicttypeid, Integer dictid, String productname, Float price, String remark,Date createtime, Date updatetime, Integer createperson) {
+	public TBuyRecord(Integer empid, Integer dicttypeid, Integer dictid, String productname, Float price, Float totalprice,
+			Integer buynum,String remark,Date createtime, Date updatetime, Integer createperson) {
 		this.empid = empid;
 		this.dicttypeid = dicttypeid;
 		this.dictid = dictid;
 		this.productname = productname;
+		this.totalprice = totalprice;
 		this.price = price;
+		this.buynum = buynum;
 		this.remark = remark;
 		this.createtime = createtime;
 		this.updatetime = updatetime;
@@ -157,6 +161,15 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 		this.productname = productname;
 	}
 
+	@Column(name = "totalprice")
+	public Float getTotalprice() {
+		return totalprice;
+	}
+
+	public void setTotalprice(Float totalprice) {
+		this.totalprice = totalprice;
+	}
+
 	@Column(name = "price")
 	public Float getPrice() {
 		return price;
@@ -166,6 +179,15 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 		this.price = price;
 	}
 
+	@Column(name = "buynum")
+	public Integer getBuynum() {
+		return buynum;
+	}
+
+	public void setBuynum(Integer buynum) {
+		this.buynum = buynum;
+	}
+	
 	@Transient
 	public String getEmpname() {
 		return empname;
@@ -218,15 +240,6 @@ public class TBuyRecord extends AbstractModelInteger implements ModelPlusSchool{
 
 	public void setBuytimeend(String buytimeend) {
 		this.buytimeend = buytimeend;
-	}
-
-	@Transient
-	public String getBuynum() {
-		return buynum;
-	}
-
-	public void setBuynum(String buynum) {
-		this.buynum = buynum;
 	}
 
 	@Transient

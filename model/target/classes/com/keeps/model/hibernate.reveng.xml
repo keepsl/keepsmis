@@ -2,5 +2,6 @@
 <!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
 
 <hibernate-reverse-engineering>
-	<table-filter match-catalog="keeps_crm" match-name="t_schedule"/>
+	<table-filter match-catalog="keeps_ksxt" match-name="ks_shijuan_org"/>
+	<table-filter match-catalog="keeps_ksxt" match-name="ks_shijuan_emp"/>
 </hibernate-reverse-engineering>

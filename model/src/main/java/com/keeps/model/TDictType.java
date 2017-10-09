@@ -25,6 +25,7 @@ public class TDictType extends AbstractModelInteger implements java.io.Serializa
 	private String name;
 	private String code;
 	private Integer pid;
+	private String fullpid;
 	private String pname;
 	private Integer status;
 	private Integer sort;
@@ -36,10 +37,11 @@ public class TDictType extends AbstractModelInteger implements java.io.Serializa
 	public TDictType() {
 	}
 
-	public TDictType(String name, String code, Integer pid, Integer status, Integer sort, Integer fixed,String valuetype,String description,Integer isinsertdict) {
+	public TDictType(String name, String code, Integer pid, String fullpid,Integer status, Integer sort, Integer fixed,String valuetype,String description,Integer isinsertdict) {
 		this.name = name;
 		this.code = code;
 		this.pid = pid;
+		this.fullpid = fullpid;
 		this.status = status;
 		this.sort = sort;
 		this.fixed = fixed;
@@ -84,6 +86,15 @@ public class TDictType extends AbstractModelInteger implements java.io.Serializa
 
 	public void setPid(Integer pid) {
 		this.pid = pid;
+	}
+
+	@Column(name = "fullpid", nullable = false)
+	public String getFullpid() {
+		return fullpid;
+	}
+
+	public void setFullpid(String fullpid) {
+		this.fullpid = fullpid;
 	}
 
 	@Column(name = "status", nullable = false)
