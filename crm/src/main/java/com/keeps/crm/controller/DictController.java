@@ -108,6 +108,7 @@ public class DictController extends AbstractAPIController {
 		/*TDictType dictType = dictService.geTDictTypeById(id);
 		view.addObject("pname", dictType.getName());*/
 		view.addObject("dicttypelist", dictService.getDictTypeList(new TDictType()));
+		view.addObject("pdicttype", dictService.geTDictTypeById(id));
 		view.setViewName("manager/dict/addDictType");
 		return view;
 	}

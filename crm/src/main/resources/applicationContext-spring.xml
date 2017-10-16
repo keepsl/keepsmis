@@ -22,7 +22,7 @@
 	<!-- -->
     <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> 
     	<property name="jndiName">
-    		<value>java:comp/env/jdbc/keeps</value>
+    		<value>java:comp/env/jdbc/keeps_crm</value>
     	</property>
     </bean>
     <!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

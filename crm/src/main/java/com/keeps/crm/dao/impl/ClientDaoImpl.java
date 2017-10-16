@@ -174,6 +174,55 @@ public class ClientDaoImpl extends AbstractDao implements ClientDao {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<TClient> getListAll(TClient client, Integer operType){
+		List<Object> values = new ArrayList<Object>();
+		StringBuffer sb = new StringBuffer();
+		sb.append(" select a.*,d.name as attentionname,d.value as attentionvalue,e.name as typename,"
+				+ "c.name as linkempname,b.remark as content,date_format(b.nexttime,'%Y-%m-%d %H:%m') as nexttime,b.contacttime contacttime,b.visittime as visittime, "
+				+ "f.fzempname,f.fzempid,ca.name as receivename,b.recordnum,g.name as receivetypename from t_client a  ");
+		sb.append(" left join ");
+		sb.append(" (select a.id,count(1) as recordnum,max(a.clientid) clientid ,max(a.empid) empid,max(a.nexttime) nexttime,max(a.visittime) visittime, max(remark) remark,max(contacttime) contacttime ");
+		sb.append(" from (select * from t_contact_record order by id desc) a group by a.clientid) b on a.id = b.clientid ");
+		sb.append(" left join t_emp c on b.empid = c.id ");
+		sb.append(" left join t_emp ca on a.receiveid = ca.id ");
+		sb.append(" left join t_dict d on d.id = a.attention and d.typecode = ? ");
+		values.add(Constants.DICT_CODE[2]);
+		sb.append(" left join t_dict_type e on e.id = a.type ");
+		if (operType.intValue() == 3) {
+			sb.append(" inner join ");
+		}else{
+			if (StringUtils.hasText(client.getFzempid())) {
+				sb.append(" inner join ");
+			}else{
+				sb.append(" left join ");
+			}
+		}
+		sb.append(" (select group_concat(b.name) fzempname,group_concat(b.id) fzempid,a.clientid from t_empclient a left join t_emp b on a.empid = b.id ");
+		if (operType.intValue() == 3) {//查询我的客户
+			sb.append(" where a.empid = ? ");
+			values.add(client.getCreateperson());
+		}else{
+			if (StringUtils.hasText(client.getFzempid())) {
+				sb.append(" where a.empid = ? ");
+				values.add(Integer.parseInt(client.getFzempid()));
+			}
+		}
+		
+		sb.append(" group by a.clientid) f  on a.id = f.clientid ");
+		sb.append(" left join t_dict_type g on g.id = a.receivetype ");
+		sb.append(" where 1 = 1 ");
+		
+		if(operType.intValue() == 1){
+			
+		}else if(operType.intValue() == 2){
+			sb.append(" and a.isopen = 2 ");
+		}
+		sb.append("  order by b.contacttime desc ");
+		return super.getByPropertySql(sb.toString(), values.toArray(), TClient.class);
+	}
+
+	
+	@SuppressWarnings("unchecked")
 	public List<TClient> getListInfoByPhone(String phone){
 		List<Object> values = new ArrayList<Object>();
 		StringBuffer sb = new StringBuffer();

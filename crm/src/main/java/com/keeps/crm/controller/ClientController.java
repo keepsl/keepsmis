@@ -7,6 +7,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +27,10 @@ import com.keeps.crm.service.EmpService;
 import com.keeps.crm.service.impl.ClientServiceImpl;
 import com.keeps.model.TClient;
 import com.keeps.model.TEmp;
+import com.keeps.tools.utils.DateUtils;
+import com.keeps.tools.utils.ExcelUtil;
 import com.keeps.tools.utils.JsonPost;
+import com.keeps.tools.utils.StringUtils;
 import com.keeps.tools.utils.page.Page;
 import com.keeps.tools.utils.threadlocal.UserSchoolThread;
 import com.keeps.utils.Constants;
@@ -123,6 +129,35 @@ public class ClientController extends AbstractAPIController {
 		view.addObject("operType", operType);
 		return view;
 	}
+	
+	
+	@RequestMapping("exportOfFile/{operType}")
+	public void exportOfFile(ModelAndView view,HttpServletRequest request, HttpServletResponse response,@PathVariable("operType")Integer operType) {
+		HSSFWorkbook workbook = new HSSFWorkbook();
+        Sheet sheet = workbook.createSheet("客户详细列表");
+        List<TClient> list = clientService.getListAll(new TClient(), operType);
+        int k = 0;
+		for (TClient tClient : list) {
+			k++;
+			Row row = sheet.createRow((int)k);//创建一行
+			ExcelUtil.createCell(row, 0, tClient.getName());
+			ExcelUtil.createCell(row, 1, tClient.getPhone());
+			ExcelUtil.createCell(row, 2, tClient.getLinkempname());
+			ExcelUtil.createCell(row, 3, StringUtils.notText(tClient.getContacttime())?"无":DateUtils.format(tClient.getContacttime(), "yyyy-MM-dd HH:mm"));
+			ExcelUtil.createCell(row, 4, StringUtils.notText(tClient.getNexttime())?"无":DateUtils.format(tClient.getNexttime(), "yyyy-MM-dd HH:mm"));
+			ExcelUtil.createCell(row, 5, StringUtils.notText(tClient.getVisittime())?"无":DateUtils.format(tClient.getVisittime(), "yyyy-MM-dd HH:mm"));
+			ExcelUtil.createCell(row, 6, tClient.getAttentionname());
+			ExcelUtil.createCell(row, 7, tClient.getTypename());
+			ExcelUtil.createCell(row, 8, tClient.getFzempname());
+			ExcelUtil.createCell(row, 9, tClient.getReceivename());
+			ExcelUtil.createCell(row, 10, tClient.getReceivetypename());
+			ExcelUtil.createCell(row, 11, tClient.getIsopen()==1?"否":"是");
+			ExcelUtil.createCell(row, 12, DateUtils.format(tClient.getCreatetime(), "yyyy-MM-dd HH:mm:ss"));
+		}
+		String[] titlenames = new  String[] {"姓名","联系电话","最近联系人","最近联系时间","下次联系时间","来访时间","关注度","客户类型","负责人","邀约人","邀约方式","是否开放","创建时间"};
+        ExcelUtil.downloadExeclFile(workbook,sheet,titlenames, "客户详细备份-"+DateUtils.getCurrentZhDate(),response);
+	}
+	
 	
 	@SuppressWarnings("rawtypes")
 	@RequestMapping("saveClientfile/{operType}")

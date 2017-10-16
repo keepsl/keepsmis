@@ -25,6 +25,8 @@ public interface ClientService extends SoftService{
 	
 	public Page queryList(TClient client,Integer operType);
 
+	public List<TClient> getListAll(TClient client,Integer operType);
+
 	public List<TClient> getListInfoByPhone(String phone);
 
 	public TClient getById(Integer id);

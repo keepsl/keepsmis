@@ -293,6 +293,10 @@ function imp_obj(){
 function add_obj(){
 	openWin('../client/add/'+$('#operType').val(),'新增客户',750,550,'',onSaveUpdateSuccess);
 }
+//导出
+function export_obj(){
+	window.location.href=basePath+"/client/exportOfFile/"+$('#operType').val();
+}
 //批量编辑
 function batch_edit_obj(){
 	var onEditUpdateSuccess = function (iframe,callback) {

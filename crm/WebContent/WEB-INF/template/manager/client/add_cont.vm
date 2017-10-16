@@ -26,7 +26,7 @@
 			#if(${operType}!=1 && $!{client.id})
 				$!{client.phone}
 			#else
-				<input type="text" class="form-control" id="phone" name="phone" value="$!{client.phone}" maxlength="11"/>
+				<input type="text" class="form-control" id="phone" name="phone" value="$!{client.phone}" maxlength="12"/>
 			#end
 		</div>
 		<label for="email" class="col-xs-2 control-label">邮箱：</label>

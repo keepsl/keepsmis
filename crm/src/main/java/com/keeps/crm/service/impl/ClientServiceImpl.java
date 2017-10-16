@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.assertj.core.internal.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -145,6 +146,14 @@ public class ClientServiceImpl extends AbstractService implements ClientService 
 		return page;
 	}
 	
+	public List<TClient> getListAll(TClient client,Integer operType){
+		if (operType == null) {
+			return null;
+		}
+		client.setCreateperson(UserSchoolThread.get().getUserid());
+		return clientDao.getListAll(client, operType);
+	}
+
 	@Override
 	public List<TClient> getListInfoByPhone(String phone){
 		return clientDao.getListInfoByPhone(phone);
@@ -169,8 +178,24 @@ public class ClientServiceImpl extends AbstractService implements ClientService 
 		Assert.isTrue(operType!=null, "没有找到当前操作类型,系统检测到你有非法操作!");
 		Assert.isTrue(StringUtils.hasText(client.getName()), "客户姓名不能为空!");
 		if (operType==1) {
-			Assert.isTrue(StringUtils.hasText(client.getPhone()), "手机号不能为空!");
-			Assert.isTrue(ValidateUtil.isMobile(client.getPhone()), "手机号格式不正确!");
+			Assert.isTrue(StringUtils.hasText(client.getPhone()), "电话不能为空!");
+			if (client.getPhone().indexOf("-")==-1) {
+				Assert.isTrue(CommonUtils.isNumeric(client.getPhone()), "电话格式不正确!");
+				if (client.getPhone().length()!=7&&client.getPhone().length()!=11) {
+					throw new CapecException("电话格式不正确!");
+				}
+			}else{
+				String[] strs = client.getPhone().split("-");
+				if (strs.length!=2) {
+					throw new CapecException("电话格式不正确!");
+				}
+				if (strs[0].length()!=4) {
+					throw new CapecException("电话格式不正确!");
+				}
+				if (strs[1].length()!=7) {
+					throw new CapecException("电话格式不正确!");
+				}
+			}
 		}
 		if (StringUtils.hasText(client.getEmail())) {
 			Assert.isTrue(ValidateUtil.isEmail(client.getEmail()), "邮箱格式不正确!");

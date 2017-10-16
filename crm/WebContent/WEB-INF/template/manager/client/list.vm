@@ -64,6 +64,9 @@
 					    <li><a href="javascript:;" attr-time='0'>取消选择</a></li>
 					  </ul>
 				</div>
+				<div class="btn-group J_dropDown">
+				<a class="gbn" id="btn_export" href="javascript:;" onclick="export_obj()" right-attr='client/exportOfFile/$!{operType}'><i></i>客户资料备份</a>
+				</div>
             	<span class="intro J_arrowAction" style="cursor:pointer;">功能介绍<i class="gi-down"></i></span></h4>
             	<p class="bg-warning J_tipBox g-t-mg">功能介绍：客户信息管理与维护。</p>
             	<div class="g-total-pd" style="padding-top:0;" id="jqGridWarp">
@@ -113,7 +116,6 @@
 			                        <span class="group">
 			                        	<a class="gbn gbn-search" id="btn_query" href="javascript:;" onclick="query();"><i></i>查询</a>
 			                        	<a class="gbn gbn-gray" id="btn_reset" href="javascript:;" onclick="query(1);"><i></i>重置</a>
-			                        	
 						  				<a class="gbn" id="btn_imp" href="javascript:;" onclick="imp_obj()" right-attr='client/saveClientfile/$!{operType}'><i></i>导入</a>
 								  		<a class="gbn gbn-add" id="btn_add" href="javascript:;" onclick="add_obj();" right-attr='client/save/$!{operType}'><i></i>新增</a>
 				                        <a class="gbn gbn-edit" id="btn_batch_modify" href="javascript:;" onclick="batch_edit_obj();" right-attr='client/batchEditUpdate/$!{operType}'><i></i>批量修改</a>
@@ -205,4 +207,4 @@
          </div>
 	</div>
 </div>
-<script type="text/javascript" src="${path}/javascript/client.js?date=201701220001"></script>
+<script type="text/javascript" src="${path}/javascript/client.js?date=201708060003"></script>
